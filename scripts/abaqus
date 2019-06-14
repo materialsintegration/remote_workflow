@@ -1,0 +1,39 @@
+#!/bin/bash -x
+
+#sleep 10
+in_file=""
+out_file=""
+token=""
+
+# 引数解釈
+filecount=1
+exec_path="/opt/Abaqus/Commands/abaqus ""$@"
+exec_dir=""
+infiles=("XX.inp")
+count=0
+token=""
+ssh_client="192.168.1.234"
+
+# 作業ディレクトリ作成
+ssh $ssh_client "if [ -e /tmp/node_calc ]; then rm -rf /tmp/node_calc; fi; mkdir /tmp/node_calc"
+# ファイルを転送
+for item in ${infiles[@]}; do
+    rsync -av -L -e ssh $item $ssh_client:/tmp/node_calc > /dev/null 2>&1
+done
+
+# プログラム実行
+echo `date '+%Y-%m-%d %T'`": start: abaqus: unknown" >> /home/misystem/assets/workflow/site00002/solver_logs/solver_execute.log
+ssh $ssh_client "cd /tmp/node_calc; $exec_path > /tmp/node_calc/node_calc_exec.log 2>&1"
+if [ $? != 0 ]; then
+    echo `date '+%Y-%m-%d %T'`": abnormal end: abaqus: unknown" >> /home/misystem/assets/workflow/site00002/solver_logs/solver_execute.log
+    exit 1
+fi
+echo `date '+%Y-%m-%d %T'`": normal end: abaqus: unknown" >> /home/misystem/assets/workflow/site00002/solver_logs/solver_execute.log
+
+# 出力結果の取得
+if [ -e /tmp/node_calc ]; then
+    rm -rf /tmp/node_calc
+fi
+rsync -av -e ssh $ssh_client:/tmp/node_calc/ ./
+
+exit 0

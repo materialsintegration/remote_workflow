@@ -1,0 +1,51 @@
+{
+    "prediction_models": [
+        {
+            "prediction_model_names": [
+                {
+                    "name": "高速疲労予測計算_応力分布計算（ssh経由計算）", 
+                    "language": "ja"
+                }
+            ], 
+            "metadata_list": [], 
+            "modified_by": "東大システム管理者０１", 
+            "description": "ssh経由でMIシステム外の計算機を利用して、高速疲労予測計算の応力分布計算を行うための予測モデル。", 
+            "approval_status": "N", 
+            "input_ports": [
+                {
+                    "descriptor_id": "https://nims.mintsys.jp/inventory/descriptors/D000020000015898", 
+                    "tag_list": [], 
+                    "description": null, 
+                    "required": false, 
+                    "preferred_name": "abaqus.inp", 
+                    "metadata_list": [], 
+                    "port_display_name_ja": null, 
+                    "port_display_name_en": null, 
+                    "port_name": "input001", 
+                    "preferred_name_language": "ja"
+                }
+            ], 
+            "creation_time": "2019-06-13T03:13:57Z", 
+            "created_by": "東大システム管理者０１", 
+            "preferred_name": "高速疲労予測計算_応力分布計算（ssh経由計算）", 
+            "prediction_model_type_name": "理論モデル", 
+            "modified_time": "2019-06-13T03:13:57Z", 
+            "prediction_model_id": "https://nims.mintsys.jp/inventory/prediction-models/M000020000004160", 
+            "preferred_name_language": "ja", 
+            "output_ports": [
+                {
+                    "descriptor_id": "https://nims.mintsys.jp/inventory/descriptors/D000020000015899", 
+                    "tag_list": [], 
+                    "description": null, 
+                    "preferred_name": "abaqus.dat", 
+                    "metadata_list": [], 
+                    "port_display_name_ja": null, 
+                    "port_display_name_en": null, 
+                    "port_name": "output001", 
+                    "preferred_name_language": "ja"
+                }
+            ], 
+            "software_tools": []
+        }
+    ]
+}

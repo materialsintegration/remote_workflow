@@ -1,0 +1,429 @@
+{
+    "prediction_models": [
+        {
+            "prediction_model_names": [
+                {
+                    "name": "高速疲労計算_Abaqus", 
+                    "language": "ja"
+                }
+            ], 
+            "metadata_list": [], 
+            "modified_by": "東大システム管理者０１", 
+            "description": "高速疲労計算 応力分布計算\r\nソルバーはAbaqusを使用する。\r\n", 
+            "approval_status": "N", 
+            "input_ports": [
+                {
+                    "descriptor_id": "https://nims.mintsys.jp/inventory/descriptors/D000020000015898", 
+                    "tag_list": [], 
+                    "description": null, 
+                    "required": false, 
+                    "preferred_name": "abaqus.inp", 
+                    "metadata_list": [], 
+                    "port_display_name_ja": "input001", 
+                    "port_display_name_en": "input001", 
+                    "port_name": "input001", 
+                    "preferred_name_language": "ja"
+                }
+            ], 
+            "creation_time": "2017-06-14T07:36:04Z", 
+            "created_by": "東大遠藤管理者001", 
+            "preferred_name": "高速疲労計算_Abaqus", 
+            "prediction_model_type_name": "", 
+            "modified_time": "2019-06-13T03:08:59Z", 
+            "prediction_model_id": "https://nims.mintsys.jp/inventory/prediction-models/M000020000003896", 
+            "preferred_name_language": "ja", 
+            "output_ports": [
+                {
+                    "descriptor_id": "https://nims.mintsys.jp/inventory/descriptors/D000020000015899", 
+                    "tag_list": [], 
+                    "description": null, 
+                    "preferred_name": "abaqus.dat", 
+                    "metadata_list": [], 
+                    "port_display_name_ja": "output001", 
+                    "port_display_name_en": "output001", 
+                    "port_name": "output001", 
+                    "preferred_name_language": "ja"
+                }
+            ], 
+            "software_tools": []
+        }, 
+        {
+            "prediction_model_names": [
+                {
+                    "name": "高速疲労計算_Mathematica", 
+                    "language": "ja"
+                }
+            ], 
+            "metadata_list": [], 
+            "modified_by": "東大遠藤管理者001", 
+            "description": "疲労寿命予想計算を行う。", 
+            "approval_status": "N", 
+            "input_ports": [
+                {
+                    "descriptor_id": "https://nims.mintsys.jp/inventory/descriptors/D000020000015899", 
+                    "tag_list": [], 
+                    "description": null, 
+                    "required": false, 
+                    "preferred_name": "abaqus.dat", 
+                    "metadata_list": [], 
+                    "port_display_name_ja": "input001", 
+                    "port_display_name_en": "input001", 
+                    "port_name": "input001", 
+                    "preferred_name_language": "ja"
+                }, 
+                {
+                    "descriptor_id": "https://nims.mintsys.jp/inventory/descriptors/D000020000015927", 
+                    "tag_list": [], 
+                    "description": null, 
+                    "required": false, 
+                    "preferred_name": "Ferrite_grain.csv", 
+                    "metadata_list": [], 
+                    "port_display_name_ja": "input002", 
+                    "port_display_name_en": "input002", 
+                    "port_name": "input002", 
+                    "preferred_name_language": "ja"
+                }, 
+                {
+                    "descriptor_id": "https://nims.mintsys.jp/inventory/descriptors/D000020000015928", 
+                    "tag_list": [], 
+                    "description": null, 
+                    "required": false, 
+                    "preferred_name": "Pearlite_thickness", 
+                    "metadata_list": [], 
+                    "port_display_name_ja": "input003", 
+                    "port_display_name_en": "input003", 
+                    "port_name": "input003", 
+                    "preferred_name_language": "en"
+                }, 
+                {
+                    "descriptor_id": "https://nims.mintsys.jp/inventory/descriptors/D000020000015929", 
+                    "tag_list": [], 
+                    "description": null, 
+                    "required": false, 
+                    "preferred_name": "高速疲労計算_script", 
+                    "metadata_list": [], 
+                    "port_display_name_ja": "input004", 
+                    "port_display_name_en": "input004", 
+                    "port_name": "input004", 
+                    "preferred_name_language": "ja"
+                }, 
+                {
+                    "descriptor_id": "https://nims.mintsys.jp/inventory/descriptors/D000020000015964", 
+                    "tag_list": [], 
+                    "description": null, 
+                    "required": false, 
+                    "preferred_name": "Volume faraction of pearlite phase", 
+                    "metadata_list": [], 
+                    "port_display_name_ja": "input005", 
+                    "port_display_name_en": "input005", 
+                    "port_name": "input005", 
+                    "preferred_name_language": "en"
+                }, 
+                {
+                    "descriptor_id": "https://nims.mintsys.jp/inventory/descriptors/D000020000015975", 
+                    "tag_list": [], 
+                    "description": null, 
+                    "required": false, 
+                    "preferred_name": "応力条件", 
+                    "metadata_list": [], 
+                    "port_display_name_ja": "input006", 
+                    "port_display_name_en": "input006", 
+                    "port_name": "input006", 
+                    "preferred_name_language": "ja"
+                }
+            ], 
+            "creation_time": "2017-06-14T07:37:13Z", 
+            "created_by": "東大遠藤管理者001", 
+            "preferred_name": "高速疲労計算_Mathematica", 
+            "prediction_model_type_name": "", 
+            "modified_time": "2017-09-07T08:51:24Z", 
+            "prediction_model_id": "https://nims.mintsys.jp/inventory/prediction-models/M000020000003897", 
+            "preferred_name_language": "ja", 
+            "output_ports": [
+                {
+                    "descriptor_id": "https://nims.mintsys.jp/inventory/descriptors/D000020000015900", 
+                    "tag_list": [], 
+                    "description": null, 
+                    "preferred_name": " 高速疲労寿命予測モジュール計算結果ファイル", 
+                    "metadata_list": [], 
+                    "port_display_name_ja": "output001", 
+                    "port_display_name_en": "output001", 
+                    "port_name": "output001", 
+                    "preferred_name_language": "ja"
+                }
+            ], 
+            "software_tools": []
+        }, 
+        {
+            "prediction_model_names": [
+                {
+                    "name": "SS曲線導出", 
+                    "language": "ja"
+                }
+            ], 
+            "metadata_list": [], 
+            "modified_by": "東大遠藤管理者001", 
+            "description": "SS曲線を作成します。", 
+            "approval_status": "N", 
+            "input_ports": [
+                {
+                    "descriptor_id": "https://nims.mintsys.jp/inventory/descriptors/D000020000015965", 
+                    "tag_list": [], 
+                    "description": null, 
+                    "required": false, 
+                    "preferred_name": "Young's modulus", 
+                    "metadata_list": [], 
+                    "port_display_name_ja": "input001", 
+                    "port_display_name_en": "input001", 
+                    "port_name": "input001", 
+                    "preferred_name_language": "en"
+                }, 
+                {
+                    "descriptor_id": "https://nims.mintsys.jp/inventory/descriptors/D000020000015961", 
+                    "tag_list": [], 
+                    "description": null, 
+                    "required": false, 
+                    "preferred_name": "Yield Strength", 
+                    "metadata_list": [], 
+                    "port_display_name_ja": "input002", 
+                    "port_display_name_en": "input002", 
+                    "port_name": "input002", 
+                    "preferred_name_language": "ja"
+                }, 
+                {
+                    "descriptor_id": "https://nims.mintsys.jp/inventory/descriptors/D000020000015962", 
+                    "tag_list": [], 
+                    "description": null, 
+                    "required": false, 
+                    "preferred_name": "Tensile strength", 
+                    "metadata_list": [], 
+                    "port_display_name_ja": "input003", 
+                    "port_display_name_en": "input003", 
+                    "port_name": "input003", 
+                    "preferred_name_language": "en"
+                }, 
+                {
+                    "descriptor_id": "https://nims.mintsys.jp/inventory/descriptors/D000020000015963", 
+                    "tag_list": [], 
+                    "description": null, 
+                    "required": false, 
+                    "preferred_name": "Reduction Area", 
+                    "metadata_list": [], 
+                    "port_display_name_ja": "input004", 
+                    "port_display_name_en": "input004", 
+                    "port_name": "input004", 
+                    "preferred_name_language": "en"
+                }
+            ], 
+            "creation_time": "2017-08-24T06:48:01Z", 
+            "created_by": "東大遠藤管理者001", 
+            "preferred_name": "SS曲線導出", 
+            "prediction_model_type_name": "", 
+            "modified_time": "2017-09-26T05:19:38Z", 
+            "prediction_model_id": "https://nims.mintsys.jp/inventory/prediction-models/M000020000003918", 
+            "preferred_name_language": "ja", 
+            "output_ports": [
+                {
+                    "descriptor_id": "https://nims.mintsys.jp/inventory/descriptors/D000020000015966", 
+                    "tag_list": [], 
+                    "description": null, 
+                    "preferred_name": "SS曲線", 
+                    "metadata_list": [], 
+                    "port_display_name_ja": "output001", 
+                    "port_display_name_en": "output001", 
+                    "port_name": "output001", 
+                    "preferred_name_language": "ja"
+                }
+            ], 
+            "software_tools": []
+        }, 
+        {
+            "prediction_model_names": [
+                {
+                    "name": "フェライト・パーライト相の転位の摩擦応力導出", 
+                    "language": "ja"
+                }
+            ], 
+            "metadata_list": [], 
+            "modified_by": "東大遠藤管理者001", 
+            "description": "Hall-Petch則を用いて摩擦応力を導出する。", 
+            "approval_status": "N", 
+            "input_ports": [
+                {
+                    "descriptor_id": "https://nims.mintsys.jp/inventory/descriptors/D000020000015964", 
+                    "tag_list": [], 
+                    "description": null, 
+                    "required": false, 
+                    "preferred_name": "Volume faraction of pearlite phase", 
+                    "metadata_list": [], 
+                    "port_display_name_ja": "input001", 
+                    "port_display_name_en": "input001", 
+                    "port_name": "input001", 
+                    "preferred_name_language": "en"
+                }, 
+                {
+                    "descriptor_id": "https://nims.mintsys.jp/inventory/descriptors/D000020000015961", 
+                    "tag_list": [], 
+                    "description": null, 
+                    "required": false, 
+                    "preferred_name": "Yield Strength", 
+                    "metadata_list": [], 
+                    "port_display_name_ja": "input002", 
+                    "port_display_name_en": "input002", 
+                    "port_name": "input002", 
+                    "preferred_name_language": "ja"
+                }, 
+                {
+                    "descriptor_id": "https://nims.mintsys.jp/inventory/descriptors/D000020000015927", 
+                    "tag_list": [], 
+                    "description": null, 
+                    "required": false, 
+                    "preferred_name": "Ferrite_grain.csv", 
+                    "metadata_list": [], 
+                    "port_display_name_ja": "input003", 
+                    "port_display_name_en": "input003", 
+                    "port_name": "input003", 
+                    "preferred_name_language": "ja"
+                }
+            ], 
+            "creation_time": "2017-08-24T07:18:49Z", 
+            "created_by": "東大遠藤管理者001", 
+            "preferred_name": "フェライト・パーライト相の転位の摩擦応力導出", 
+            "prediction_model_type_name": "", 
+            "modified_time": "2017-08-24T07:18:49Z", 
+            "prediction_model_id": "https://nims.mintsys.jp/inventory/prediction-models/M000020000003919", 
+            "preferred_name_language": "ja", 
+            "output_ports": [
+                {
+                    "descriptor_id": "https://nims.mintsys.jp/inventory/descriptors/D000020000015969", 
+                    "tag_list": [], 
+                    "description": null, 
+                    "preferred_name": "σfP", 
+                    "metadata_list": [], 
+                    "port_display_name_ja": "output001", 
+                    "port_display_name_en": "output001", 
+                    "port_name": "output001", 
+                    "preferred_name_language": "ja"
+                }, 
+                {
+                    "descriptor_id": "https://nims.mintsys.jp/inventory/descriptors/D000020000015968", 
+                    "tag_list": [], 
+                    "description": null, 
+                    "preferred_name": "σfF", 
+                    "metadata_list": [], 
+                    "port_display_name_ja": "output002", 
+                    "port_display_name_en": "output002", 
+                    "port_name": "output002", 
+                    "preferred_name_language": "en"
+                }
+            ], 
+            "software_tools": []
+        }, 
+        {
+            "prediction_model_names": [
+                {
+                    "name": "高速疲労寿命予測計算_入力データ生成", 
+                    "language": "ja"
+                }
+            ], 
+            "metadata_list": [], 
+            "modified_by": "東大遠藤管理者001", 
+            "description": "入力データの生成を行います。", 
+            "approval_status": "N", 
+            "input_ports": [
+                {
+                    "descriptor_id": "https://nims.mintsys.jp/inventory/descriptors/D000020000015970", 
+                    "tag_list": [], 
+                    "description": null, 
+                    "required": false, 
+                    "preferred_name": "モデルデータ", 
+                    "metadata_list": [], 
+                    "port_display_name_ja": "input001", 
+                    "port_display_name_en": "input001", 
+                    "port_name": "input001", 
+                    "preferred_name_language": "ja"
+                }, 
+                {
+                    "descriptor_id": "https://nims.mintsys.jp/inventory/descriptors/D000020000015966", 
+                    "tag_list": [], 
+                    "description": null, 
+                    "required": false, 
+                    "preferred_name": "SS曲線", 
+                    "metadata_list": [], 
+                    "port_display_name_ja": "input002", 
+                    "port_display_name_en": "input002", 
+                    "port_name": "input002", 
+                    "preferred_name_language": "ja"
+                }
+            ], 
+            "creation_time": "2017-08-24T07:25:01Z", 
+            "created_by": "東大遠藤管理者001", 
+            "preferred_name": "高速疲労寿命予測計算_入力データ生成", 
+            "prediction_model_type_name": "", 
+            "modified_time": "2017-09-07T08:45:20Z", 
+            "prediction_model_id": "https://nims.mintsys.jp/inventory/prediction-models/M000020000003920", 
+            "preferred_name_language": "ja", 
+            "output_ports": [
+                {
+                    "descriptor_id": "https://nims.mintsys.jp/inventory/descriptors/D000020000015898", 
+                    "tag_list": [], 
+                    "description": null, 
+                    "preferred_name": "abaqus.inp", 
+                    "metadata_list": [], 
+                    "port_display_name_ja": "output001", 
+                    "port_display_name_en": "output001", 
+                    "port_name": "output001", 
+                    "preferred_name_language": "ja"
+                }
+            ], 
+            "software_tools": []
+        }, 
+        {
+            "prediction_model_names": [
+                {
+                    "name": "高速疲労予測計算_応力分布計算（ssh経由計算）", 
+                    "language": "ja"
+                }
+            ], 
+            "metadata_list": [], 
+            "modified_by": "東大システム管理者０１", 
+            "description": "ssh経由でMIシステム外の計算機を利用して、高速疲労予測計算の応力分布計算を行うための予測モデル。", 
+            "approval_status": "N", 
+            "input_ports": [
+                {
+                    "descriptor_id": "https://nims.mintsys.jp/inventory/descriptors/D000020000015898", 
+                    "tag_list": [], 
+                    "description": null, 
+                    "required": false, 
+                    "preferred_name": "abaqus.inp", 
+                    "metadata_list": [], 
+                    "port_display_name_ja": null, 
+                    "port_display_name_en": null, 
+                    "port_name": "input001", 
+                    "preferred_name_language": "ja"
+                }
+            ], 
+            "creation_time": "2019-06-13T03:13:57Z", 
+            "created_by": "東大システム管理者０１", 
+            "preferred_name": "高速疲労予測計算_応力分布計算（ssh経由計算）", 
+            "prediction_model_type_name": "理論モデル", 
+            "modified_time": "2019-06-13T03:13:57Z", 
+            "prediction_model_id": "https://nims.mintsys.jp/inventory/prediction-models/M000020000004160", 
+            "preferred_name_language": "ja", 
+            "output_ports": [
+                {
+                    "descriptor_id": "https://nims.mintsys.jp/inventory/descriptors/D000020000015899", 
+                    "tag_list": [], 
+                    "description": null, 
+                    "preferred_name": "abaqus.dat", 
+                    "metadata_list": [], 
+                    "port_display_name_ja": null, 
+                    "port_display_name_en": null, 
+                    "port_name": "output001", 
+                    "preferred_name_language": "ja"
+                }
+            ], 
+            "software_tools": []
+        }
+    ]
+}

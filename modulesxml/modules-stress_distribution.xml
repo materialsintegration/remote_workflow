@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<modules xmlns="http://www.example.com/predictionModuleSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:dc="http://purl.org/dc/elements/1.1/" xsi:schemaLocation="http://www.example.com/predictionModuleSchema predictionModuleSchema.xsd">
+    <module>
+        <dc:identifier>P000029000001026</dc:identifier>
+        <dc:title>高速疲労計算_応力分布計算(ssh経由)</dc:title>
+        <dc:description>Abaqusを使用し、試験体にかかる応力分布を計算します。n 必要データはAbaqusの入力データ[.inp]です。</dc:description>
+        <dc:creator>t.endo</dc:creator>
+        <dc:date>2019-06-13</dc:date>
+        <predictionModel>M000020000004146</predictionModel>
+        <deleted>false</deleted>
+        <version>1.0.2</version>
+        <objectPath>/P61xx_endo/kousoku/shellscript/kousoku_abaqus_ssh.sh</objectPath>
+        <resourceRequests>
+            <pbsQueue>ex_queue</pbsQueue>
+            <pbsNodesGroup>ssh-node01</pbsNodesGroup>
+            <pbsMinCores>1</pbsMinCores>
+            <pbsMaxCores>4</pbsMaxCores>
+            <pbsBaseCores>1</pbsBaseCores>
+        </resourceRequests>
+        <inputPorts>
+            <port>
+                <name>XX_inp</name>
+                <description>Abaqusの入力ファイルです。n このファイルには「モデル形状」「材料物性」「荷重」が含まれています。拡張子[.inp]</description>
+                <descriptor>D000020000015898</descriptor>
+                <type>file</type>
+                <depth>0</depth>
+                <required>true</required>
+            </port>
+        </inputPorts>
+        <outputPorts>
+            <port>
+                <name>XX_dat</name>
+                <description>Abaqusの出力ファイルです。n このデータには「応力分布」が含まれます。拡張子[.dat]</description>
+                <descriptor>D000020000015899</descriptor>
+                <type>file</type>
+                <depth>0</depth>
+            </port>
+        </outputPorts>
+    </module>
+</modules>
