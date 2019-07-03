@@ -35,4 +35,28 @@ descriptor, prediction_model, software_toolの辞書単位の出力JSONファイ
 3. 複製された高速疲労予測計算ワークフローの応力分布計算のモジュールを実装された遠隔実行用応力分布計算モジュールに置き換える。
 
 ## 実装、準備手順
+接続手順により、設定項目がある。それぞれについて記述する。またssh接続は秘密鍵＋秘密鍵のパスフレーズ併用方式とし、チャレンジレスポンス方式は考慮しないこととする。
+※ 秘密鍵の名前はid_rsa-組織名などとすることを推奨する。
+### ssh接続
+### socksプロキシ経由ssh接続
+NIMSに正式な設定資料はなく、ネット上の検索結果による一般的なsocksプロトコルを使ったssh接続方法とNIMSでの過去存在した資料の伝聞による設定との組み合わせを実施する。
+* socksプロキシの設定
+  socksプロキシは以下のconfigファイルに設定するので必要ない。
+* ssh用configファイルの使用  
+  ホームディレクトリ以下に、.ssh/configファイルを作成し、以下のように記述する。
+  ```
+  Host u-tokyo
+    Hostname xxx.xxxx.xxxx.xxxx
+    Port 50022
+    User yourname 
+    ProxyCommand nc --proxy socks.nims.go.jp:1080 --proxy-type socks4 %h %p
+    IdentityFile ~/.ssh/id_rsa-xxx
+  ```
+  接続は
+  ```
+  $ ssh remote-site
+  Enter passphrase for key '/home/yourdirectory/.ssh/id_rsa-xxx':
+  ```
+  パスフレーズを入力してログインする。 
+  ※ 作成した.sshを含むディレクトリは、パーミッションを700としておくこと。
 
