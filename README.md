@@ -45,10 +45,10 @@ NIMSに正式な設定資料はなく、ネット上の検索結果による一�
 * ssh用configファイルの使用  
   ホームディレクトリ以下に、.ssh/configファイルを作成し、以下のように記述する。
   ```
-  Host u-tokyo
-    Hostname xxx.xxxx.xxxx.xxxx
+  Host remote-site
+    Hostname xxx.xxx.xxx.xxx
     Port 50022
-    User yourname 
+    User remote-site-user-name 
     ProxyCommand nc --proxy socks.nims.go.jp:1080 --proxy-type socks4 %h %p
     IdentityFile ~/.ssh/id_rsa-xxx
   ```
