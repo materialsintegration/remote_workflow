@@ -40,7 +40,8 @@ descriptor, prediction_model, software_toolの辞書単位の出力JSONファイ
 ### ssh接続
 ### socksプロキシ経由ssh接続
 NIMSに正式な設定資料はなく、ネット上の検索結果による一般的なsocksプロトコルを使ったssh接続方法とNIMSでの過去存在した資料の伝聞による設定との組み合わせを実施する。
-* socksプロキシの設定
+[参考ページ](https://blog.ymyzk.com/2013/10/ssh-over-socks-https/)
+* socksプロキシの設定  
   socksプロキシは以下のconfigファイルに設定するので必要ない。
 * ssh用configファイルの使用  
   ホームディレクトリ以下に、.ssh/configファイルを作成し、以下のように記述する。
