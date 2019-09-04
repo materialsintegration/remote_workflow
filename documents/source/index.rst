@@ -11,7 +11,7 @@ Welcome to 外部計算資源の利用について's documentation!
    :caption: 目次:
    :numbered: 4
 
-   document/using_distributed_properties.rst
+   using_distributed_properties.rst
 
 
 .. raw:: latex
