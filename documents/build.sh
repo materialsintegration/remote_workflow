@@ -20,19 +20,20 @@ do
     make latex >> $logfile 2>&1
     echo "-------------------- 1st compile dvi file -----------" >> $logfile
     pushd build/latex
-    echo "uplatex -f --interaction=nonstopmode 外部計算資源の利用.tex" >> $logfile 2>&1
-    uplatex -f --interaction=nonstopmode 外部計算資源の利用.tex >> $logfile 2>&1
+    echo "platex -f --interaction=nonstopmode sphinx.tex" >> $logfile 2>&1
+    platex -f --interaction=nonstopmode sphinx.tex >> $logfile 2>&1
     echo "-------------------- 2nd compile dvi file -----------" >> $logfile
-    echo "uplatex -f --interaction=nonstopmode 外部計算資源の利用.tex" >> $logfile 2>&1
-    uplatex -f --interaction=nonstopmode 外部計算資源の利用.tex >> $logfile 2>&1
+    echo "platex -f --interaction=nonstopmode sphinx.tex" >> $logfile 2>&1
+    platex -f --interaction=nonstopmode sphinx.tex >> $logfile 2>&1
     echo "-------------------- convert pdf file -----------" >> $logfile
-    echo "dvipdfmx 外部計算資源の利用.dvi" >> $logfile 2>&1
-    dvipdfmx 外部計算資源の利用.dvi >> $logfile 2>&1
-    if [ -e "外部計算資源の利用.pdf" ]; then
+    echo "dvipdfmx sphinx.dvi" >> $logfile 2>&1
+    dvipdfmx sphinx.dvi >> $logfile 2>&1
+    if [ -e "sphinx.pdf" ]; then
         # とりあえず成果物確認用ページへコピーする。
         # 本来はちゃんとした公開ページへコピーすること。
-        echo "copy 外部計算資源の利用.pdf to ${pdffilenames[$count]}.pdf" >> $logfile
-        cp 外部計算資源の利用.pdf /var/lib/mi-docroot/static/misystem-user-manual/${pdffilenames[$count]}.pdf
+        echo "copy sphinx.pdf to ${pdffilenames[$count]}.pdf" >> $logfile
+        #cp sphinx.pdf /var/lib/mi-docroot/static/misystem-user-manual/${pdffilenames[$count]}.pdf
+        mv sphinx.pdf ${pdffilenames[$count]}.pdf
         let count++
     fi
     popd
