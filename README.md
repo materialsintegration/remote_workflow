@@ -43,17 +43,27 @@ NIMSに正式な設定資料はなく、ネット上の検索結果による一�
 [参考ページ](https://blog.ymyzk.com/2013/10/ssh-over-socks-https/)
 * socksプロキシの設定  
   socksプロキシは以下のconfigファイルに設定するので必要ない。
-* ssh用configファイルの使用  
-  ホームディレクトリ以下に、.ssh/configファイルを作成し、以下のように記述する。
-  ```
-  Host remote-site
+* ssh用configファイル  
+  CentOS7用とCentOS6用でProxyCommandのパラメータが違うので注意  
+  + ホームディレクトリ以下に、.ssh/configファイルを作成し、以下のように記述する。
+    ```
+    Host remote-site
     Hostname xxx.xxx.xxx.xxx
     Port 50022
     User remote-site-user-name 
     ProxyCommand nc --proxy socks.nims.go.jp:1080 --proxy-type socks4 %h %p
     IdentityFile ~/.ssh/id_rsa-xxx
-  ```
-  接続は
+    ```
+  + ssh用configファイル(CentOS6用)
+    ```
+    Host u-tokyo
+    Hostname 133.11.86.170
+    Port 50022
+    User misystem
+    ProxyCommand nc -x socks.nims.go.jp:1080 -X 4 %h %p
+    IdentityFile ~/.ssh/node05_u-tokyo/id_rsa
+    ```
+* 接続は
   ```
   $ ssh remote-site
   Enter passphrase for key '/home/yourdirectory/.ssh/id_rsa-xxx':
