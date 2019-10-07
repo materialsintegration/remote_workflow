@@ -43,9 +43,13 @@ SSHを利用した遠隔実行
 
 本事例では、以下のようなシステムを想定している。
 
-.. figure:: images/remote_execution_image.png
+.. figure:: images/remote_execution_image.eps
   :scale: 70%
   :align: center
+
+.. raw:: html
+
+   <A HREF="_images/remote_execution_image.png"><img src="_images/remote_execution_image.png" /></A>
 
   遠隔実行のイメージ
 
@@ -133,9 +137,13 @@ APIを利用したポーリング方式
 
 本事例では以下のようなシステムを想定している。 
 
-.. figure:: images/remote_execution_image_api.png
+.. figure:: images/remote_execution_image_api.eps
   :scale: 70%
   :align: center
+
+.. raw:: html
+
+   <A HREF="_images/remote_execution_image_api.png"><img src="_images/remote_execution_image_api.png" /></A>
 
   APIを利用した外部計算資源の利用イメージ
 
@@ -148,11 +156,42 @@ APIを利用したポーリング方式
 
 本事例にあるポーリングシステムのフロー概要。
 
-.. figure:: images/polling_system_flow.png
-   :scale: 100%
+.. mermaid::
+   :caption: ポーリングシステムの流れ
    :align: center
 
-   ポーリングシステムの流れ
+   sequenceDiagram;
+
+   participant A as MIシステム<BR>（NIMS内）
+   participant B as WebAPI<BR>(NIMS内)
+   participant C as ポーリングシステム<BR>（ユーザー側）
+   participant D as ユーザープログラム<BR>（ユーザー側）
+
+
+   C->>B:リクエスト
+     alt 計算が存在しない
+       B->>C:ありません
+       C -->> C:リクエスト継続
+     else 計算が存在する
+       A->>B:計算要求
+       C->>B:リクエスト
+       B->>C:あります
+       C->>B:情報取得リクエスト
+       alt 計算実行
+         B->>C:パラメータ送付、コマンドライン送付
+         C->>D:プログラム実行
+         alt プログラム実行
+           D -->> D:プログラム実行中
+         else プログラム終了
+           D -->> C:プログラム終了
+         end
+         C->>B:計算終了通知
+       else no seq
+       end
+       B->>C:計算結果の返却要求
+       C->>B:計算結果の返却応答
+       B->>A:ジョブの終了要求
+     end
 
 .. raw:: latex
 
@@ -162,6 +201,7 @@ APIを利用したポーリング方式
 ---------------
 
 本事例の実証は以下のような準備および設定を行った。
+
 * MIシステム側API
   + 計算情報の仲介を行うAPIを作成した。
   + 本APIはこのシステムの要であり、計算情報の一元管理を行い、計算ノード、外部計算資源の両方からアクセスされる。

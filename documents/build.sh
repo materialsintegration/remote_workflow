@@ -46,6 +46,7 @@ do
     #fi >> $logfile
     #cp -rp html /var/lib/mi-docroot/static/misystem-user-manual
     #cd ../
+    cp source/images/*.png build/html/_images
     cd ../
 done
 

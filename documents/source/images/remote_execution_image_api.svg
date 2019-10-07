@@ -1,0 +1,826 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   version="1.0"
+   width="246.49001mm"
+   height="143.03999mm"
+   id="svg4037"
+   sodipodi:docname="remote_with_http.svg"
+   inkscape:version="0.92.4 (5da689c313, 2019-01-14)">
+  <metadata
+     id="metadata4041">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <sodipodi:namedview
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1"
+     objecttolerance="10"
+     gridtolerance="10"
+     guidetolerance="10"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:window-width="1478"
+     inkscape:window-height="950"
+     id="namedview4039"
+     showgrid="false"
+     inkscape:zoom="1.1614566"
+     inkscape:cx="441.8724"
+     inkscape:cy="365.15727"
+     inkscape:window-x="1978"
+     inkscape:window-y="32"
+     inkscape:window-maximized="0"
+     inkscape:current-layer="svg4037" />
+  <defs
+     id="defs3717">
+    <clipPath
+       clipPathUnits="userSpaceOnUse"
+       id="clipEmfPath1">
+      <path
+         d="M 8.9677463,8.8076079 L 940.65253,8.8076079 L 940.65253,549.59474 L 8.9677463,549.59474 z"
+         id="path3713" />
+    </clipPath>
+    <pattern
+       id="EMFhbasepattern"
+       patternUnits="userSpaceOnUse"
+       width="6"
+       height="6"
+       x="0"
+       y="0" />
+  </defs>
+  <path
+     style="fill:none;stroke:#2f528f;stroke-width:2.7223516px;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:8;stroke-dasharray:none;stroke-opacity:1;"
+     clip-path="url(#clipEmfPath1)"
+     d="  M 10.889406,98.284898   C 10.889406,50.02321 50.02321,10.889406 98.284898,10.889406   L 529.79763,10.889406   C 578.05932,10.889406 617.17311,50.02321 617.17311,98.284898   L 617.17311,447.80681   C 617.17311,496.0685 578.05932,535.18229 529.79763,535.18229   L 98.284898,535.18229   C 50.02321,535.18229 10.889406,496.0685 10.889406,447.80681   z "
+     id="path3719" />
+  <text
+     xml:space="preserve"
+     style="font-size:24.000000px;font-style:normal;font-variant:normal;font-weight:400;font-stretch:Normal;line-height:125.000000%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Calibri;text-align:start;text-anchor:start;"
+     transform="matrix(1.000000,-0.000000,0.000000,1.000000,79.341288,50.812182)"
+     x="0.000000"
+     y="0.000000"
+     id="text3725"><tspan
+       sodipodi:role="line"
+       x="0.000000"
+       y="0.000000"
+       id="tspan3723"><tspan
+         dx="0.000000"
+         dy="0.000000"
+         style="fill:#000000;font-size:24.000000px;font-style:normal;font-variant:normal;font-weight:400;font-stretch:Normal;font-family:Calibri;"
+         id="tspan3721">MI</tspan></tspan></text>
+  <text
+     xml:space="preserve"
+     style="font-size:24.000000px;font-style:normal;font-variant:normal;font-weight:400;font-stretch:Normal;line-height:125.000000%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:游ゴシック;text-align:start;text-anchor:start;"
+     transform="matrix(1.000000,-0.000000,0.000000,1.000000,105.924250,50.812182)"
+     x="0.000000"
+     y="0.000000"
+     id="text3731"><tspan
+       sodipodi:role="line"
+       x="0.000000"
+       y="0.000000"
+       id="tspan3729"><tspan
+         dx="0.000000"
+         dy="0.000000"
+         style="fill:#000000;font-size:24.000000px;font-style:normal;font-variant:normal;font-weight:400;font-stretch:Normal;font-family:游ゴシック;"
+         id="tspan3727">システム</tspan></tspan></text>
+  <path
+     style="fill:none;stroke:#2f528f;stroke-width:2.7223516px;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:8;stroke-dasharray:none;stroke-opacity:1;"
+     d="  M 23.700472,120.24387   C 23.700472,105.31097 35.810933,93.200506 50.743832,93.200506   L 158.89725,93.200506   C 173.83015,93.200506 185.9206,105.31097 185.9206,120.24387   L 185.9206,445.38472   C 185.9206,460.31762 173.83015,472.40806 158.89725,472.40806   L 50.743832,472.40806   C 35.810933,472.40806 23.700472,460.31762 23.700472,445.38472   z "
+     id="path3733" />
+  <path
+     style="fill:none;stroke:#70ad47;stroke-width:2.7223516px;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:8;stroke-dasharray:none;stroke-opacity:1;"
+     d="  M 292.73286,99.986367   C 292.73286,93.420696 298.07748,88.076079 304.64315,88.076079   L 399.18481,88.076079   C 405.75048,88.076079 411.07508,93.420696 411.07508,99.986367   L 411.07508,147.6075   C 411.07508,154.17317 405.75048,159.49777 399.18481,159.49777   L 304.64315,159.49777   C 298.07748,159.49777 292.73286,154.17317 292.73286,147.6075   z "
+     id="path3735" />
+  <text
+     xml:space="preserve"
+     style="font-size:13.312500px;font-style:normal;font-variant:normal;font-weight:400;font-stretch:Normal;line-height:125.000000%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:游ゴシック;text-align:start;text-anchor:start;"
+     transform="matrix(1.000000,-0.000000,0.000000,1.000000,312.039400,128.088435)"
+     x="0.000000"
+     y="0.000000"
+     id="text3741"><tspan
+       sodipodi:role="line"
+       x="0.000000"
+       y="0.000000"
+       id="tspan3739"><tspan
+         dx="0.000000"
+         dy="0.000000"
+         style="fill:#000000;font-size:13.312500px;font-style:normal;font-variant:normal;font-weight:400;font-stretch:Normal;font-family:游ゴシック;"
+         id="tspan3737">計算ノード１</tspan></tspan></text>
+  <path
+     style="fill:none;stroke:#ffc000;stroke-width:2.7223516px;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:8;stroke-dasharray:none;stroke-opacity:1;"
+     d="  M 294.65452,236.42422   C 294.65452,229.85855 299.99914,224.51393 306.56481,224.51393   L 400.94633,224.51393   C 407.51201,224.51393 412.8366,229.85855 412.8366,236.42422   L 412.8366,284.04536   C 412.8366,290.61103 407.51201,295.93563 400.94633,295.93563   L 306.56481,295.93563   C 299.99914,295.93563 294.65452,290.61103 294.65452,284.04536   z "
+     id="path3743" />
+  <text
+     xml:space="preserve"
+     style="font-size:13.312500px;font-style:normal;font-variant:normal;font-weight:400;font-stretch:Normal;line-height:125.000000%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:游ゴシック;text-align:start;text-anchor:start;"
+     transform="matrix(1.000000,-0.000000,0.000000,1.000000,320.421230,248.546294)"
+     x="0.000000"
+     y="0.000000"
+     id="text3749"><tspan
+       sodipodi:role="line"
+       x="0.000000"
+       y="0.000000"
+       id="tspan3747"><tspan
+         dx="0.000000"
+         dy="0.000000"
+         style="fill:#000000;font-size:13.312500px;font-style:normal;font-variant:normal;font-weight:400;font-stretch:Normal;font-family:游ゴシック;"
+         id="tspan3745">計算ノード</tspan></tspan></text>
+  <text
+     xml:space="preserve"
+     style="font-size:13.312500px;font-style:normal;font-variant:normal;font-weight:400;font-stretch:Normal;line-height:125.000000%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:游ゴシック;text-align:start;text-anchor:start;"
+     transform="matrix(1.000000,-0.000000,0.000000,1.000000,327.147040,264.560126)"
+     x="0.000000"
+     y="0.000000"
+     id="text3755"><tspan
+       sodipodi:role="line"
+       x="0.000000"
+       y="0.000000"
+       id="tspan3753"><tspan
+         dx="0.000000"
+         dy="0.000000"
+         style="fill:#000000;font-size:13.312500px;font-style:normal;font-variant:normal;font-weight:400;font-stretch:Normal;font-family:游ゴシック;"
+         id="tspan3751">遠隔実行</tspan></tspan></text>
+  <text
+     xml:space="preserve"
+     style="font-size:13.312500px;font-style:normal;font-variant:normal;font-weight:400;font-stretch:Normal;line-height:125.000000%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:游ゴシック;text-align:start;text-anchor:start;"
+     transform="matrix(1.000000,-0.000000,0.000000,1.000000,340.438521,280.573959)"
+     x="0.000000"
+     y="0.000000"
+     id="text3761"><tspan
+       sodipodi:role="line"
+       x="0.000000"
+       y="0.000000"
+       id="tspan3759"><tspan
+         dx="0.000000"
+         dy="0.000000"
+         style="fill:#000000;font-size:13.312500px;font-style:normal;font-variant:normal;font-weight:400;font-stretch:Normal;font-family:游ゴシック;"
+         id="tspan3757">専用</tspan></tspan></text>
+  <path
+     style="fill:none;stroke:#70ad47;stroke-width:2.7223516px;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:8;stroke-dasharray:none;stroke-opacity:1;"
+     d="  M 294.65452,376.7054   C 294.65452,370.13972 299.99914,364.79511 306.56481,364.79511   L 400.94633,364.79511   C 407.51201,364.79511 412.8366,370.13972 412.8366,376.7054   L 412.8366,424.32653   C 412.8366,430.8922 407.51201,436.2168 400.94633,436.2168   L 306.56481,436.2168   C 299.99914,436.2168 294.65452,430.8922 294.65452,424.32653   z "
+     id="path3763" />
+  <text
+     xml:space="preserve"
+     style="font-size:13.312500px;font-style:normal;font-variant:normal;font-weight:400;font-stretch:Normal;line-height:125.000000%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:游ゴシック;text-align:start;text-anchor:start;"
+     transform="matrix(1.000000,-0.000000,0.000000,1.000000,313.855559,404.789810)"
+     x="0.000000"
+     y="0.000000"
+     id="text3769"><tspan
+       sodipodi:role="line"
+       x="0.000000"
+       y="0.000000"
+       id="tspan3767"><tspan
+         dx="0.000000"
+         dy="0.000000"
+         style="fill:#000000;font-size:13.312500px;font-style:normal;font-variant:normal;font-weight:400;font-stretch:Normal;font-family:游ゴシック;"
+         id="tspan3765">計算ノード３</tspan></tspan></text>
+  <path
+     style="fill:none;stroke:#ffc000;stroke-width:2.7223516px;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:8;stroke-dasharray:none;stroke-opacity:1;"
+     d="  M 707.8114,243.53036   C 707.8114,235.96382 713.97673,229.7985 721.54326,229.7985   L 914.46991,229.7985   C 922.03645,229.7985 928.16174,235.96382 928.16174,243.53036   L 928.16174,298.41777   C 928.16174,305.98431 922.03645,312.1096 914.46991,312.1096   L 721.54326,312.1096   C 713.97673,312.1096 707.8114,305.98431 707.8114,298.41777   z "
+     id="path3771" />
+  <text
+     xml:space="preserve"
+     style="font-size:13.312500px;font-style:normal;font-variant:normal;font-weight:400;font-stretch:Normal;line-height:125.000000%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Calibri;text-align:start;text-anchor:start;"
+     transform="matrix(1.000000,-0.000000,0.000000,1.000000,757.295630,267.263673)"
+     x="0.000000"
+     y="0.000000"
+     id="text3777"><tspan
+       sodipodi:role="line"
+       x="0.000000"
+       y="0.000000"
+       id="tspan3775"><tspan
+         dx="0.000000"
+         dy="0.000000"
+         style="fill:#000000;font-size:13.312500px;font-style:normal;font-variant:normal;font-weight:400;font-stretch:Normal;font-family:Calibri;"
+         id="tspan3773">MI</tspan></tspan></text>
+  <text
+     xml:space="preserve"
+     style="font-size:13.312500px;font-style:normal;font-variant:normal;font-weight:400;font-stretch:Normal;line-height:125.000000%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:游ゴシック;text-align:start;text-anchor:start;"
+     transform="matrix(1.000000,-0.000000,0.000000,1.000000,772.028356,267.263673)"
+     x="0.000000"
+     y="0.000000"
+     id="text3783"><tspan
+       sodipodi:role="line"
+       x="0.000000"
+       y="0.000000"
+       id="tspan3781"><tspan
+         dx="0.000000"
+         dy="0.000000"
+         style="fill:#000000;font-size:13.312500px;font-style:normal;font-variant:normal;font-weight:400;font-stretch:Normal;font-family:游ゴシック;"
+         id="tspan3779">システム外計算機</tspan></tspan></text>
+  <text
+     xml:space="preserve"
+     style="font-size:13.312500px;font-style:normal;font-variant:normal;font-weight:400;font-stretch:Normal;line-height:125.000000%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:游ゴシック;text-align:start;text-anchor:start;"
+     transform="matrix(1.000000,-0.000000,0.000000,1.000000,724.467273,283.277505)"
+     x="0.000000"
+     y="0.000000"
+     id="text3789"><tspan
+       sodipodi:role="line"
+       x="0.000000"
+       y="0.000000"
+       id="tspan3787"><tspan
+         dx="0.000000"
+         dy="0.000000"
+         style="fill:#000000;font-size:13.312500px;font-style:normal;font-variant:normal;font-weight:400;font-stretch:Normal;font-family:游ゴシック;"
+         id="tspan3785">（</tspan></tspan></text>
+  <text
+     xml:space="preserve"
+     style="font-size:13.312500px;font-style:normal;font-variant:normal;font-weight:400;font-stretch:Normal;line-height:125.000000%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Calibri;text-align:start;text-anchor:start;"
+     transform="matrix(1.000000,-0.000000,0.000000,1.000000,737.758754,283.277505)"
+     x="0.000000"
+     y="0.000000"
+     id="text3795"><tspan
+       sodipodi:role="line"
+       x="0.000000"
+       y="0.000000"
+       id="tspan3793"><tspan
+         dx="0.000000"
+         dy="0.000000"
+         style="fill:#000000;font-size:13.312500px;font-style:normal;font-variant:normal;font-weight:400;font-stretch:Normal;font-family:Calibri;"
+         id="tspan3791">Abaqus2017</tspan></tspan></text>
+  <text
+     xml:space="preserve"
+     style="font-size:13.312500px;font-style:normal;font-variant:normal;font-weight:400;font-stretch:Normal;line-height:125.000000%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:游ゴシック;text-align:start;text-anchor:start;"
+     transform="matrix(1.000000,-0.000000,0.000000,1.000000,805.016851,283.277505)"
+     x="0.000000"
+     y="0.000000"
+     id="text3801"><tspan
+       sodipodi:role="line"
+       x="0.000000"
+       y="0.000000"
+       id="tspan3799"><tspan
+         dx="0.000000"
+         dy="0.000000"
+         style="fill:#000000;font-size:13.312500px;font-style:normal;font-variant:normal;font-weight:400;font-stretch:Normal;font-family:游ゴシック;"
+         id="tspan3797">実行可能計算機）</tspan></tspan></text>
+  <path
+     style="fill:#4472c4;fill-rule:evenodd;fill-opacity:1;stroke:none;"
+     d="  M 177.08296,177.32317   L 189.15339,153.31243   L 192.13597,162.33022   L 268.26172,137.11844   L 265.27915,128.09064   L 289.29989,140.16107   L 277.22947,164.18182   L 274.23688,155.15402   L 198.11113,180.37581   L 201.10371,189.3936   z "
+     id="path3803" />
+  <path
+     style="fill:none;stroke:#2f528f;stroke-width:1.3311498px;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:8;stroke-dasharray:none;stroke-opacity:1;"
+     d="  M 177.08296,177.32317   L 189.15339,153.31243   L 192.13597,162.33022   L 268.26172,137.11844   L 265.27915,128.09064   L 289.29989,140.16107   L 277.22947,164.18182   L 274.23688,155.15402   L 198.11113,180.37581   L 201.10371,189.3936   z "
+     id="path3805" />
+  <path
+     style="fill:#4472c4;fill-rule:evenodd;fill-opacity:1;stroke:none;"
+     d="  M 174.47071,260.7052   L 191.84571,243.33019   L 191.84571,252.01769   L 275.27778,252.01769   L 275.27778,243.33019   L 292.65279,260.7052   L 275.27778,278.0802   L 275.27778,269.3927   L 191.84571,269.3927   L 191.84571,278.0802   z "
+     id="path3807" />
+  <path
+     style="fill:none;stroke:#2f528f;stroke-width:1.2811066px;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:8;stroke-dasharray:none;stroke-opacity:1;"
+     d="  M 174.47071,260.7052   L 191.84571,243.33019   L 191.84571,252.01769   L 275.27778,252.01769   L 275.27778,243.33019   L 292.65279,260.7052   L 275.27778,278.0802   L 275.27778,269.3927   L 191.84571,269.3927   L 191.84571,278.0802   z "
+     id="path3809" />
+  <path
+     style="fill:#4472c4;fill-rule:evenodd;fill-opacity:1;stroke:none;"
+     d="  M 170.84758,354.66636   L 191.42535,340.49412   L 189.82397,349.18162   L 271.35439,364.21461   L 272.95578,355.50708   L 287.14804,376.10488   L 266.55024,390.27712   L 268.15163,381.58961   L 186.6212,366.55663   L 185.01982,375.24413   z "
+     id="path3811" />
+  <path
+     style="fill:none;stroke:#2f528f;stroke-width:1.3411585px;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:8;stroke-dasharray:none;stroke-opacity:1;"
+     d="  M 170.84758,354.66636   L 191.42535,340.49412   L 189.82397,349.18162   L 271.35439,364.21461   L 272.95578,355.50708   L 287.14804,376.10488   L 266.55024,390.27712   L 268.15163,381.58961   L 186.6212,366.55663   L 185.01982,375.24413   z "
+     id="path3813" />
+  <text
+     xml:space="preserve"
+     style="font-size:13.312500px;font-style:normal;font-variant:normal;font-weight:400;font-stretch:Normal;line-height:125.000000%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Calibri;text-align:start;text-anchor:start;"
+     transform="matrix(1.000000,-0.000000,0.000000,1.000000,212.122448,191.692614)"
+     x="0.000000"
+     y="0.000000"
+     id="text3819"><tspan
+       sodipodi:role="line"
+       x="0.000000"
+       y="0.000000"
+       id="tspan3817"><tspan
+         dx="0.000000"
+         dy="0.000000"
+         style="fill:#000000;font-size:13.312500px;font-style:normal;font-variant:normal;font-weight:400;font-stretch:Normal;font-family:Calibri;"
+         id="tspan3815">Mathematica</tspan></tspan></text>
+  <text
+     xml:space="preserve"
+     style="font-size:13.312500px;font-style:normal;font-variant:normal;font-weight:400;font-stretch:Normal;line-height:125.000000%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:游ゴシック;text-align:start;text-anchor:start;"
+     transform="matrix(1.000000,-0.000000,0.000000,1.000000,284.504972,191.692614)"
+     x="0.000000"
+     y="0.000000"
+     id="text3825"><tspan
+       sodipodi:role="line"
+       x="0.000000"
+       y="0.000000"
+       id="tspan3823"><tspan
+         dx="0.000000"
+         dy="0.000000"
+         style="fill:#000000;font-size:13.312500px;font-style:normal;font-variant:normal;font-weight:400;font-stretch:Normal;font-family:游ゴシック;"
+         id="tspan3821">計算</tspan></tspan></text>
+  <text
+     xml:space="preserve"
+     style="font-size:13.312500px;font-style:normal;font-variant:normal;font-weight:400;font-stretch:Normal;line-height:125.000000%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Calibri;text-align:start;text-anchor:start;"
+     transform="matrix(1.000000,-0.000000,0.000000,1.000000,188.338330,234.955492)"
+     x="0.000000"
+     y="0.000000"
+     id="text3831"><tspan
+       sodipodi:role="line"
+       x="0.000000"
+       y="0.000000"
+       id="tspan3829"><tspan
+         dx="0.000000"
+         dy="0.000000"
+         style="fill:#000000;font-size:13.312500px;font-style:normal;font-variant:normal;font-weight:400;font-stretch:Normal;font-family:Calibri;"
+         id="tspan3827">Abaqus2017</tspan></tspan></text>
+  <text
+     xml:space="preserve"
+     style="font-size:13.312500px;font-style:normal;font-variant:normal;font-weight:400;font-stretch:Normal;line-height:125.000000%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:游ゴシック;text-align:start;text-anchor:start;"
+     transform="matrix(1.000000,-0.000000,0.000000,1.000000,255.596427,234.955492)"
+     x="0.000000"
+     y="0.000000"
+     id="text3837"><tspan
+       sodipodi:role="line"
+       x="0.000000"
+       y="0.000000"
+       id="tspan3835"><tspan
+         dx="0.000000"
+         dy="0.000000"
+         style="fill:#000000;font-size:13.312500px;font-style:normal;font-variant:normal;font-weight:400;font-stretch:Normal;font-family:游ゴシック;"
+         id="tspan3833">計算</tspan></tspan></text>
+  <text
+     xml:space="preserve"
+     style="font-size:13.312500px;font-style:normal;font-variant:normal;font-weight:400;font-stretch:Normal;line-height:125.000000%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Calibri;text-align:start;text-anchor:start;"
+     transform="matrix(1.000000,-0.000000,0.000000,1.000000,200.158090,351.705988)"
+     x="0.000000"
+     y="0.000000"
+     id="text3843"><tspan
+       sodipodi:role="line"
+       x="0.000000"
+       y="0.000000"
+       id="tspan3841"><tspan
+         dx="0.000000"
+         dy="0.000000"
+         style="fill:#000000;font-size:13.312500px;font-style:normal;font-variant:normal;font-weight:400;font-stretch:Normal;font-family:Calibri;"
+         id="tspan3839">Matlab</tspan></tspan></text>
+  <text
+     xml:space="preserve"
+     style="font-size:13.312500px;font-style:normal;font-variant:normal;font-weight:400;font-stretch:Normal;line-height:125.000000%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:游ゴシック;text-align:start;text-anchor:start;"
+     transform="matrix(1.000000,-0.000000,0.000000,1.000000,238.911565,351.705988)"
+     x="0.000000"
+     y="0.000000"
+     id="text3849"><tspan
+       sodipodi:role="line"
+       x="0.000000"
+       y="0.000000"
+       id="tspan3847"><tspan
+         dx="0.000000"
+         dy="0.000000"
+         style="fill:#000000;font-size:13.312500px;font-style:normal;font-variant:normal;font-weight:400;font-stretch:Normal;font-family:游ゴシック;"
+         id="tspan3845">計算</tspan></tspan></text>
+  <text
+     xml:space="preserve"
+     style="font-size:13.312500px;font-style:normal;font-variant:normal;font-weight:400;font-stretch:Normal;line-height:125.000000%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:游ゴシック;text-align:start;text-anchor:start;"
+     transform="matrix(1.000000,-0.000000,0.000000,1.000000,602.877558,210.004701)"
+     x="0.000000"
+     y="0.000000"
+     id="text3855"><tspan
+       sodipodi:role="line"
+       x="0.000000"
+       y="0.000000"
+       id="tspan3853"><tspan
+         dx="0.000000"
+         dy="0.000000"
+         style="fill:#000000;font-size:13.312500px;font-style:normal;font-variant:normal;font-weight:400;font-stretch:Normal;font-family:游ゴシック;"
+         id="tspan3851">計算情報の取得</tspan></tspan></text>
+  <text
+     xml:space="preserve"
+     style="font-size:13.312500px;font-style:normal;font-variant:normal;font-weight:400;font-stretch:Normal;line-height:125.000000%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Calibri;text-align:start;text-anchor:start;"
+     transform="matrix(1.000000,-0.000000,0.000000,1.000000,537.274640,255.536512)"
+     x="0.000000"
+     y="0.000000"
+     id="text3861"><tspan
+       sodipodi:role="line"
+       x="0.000000"
+       y="0.000000"
+       id="tspan3859"><tspan
+         dx="0.000000"
+         dy="0.000000"
+         style="fill:#000000;font-size:13.312500px;font-style:normal;font-variant:normal;font-weight:400;font-stretch:Normal;font-family:Calibri;"
+         id="tspan3857">API</tspan></tspan></text>
+  <text
+     xml:space="preserve"
+     style="font-size:13.312500px;font-style:normal;font-variant:normal;font-weight:400;font-stretch:Normal;line-height:125.000000%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Calibri;text-align:start;text-anchor:start;"
+     transform="matrix(1.000000,-0.000000,0.000000,1.000000,518.858733,271.390206)"
+     x="0.000000"
+     y="0.000000"
+     id="text3867"><tspan
+       sodipodi:role="line"
+       x="0.000000"
+       y="0.000000"
+       id="tspan3865"><tspan
+         dx="0.000000"
+         dy="0.000000"
+         style="fill:#000000;font-size:13.312500px;font-style:normal;font-variant:normal;font-weight:400;font-stretch:Normal;font-family:Calibri;"
+         id="tspan3863">https</tspan></tspan></text>
+  <text
+     xml:space="preserve"
+     style="font-size:13.312500px;font-style:normal;font-variant:normal;font-weight:400;font-stretch:Normal;line-height:125.000000%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:游ゴシック;text-align:start;text-anchor:start;"
+     transform="matrix(1.000000,-0.000000,0.000000,1.000000,547.043078,271.390206)"
+     x="0.000000"
+     y="0.000000"
+     id="text3873"><tspan
+       sodipodi:role="line"
+       x="0.000000"
+       y="0.000000"
+       id="tspan3871"><tspan
+         dx="0.000000"
+         dy="0.000000"
+         style="fill:#000000;font-size:13.312500px;font-style:normal;font-variant:normal;font-weight:400;font-stretch:Normal;font-family:游ゴシック;"
+         id="tspan3869">使用</tspan></tspan></text>
+  <text
+     xml:space="preserve"
+     style="font-size:24.000000px;font-style:normal;font-variant:normal;font-weight:400;font-stretch:Normal;line-height:125.000000%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Calibri;text-align:start;text-anchor:start;"
+     transform="matrix(1.000000,-0.000000,0.000000,1.000000,202.242195,516.890900)"
+     x="0.000000"
+     y="0.000000"
+     id="text3879"><tspan
+       sodipodi:role="line"
+       x="0.000000"
+       y="0.000000"
+       id="tspan3877"><tspan
+         dx="0.000000"
+         dy="0.000000"
+         style="fill:#000000;font-size:24.000000px;font-style:normal;font-variant:normal;font-weight:400;font-stretch:Normal;font-family:Calibri;"
+         id="tspan3875">NIMS</tspan></tspan></text>
+  <text
+     xml:space="preserve"
+     style="font-size:24.000000px;font-style:normal;font-variant:normal;font-weight:400;font-stretch:Normal;line-height:125.000000%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:游ゴシック;text-align:start;text-anchor:start;"
+     transform="matrix(1.000000,-0.000000,0.000000,1.000000,255.408119,516.890900)"
+     x="0.000000"
+     y="0.000000"
+     id="text3885"><tspan
+       sodipodi:role="line"
+       x="0.000000"
+       y="0.000000"
+       id="tspan3883"><tspan
+         dx="0.000000"
+         dy="0.000000"
+         style="fill:#000000;font-size:24.000000px;font-style:normal;font-variant:normal;font-weight:400;font-stretch:Normal;font-family:游ゴシック;"
+         id="tspan3881">所内</tspan></tspan></text>
+  <path
+     style="fill:none;stroke:#2f528f;stroke-width:2.7223516px;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:8;stroke-dasharray:none;stroke-opacity:1;"
+     clip-path="url(#clipEmfPath1)"
+     d="  M 675.94387,54.847377   C 675.94387,30.666489 695.56082,11.049545 719.74171,11.049545   L 894.93304,11.049545   C 919.15396,11.049545 938.73087,30.666489 938.73087,54.847377   L 938.73087,491.54459   C 938.73087,515.76551 919.15396,535.34242 894.93304,535.34242   L 719.74171,535.34242   C 695.56082,535.34242 675.94387,515.76551 675.94387,491.54459   z "
+     id="path3887" />
+  <text
+     xml:space="preserve"
+     style="font-size:24.000000px;font-style:normal;font-variant:normal;font-weight:400;font-stretch:Normal;line-height:125.000000%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Calibri;text-align:start;text-anchor:start;"
+     transform="matrix(1.000000,-0.000000,0.000000,1.000000,752.195131,527.512341)"
+     x="0.000000"
+     y="0.000000"
+     id="text3893"><tspan
+       sodipodi:role="line"
+       x="0.000000"
+       y="0.000000"
+       id="tspan3891"><tspan
+         dx="0.000000"
+         dy="0.000000"
+         style="fill:#000000;font-size:24.000000px;font-style:normal;font-variant:normal;font-weight:400;font-stretch:Normal;font-family:Calibri;"
+         id="tspan3889">NIMS</tspan></tspan></text>
+  <text
+     xml:space="preserve"
+     style="font-size:24.000000px;font-style:normal;font-variant:normal;font-weight:400;font-stretch:Normal;line-height:125.000000%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:游ゴシック;text-align:start;text-anchor:start;"
+     transform="matrix(1.000000,-0.000000,0.000000,1.000000,805.361055,527.512341)"
+     x="0.000000"
+     y="0.000000"
+     id="text3899"><tspan
+       sodipodi:role="line"
+       x="0.000000"
+       y="0.000000"
+       id="tspan3897"><tspan
+         dx="0.000000"
+         dy="0.000000"
+         style="fill:#000000;font-size:24.000000px;font-style:normal;font-variant:normal;font-weight:400;font-stretch:Normal;font-family:游ゴシック;"
+         id="tspan3895">所外</tspan></tspan></text>
+  <text
+     xml:space="preserve"
+     style="font-size:24.000000px;font-style:normal;font-variant:normal;font-weight:400;font-stretch:Normal;line-height:125.000000%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:游ゴシック;text-align:start;text-anchor:start;"
+     transform="matrix(1.000000,-0.000000,0.000000,1.000000,32.760161,453.581605)"
+     x="0.000000"
+     y="0.000000"
+     id="text3905"><tspan
+       sodipodi:role="line"
+       x="0.000000"
+       y="0.000000"
+       id="tspan3903"><tspan
+         dx="0.000000"
+         dy="0.000000"
+         style="fill:#000000;font-size:24.000000px;font-style:normal;font-variant:normal;font-weight:400;font-stretch:Normal;font-family:游ゴシック;"
+         id="tspan3901">ワークフロー</tspan></tspan></text>
+  <path
+     style="fill:#8faadc;fill-rule:evenodd;fill-opacity:1;stroke:none;"
+     d="  M 46.360045,106.41192   L 163.90158,106.41192   L 163.90158,134.08582   L 105.13081,141.0018   L 46.360045,134.08582   z "
+     id="path3907" />
+  <path
+     style="fill:none;stroke:#2f528f;stroke-width:1.2811066px;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:8;stroke-dasharray:none;stroke-opacity:1;"
+     d="  M 46.360045,106.41192   L 163.90158,106.41192   L 163.90158,134.08582   L 105.13081,141.0018   L 46.360045,134.08582   z "
+     id="path3909" />
+  <text
+     xml:space="preserve"
+     style="font-size:16.000000px;font-style:normal;font-variant:normal;font-weight:400;font-stretch:Normal;line-height:125.000000%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:游ゴシック;text-align:start;text-anchor:start;"
+     transform="matrix(1.000000,-0.000000,0.000000,1.000000,76.999265,125.427191)"
+     x="0.000000"
+     y="0.000000"
+     id="text3915"><tspan
+       sodipodi:role="line"
+       x="0.000000"
+       y="0.000000"
+       id="tspan3913"><tspan
+         dx="0.000000"
+         dy="0.000000"
+         style="fill:#000000;font-size:16.000000px;font-style:normal;font-variant:normal;font-weight:400;font-stretch:Normal;font-family:游ゴシック;"
+         id="tspan3911">入力</tspan></tspan></text>
+  <text
+     xml:space="preserve"
+     style="font-size:16.000000px;font-style:normal;font-variant:normal;font-weight:400;font-stretch:Normal;line-height:125.000000%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Calibri;text-align:start;text-anchor:start;"
+     transform="matrix(1.000000,-0.000000,0.000000,1.000000,109.026930,125.427191)"
+     x="0.000000"
+     y="0.000000"
+     id="text3921"><tspan
+       sodipodi:role="line"
+       x="0.000000"
+       y="0.000000"
+       id="tspan3919"><tspan
+         dx="0.000000"
+         dy="0.000000"
+         style="fill:#000000;font-size:16.000000px;font-style:normal;font-variant:normal;font-weight:400;font-stretch:Normal;font-family:Calibri;"
+         id="tspan3917">_01</tspan></tspan></text>
+  <path
+     style="fill:#ffff00;fill-rule:evenodd;fill-opacity:1;stroke:none;"
+     d="  M 32.428011,172.97942   C 32.428011,169.64654 35.130345,166.94421 38.463224,166.94421   L 170.04689,166.94421   C 173.37976,166.94421 176.07209,169.64654 176.07209,172.97942   L 176.07209,197.11026   C 176.07209,200.44314 173.37976,203.13547 170.04689,203.13547   L 38.463224,203.13547   C 35.130345,203.13547 32.428011,200.44314 32.428011,197.11026   z "
+     id="path3923" />
+  <path
+     style="fill:none;stroke:#2f528f;stroke-width:1.2811066px;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:8;stroke-dasharray:none;stroke-opacity:1;"
+     d="  M 32.428011,172.97942   C 32.428011,169.64654 35.130345,166.94421 38.463224,166.94421   L 170.04689,166.94421   C 173.37976,166.94421 176.07209,169.64654 176.07209,172.97942   L 176.07209,197.11026   C 176.07209,200.44314 173.37976,203.13547 170.04689,203.13547   L 38.463224,203.13547   C 35.130345,203.13547 32.428011,200.44314 32.428011,197.11026   z "
+     id="path3925" />
+  <text
+     xml:space="preserve"
+     style="font-size:16.000000px;font-style:normal;font-variant:normal;font-weight:400;font-stretch:Normal;line-height:125.000000%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Calibri;text-align:start;text-anchor:start;"
+     transform="matrix(1.000000,-0.000000,0.000000,1.000000,60.833021,190.574324)"
+     x="0.000000"
+     y="0.000000"
+     id="text3931"><tspan
+       sodipodi:role="line"
+       x="0.000000"
+       y="0.000000"
+       id="tspan3929"><tspan
+         dx="0.000000"
+         dy="0.000000"
+         style="fill:#000000;font-size:16.000000px;font-style:normal;font-variant:normal;font-weight:400;font-stretch:Normal;font-family:Calibri;"
+         id="tspan3927">Mathematica</tspan></tspan></text>
+  <path
+     style="fill:#ffff00;fill-rule:evenodd;fill-opacity:1;stroke:none;"
+     d="  M 32.428011,248.21441   C 32.428011,245.09171 34.990224,242.5295 38.112922,242.5295   L 170.38718,242.5295   C 173.52989,242.5295 176.07209,245.09171 176.07209,248.21441   L 176.07209,270.95405   C 176.07209,274.09676 173.52989,276.63896 170.38718,276.63896   L 38.112922,276.63896   C 34.990224,276.63896 32.428011,274.09676 32.428011,270.95405   z "
+     id="path3933" />
+  <path
+     style="fill:none;stroke:#2f528f;stroke-width:1.2811066px;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:8;stroke-dasharray:none;stroke-opacity:1;"
+     d="  M 32.428011,248.21441   C 32.428011,245.09171 34.990224,242.5295 38.112922,242.5295   L 170.38718,242.5295   C 173.52989,242.5295 176.07209,245.09171 176.07209,248.21441   L 176.07209,270.95405   C 176.07209,274.09676 173.52989,276.63896 170.38718,276.63896   L 38.112922,276.63896   C 34.990224,276.63896 32.428011,274.09676 32.428011,270.95405   z "
+     id="path3935" />
+  <text
+     xml:space="preserve"
+     style="font-size:16.000000px;font-style:normal;font-variant:normal;font-weight:400;font-stretch:Normal;line-height:125.000000%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Calibri;text-align:start;text-anchor:start;"
+     transform="matrix(1.000000,-0.000000,0.000000,1.000000,63.635544,265.151966)"
+     x="0.000000"
+     y="0.000000"
+     id="text3941"><tspan
+       sodipodi:role="line"
+       x="0.000000"
+       y="0.000000"
+       id="tspan3939"><tspan
+         dx="0.000000"
+         dy="0.000000"
+         style="fill:#000000;font-size:16.000000px;font-style:normal;font-variant:normal;font-weight:400;font-stretch:Normal;font-family:Calibri;"
+         id="tspan3937">Abaqus2017</tspan></tspan></text>
+  <path
+     style="fill:#ffff00;fill-rule:evenodd;fill-opacity:1;stroke:none;"
+     d="  M 32.428011,318.5952   C 32.428011,314.97207 35.370553,312.02953 38.993682,312.02953   L 169.50642,312.02953   C 173.14957,312.02953 176.07209,314.97207 176.07209,318.5952   L 176.07209,344.85789   C 176.07209,348.50103 173.14957,351.42356 169.50642,351.42356   L 38.993682,351.42356   C 35.370553,351.42356 32.428011,348.50103 32.428011,344.85789   z "
+     id="path3943" />
+  <path
+     style="fill:none;stroke:#2f528f;stroke-width:1.2811066px;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:8;stroke-dasharray:none;stroke-opacity:1;"
+     d="  M 32.428011,318.5952   C 32.428011,314.97207 35.370553,312.02953 38.993682,312.02953   L 169.50642,312.02953   C 173.14957,312.02953 176.07209,314.97207 176.07209,318.5952   L 176.07209,344.85789   C 176.07209,348.50103 173.14957,351.42356 169.50642,351.42356   L 38.993682,351.42356   C 35.370553,351.42356 32.428011,348.50103 32.428011,344.85789   z "
+     id="path3945" />
+  <text
+     xml:space="preserve"
+     style="font-size:16.000000px;font-style:normal;font-variant:normal;font-weight:400;font-stretch:Normal;line-height:125.000000%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Calibri;text-align:start;text-anchor:start;"
+     transform="matrix(1.000000,-0.000000,0.000000,1.000000,81.017336,337.241228)"
+     x="0.000000"
+     y="0.000000"
+     id="text3951"><tspan
+       sodipodi:role="line"
+       x="0.000000"
+       y="0.000000"
+       id="tspan3949"><tspan
+         dx="0.000000"
+         dy="0.000000"
+         style="fill:#000000;font-size:16.000000px;font-style:normal;font-variant:normal;font-weight:400;font-stretch:Normal;font-family:Calibri;"
+         id="tspan3947">Matlab</tspan></tspan></text>
+  <path
+     style="fill:#8faadc;fill-rule:evenodd;fill-opacity:1;stroke:none;"
+     d="  M 169.34628,416.75999   L 39.313959,416.75999   L 39.313959,385.77323   L 104.33012,378.00652   L 169.34628,385.77323   z "
+     id="path3953" />
+  <path
+     style="fill:none;stroke:#2f528f;stroke-width:1.2811066px;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:8;stroke-dasharray:none;stroke-opacity:1;"
+     d="  M 169.34628,416.75999   L 39.313959,416.75999   L 39.313959,385.77323   L 104.33012,378.00652   L 169.34628,385.77323   z "
+     id="path3955" />
+  <path
+     style="fill:#4472c4;fill-rule:nonzero;fill-opacity:1;stroke:#4472c4;stroke-width:0.010008645px;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:10;stroke-dasharray:none;stroke-opacity:1;"
+     d="  M 104.41019,140.99179   L 103.85971,160.26844   L 105.19086,160.30847   L 105.74134,141.02181   L 104.41019,140.99179  z    M 100.55686,158.8372   L 104.33012,166.96422   L 108.56378,159.0674   L 100.55686,158.8372  z   "
+     id="path3957" />
+  <path
+     style="fill:#4472c4;fill-rule:nonzero;fill-opacity:1;stroke:#4472c4;stroke-width:0.02001729px;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:10;stroke-dasharray:none;stroke-opacity:1;"
+     d="  M 105.01071,203.13547   L 105.01071,235.90377   L 103.66955,235.90377   L 103.66955,203.13547   L 105.01071,203.13547  z    M 108.33358,234.58263   L 104.33012,242.58955   L 100.32666,234.58263   L 108.33358,234.58263  z   "
+     id="path3959" />
+  <path
+     style="fill:#4472c4;fill-rule:nonzero;fill-opacity:1;stroke:#4472c4;stroke-width:0.02001729px;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:10;stroke-dasharray:none;stroke-opacity:1;"
+     d="  M 105.01071,276.63896   L 105.01071,305.38379   L 103.66955,305.38379   L 103.66955,276.63896   L 105.01071,276.63896  z    M 108.33358,304.04263   L 104.33012,312.04955   L 100.32666,304.04263   L 108.33358,304.04263  z   "
+     id="path3961" />
+  <path
+     style="fill:#4472c4;fill-rule:nonzero;fill-opacity:1;stroke:#4472c4;stroke-width:0.02001729px;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:10;stroke-dasharray:none;stroke-opacity:1;"
+     d="  M 105.01071,351.42356   L 105.01071,371.34076   L 103.66955,371.34076   L 103.66955,351.42356   L 105.01071,351.42356  z    M 108.33358,369.9996   L 104.33012,378.00652   L 100.32666,369.9996   L 108.33358,369.9996  z   "
+     id="path3963" />
+  <text
+     xml:space="preserve"
+     style="font-size:16.000000px;font-style:normal;font-variant:normal;font-weight:400;font-stretch:Normal;line-height:125.000000%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Arial;text-align:start;text-anchor:start;"
+     transform="matrix(1.000000,-0.000000,0.000000,1.000000,87.579479,402.042085)"
+     x="0.000000"
+     y="0.000000"
+     id="text3969"><tspan
+       sodipodi:role="line"
+       x="0.000000"
+       y="0.000000"
+       id="tspan3967"><tspan
+         dx="0.000000"
+         dy="0.000000"
+         style="fill:#000000;font-size:16.000000px;font-style:normal;font-variant:normal;font-weight:400;font-stretch:Normal;font-family:Arial;"
+         id="tspan3965">出力</tspan></tspan></text>
+  <text
+     xml:space="preserve"
+     style="font-size:16.000000px;font-style:normal;font-variant:normal;font-weight:400;font-stretch:Normal;line-height:125.000000%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Arial;text-align:start;text-anchor:start;"
+     transform="matrix(1.000000,-0.000000,0.000000,1.000000,119.607144,402.042085)"
+     x="0.000000"
+     y="0.000000"
+     id="text3975"><tspan
+       sodipodi:role="line"
+       x="0.000000"
+       y="0.000000"
+       id="tspan3973"><tspan
+         dx="0.000000"
+         dy="0.000000"
+         style="fill:#000000;font-size:16.000000px;font-style:normal;font-variant:normal;font-weight:400;font-stretch:Normal;font-family:Arial;"
+         id="tspan3971">_01</tspan></tspan></text>
+  <path
+     style="fill:none;stroke:#ff0000;stroke-width:2.7223516px;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:8;stroke-dasharray:none;stroke-opacity:1;"
+     d="  M 491.94494,139.88083   C 491.94494,130.11239 499.87179,122.18554 509.64022,122.18554   L 580.42136,122.18554   C 590.20982,122.18554 598.11665,130.11239 598.11665,139.88083   L 598.11665,408.91322   C 598.11665,418.70167 590.20982,426.6085 580.42136,426.6085   L 509.64022,426.6085   C 499.87179,426.6085 491.94494,418.70167 491.94494,408.91322   z "
+     id="path3977" />
+  <text
+     xml:space="preserve"
+     style="font-size:13.312500px;font-style:normal;font-variant:normal;font-weight:400;font-stretch:Normal;line-height:125.000000%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:游ゴシック;text-align:start;text-anchor:start;"
+     transform="matrix(1.000000,-0.000000,0.000000,1.000000,413.094836,180.599457)"
+     x="0.000000"
+     y="0.000000"
+     id="text3983"><tspan
+       sodipodi:role="line"
+       x="0.000000"
+       y="0.000000"
+       id="tspan3981"><tspan
+         dx="0.000000"
+         dy="0.000000"
+         style="fill:#000000;font-size:13.312500px;font-style:normal;font-variant:normal;font-weight:400;font-stretch:Normal;font-family:游ゴシック;"
+         id="tspan3979">計算の登録</tspan></tspan></text>
+  <text
+     xml:space="preserve"
+     style="font-size:13.312500px;font-style:normal;font-variant:normal;font-weight:400;font-stretch:Normal;line-height:125.000000%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:游ゴシック;text-align:start;text-anchor:start;"
+     transform="matrix(1.000000,-0.000000,0.000000,1.000000,439.677798,196.613290)"
+     x="0.000000"
+     y="0.000000"
+     id="text3989"><tspan
+       sodipodi:role="line"
+       x="0.000000"
+       y="0.000000"
+       id="tspan3987"><tspan
+         dx="0.000000"
+         dy="0.000000"
+         style="fill:#000000;font-size:13.312500px;font-style:normal;font-variant:normal;font-weight:400;font-stretch:Normal;font-family:游ゴシック;"
+         id="tspan3985">と</tspan></tspan></text>
+  <text
+     xml:space="preserve"
+     style="font-size:13.312500px;font-style:normal;font-variant:normal;font-weight:400;font-stretch:Normal;line-height:125.000000%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:游ゴシック;text-align:start;text-anchor:start;"
+     transform="matrix(1.000000,-0.000000,0.000000,1.000000,399.803355,212.627123)"
+     x="0.000000"
+     y="0.000000"
+     id="text3995"><tspan
+       sodipodi:role="line"
+       x="0.000000"
+       y="0.000000"
+       id="tspan3993"><tspan
+         dx="0.000000"
+         dy="0.000000"
+         style="fill:#000000;font-size:13.312500px;font-style:normal;font-variant:normal;font-weight:400;font-stretch:Normal;font-family:游ゴシック;"
+         id="tspan3991">遠隔実行の許可</tspan></tspan></text>
+  <path
+     style="fill:#4472c4;fill-rule:evenodd;fill-opacity:1;stroke:none;"
+     d="  M 401.38671,226.91601   L 491.54459,226.91601   L 491.54459,217.86819   L 509.64022,235.96382   L 491.54459,254.05945   L 491.54459,245.01164   L 401.38671,245.01164   z "
+     id="path3997" />
+  <path
+     style="fill:none;stroke:#2f528f;stroke-width:1.2811066px;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:8;stroke-dasharray:none;stroke-opacity:1;"
+     d="  M 401.38671,226.91601   L 491.54459,226.91601   L 491.54459,217.86819   L 509.64022,235.96382   L 491.54459,254.05945   L 491.54459,245.01164   L 401.38671,245.01164   z "
+     id="path3999" />
+  <path
+     style="fill:#4472c4;fill-rule:evenodd;fill-opacity:1;stroke:none;"
+     d="  M 596.91561,226.43559   L 687.23363,226.43559   L 687.23363,217.38778   L 705.32926,235.48341   L 687.23363,253.57904   L 687.23363,244.53122   L 596.91561,244.53122   z "
+     id="path4001" />
+  <path
+     style="fill:none;stroke:#2f528f;stroke-width:1.2811066px;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:8;stroke-dasharray:none;stroke-opacity:1;"
+     d="  M 596.91561,226.43559   L 687.23363,226.43559   L 687.23363,217.38778   L 705.32926,235.48341   L 687.23363,253.57904   L 687.23363,244.53122   L 596.91561,244.53122   z "
+     id="path4003" />
+  <path
+     style="fill:#4472c4;fill-rule:evenodd;fill-opacity:1;stroke:none;"
+     d="  M 399.46505,279.68159   L 416.59986,262.54679   L 416.59986,271.11419   L 505.63676,271.11419   L 505.63676,288.24899   L 416.59986,288.24899   L 416.59986,296.81639   z "
+     id="path4005" />
+  <path
+     style="fill:none;stroke:#2f528f;stroke-width:1.2811066px;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:8;stroke-dasharray:none;stroke-opacity:1;"
+     d="  M 399.46505,279.68159   L 416.59986,262.54679   L 416.59986,271.11419   L 505.63676,271.11419   L 505.63676,288.24899   L 416.59986,288.24899   L 416.59986,296.81639   z "
+     id="path4007" />
+  <path
+     style="fill:#4472c4;fill-rule:evenodd;fill-opacity:1;stroke:none;"
+     d="  M 594.3534,284.40567   L 611.56827,267.1908   L 611.56827,275.79823   L 700.52511,275.79823   L 700.52511,293.0131   L 611.56827,293.0131   L 611.56827,301.62054   z "
+     id="path4009" />
+  <path
+     style="fill:none;stroke:#2f528f;stroke-width:1.2811066px;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:8;stroke-dasharray:none;stroke-opacity:1;"
+     d="  M 594.3534,284.40567   L 611.56827,267.1908   L 611.56827,275.79823   L 700.52511,275.79823   L 700.52511,293.0131   L 611.56827,293.0131   L 611.56827,301.62054   z "
+     id="path4011" />
+  <text
+     xml:space="preserve"
+     style="font-size:13.312500px;font-style:normal;font-variant:normal;font-weight:400;font-stretch:Normal;line-height:125.000000%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:游ゴシック;text-align:start;text-anchor:start;"
+     transform="matrix(1.000000,-0.000000,0.000000,1.000000,408.666870,311.587584)"
+     x="0.000000"
+     y="0.000000"
+     id="text4017"><tspan
+       sodipodi:role="line"
+       x="0.000000"
+       y="0.000000"
+       id="tspan4015"><tspan
+         dx="0.000000"
+         dy="0.000000"
+         style="fill:#000000;font-size:13.312500px;font-style:normal;font-variant:normal;font-weight:400;font-stretch:Normal;font-family:游ゴシック;"
+         id="tspan4013">計算結果の取得</tspan></tspan></text>
+  <text
+     xml:space="preserve"
+     style="font-size:13.312500px;font-style:normal;font-variant:normal;font-weight:400;font-stretch:Normal;line-height:125.000000%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:游ゴシック;text-align:start;text-anchor:start;"
+     transform="matrix(1.000000,-0.000000,0.000000,1.000000,608.289263,317.243290)"
+     x="0.000000"
+     y="0.000000"
+     id="text4023"><tspan
+       sodipodi:role="line"
+       x="0.000000"
+       y="0.000000"
+       id="tspan4021"><tspan
+         dx="0.000000"
+         dy="0.000000"
+         style="fill:#000000;font-size:13.312500px;font-style:normal;font-variant:normal;font-weight:400;font-stretch:Normal;font-family:游ゴシック;"
+         id="tspan4019">計算終了通知</tspan></tspan></text>
+  <text
+     xml:space="preserve"
+     style="font-size:13.312500px;font-style:normal;font-variant:normal;font-weight:400;font-stretch:Normal;line-height:125.000000%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:游ゴシック;text-align:start;text-anchor:start;"
+     transform="matrix(1.000000,-0.000000,0.000000,1.000000,641.437897,333.257123)"
+     x="0.000000"
+     y="0.000000"
+     id="text4029"><tspan
+       sodipodi:role="line"
+       x="0.000000"
+       y="0.000000"
+       id="tspan4027"><tspan
+         dx="0.000000"
+         dy="0.000000"
+         style="fill:#000000;font-size:13.312500px;font-style:normal;font-variant:normal;font-weight:400;font-stretch:Normal;font-family:游ゴシック;"
+         id="tspan4025">と</tspan></tspan></text>
+  <text
+     xml:space="preserve"
+     style="font-size:13.312500px;font-style:normal;font-variant:normal;font-weight:400;font-stretch:Normal;line-height:125.000000%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:游ゴシック;text-align:start;text-anchor:start;"
+     transform="matrix(1.000000,-0.000000,0.000000,1.000000,601.563454,349.270955)"
+     x="0.000000"
+     y="0.000000"
+     id="text4035"><tspan
+       sodipodi:role="line"
+       x="0.000000"
+       y="0.000000"
+       id="tspan4033"><tspan
+         dx="0.000000"
+         dy="0.000000"
+         style="fill:#000000;font-size:13.312500px;font-style:normal;font-variant:normal;font-weight:400;font-stretch:Normal;font-family:游ゴシック;"
+         id="tspan4031">計算結果の送信</tspan></tspan></text>
+</svg>

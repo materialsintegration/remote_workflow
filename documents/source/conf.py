@@ -28,6 +28,14 @@ version = ''
 # The full version, including alpha/beta/rc tags
 release = '0.1.0'
 
+# mermaid compile? command setting
+mermaid_cmd = '/home/misystem/node_modules/.bin/mmdc'
+# mermaid_cmd = '/home/misystem/mmdc.sh'
+mermaid_params = ['-p', '/home/misystem/puppeteer-config.json', '--width', "200", "--height", "150"]
+# mermaid_params = ['--width', '100']
+# mermaid_params = ['--height', '100']
+mermaid_output_format = 'svg'
+#mermaid_pdfcrop = ['--papersize A5']
 
 # -- General configuration ---------------------------------------------------
 
@@ -40,6 +48,7 @@ release = '0.1.0'
 # ones.
 extensions = [
     'sphinx.ext.mathjax',
+    'sphinxcontrib.mermaid'
 ]
 
 # Add any paths that contain templates here, relative to this directory.
