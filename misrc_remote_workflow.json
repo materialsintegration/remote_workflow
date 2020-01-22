@@ -1,0 +1,14 @@
+{
+    "project_name":"misrc_remote_workflow",
+    "sphinx_documents":[
+        {
+            "title":"外部計算資源の利用方法 検証報告書",
+            "number":"管理者-043",
+            "hidden":"",
+            "path":"documents",
+            "remarks":""
+        }
+    ],
+    "swagger_documents":[
+    ]
+}
