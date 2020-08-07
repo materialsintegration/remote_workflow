@@ -13,7 +13,7 @@ outlinks=("XX.dat" "XX.inp")
 NUMPROCS=`wc -l < $PBS_NODEFILE`
 # ソルバー実行コマンド
 #EXEC_SOLVER="/opt/Abaqus/Commands/abaqus_u-tokyo Job=XX interactive cpus=$NUMPROCS interactive mp_mode=threads"
-EXEC_SOLVER="/opt/Abaqus/Commands/abaqus_u-tokyo Modeldata.inp"
+EXEC_SOLVER="/home/misystem/assets/modules/misrc_remote_workflow/scriptes/abaqus_u-tokyo Modeldata.inp"
 pwd
 
 # -----------------------------------------------------------------
