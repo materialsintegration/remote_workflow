@@ -2,9 +2,9 @@
 # 二期外部計算機資源実行、東大榎研サーバー
 PROGNAME="$( basename $0 )"
 # 入出力ポートのリスト（入力⇒出力の順で、要素に通し番号をつける）
-inports=("モデルデータ")
+inports=("断面減少率" "引っ張り強度" "降伏強度")
 # リンクを作成するファイル名 
-inlinks=("Modeldata.inp")
+inlinks=("reduction_area.dat" "tesile_strength.dat" "yeild_strength.dat")
 
 outports=("応力分布データ" "Abaqus入力データ")
 outlinks=("XX.dat" "XX.inp")
@@ -13,7 +13,7 @@ outlinks=("XX.dat" "XX.inp")
 NUMPROCS=`wc -l < $PBS_NODEFILE`
 # ソルバー実行コマンド
 #EXEC_SOLVER="/opt/Abaqus/Commands/abaqus_u-tokyo Job=XX interactive cpus=$NUMPROCS interactive mp_mode=threads"
-EXEC_SOLVER="/home/misystem/assets/modules/misrc_remote_workflow/scripts/abaqus_u-tokyo Modeldata.inp"
+EXEC_SOLVER="/home/misystem/assets/modules/misrc_remote_workflow/scripts/abaqus_u-tokyo reduction_area.dat tesile_strength.dat yeild_strength.dat"
 pwd
 
 # -----------------------------------------------------------------
