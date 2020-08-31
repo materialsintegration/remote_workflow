@@ -6,4 +6,5 @@ Ferrite_grain_01:Ferrite_grain.csv \
 Volume_fraction_of_pearlite_phase_01:volume_fraction_of_pearlite_phase.dat \
 Pearlite_thickness_01:Pearlite_thickness.csv \
 Stress_condition_csv_01:stress_condition.csv \
-モデルデータ_01:Modeldata.inp
+引っ張り強度_01:Tensile_strength.dat \
+断面減少率_01:Reduction_area.dat
