@@ -28,7 +28,7 @@ done
 echo `date '+%Y-%m-%d %T'`": start: abaqus: unknown" >> /home/misystem/assets/workflow/$MISYSTEM_SITEID/solver_logs/solver_execute.log
 # inp ファイル作成
 #ssh $ssh_client "cd /tmp/node_calc; python ~/abaqus_scripts/create_inputdata.py Modeldata.inp ~/abaqus_scripts/Cyclic_SSCurve_csv; mv XX_inp XX.inp > /tmp/node_calc/node_calc_exec.log 2>&1"
-ssh $ssh_client "$client_cmd > /tmp/node_calc/node_calc_exec.log 2>&1"
+ssh $ssh_client "cd /tmp/node_calc; $client_cmd > /tmp/node_calc/node_calc_exec.log 2>&1"
 if [ $? = 0 ]; then
     echo "created inp file"
 else
