@@ -15,7 +15,7 @@ count=0
 token=""
 #ssh_client="192.168.1.234"
 ssh_client="rme-u-tokyo"
-client_cmd="~/remote_workflow/scripts/execute_remote_program.sh"
+client_cmd="~/remote_workflow/scripts/execute_remote_program_ssh.sh"
 calc_dir=`cat  cat /proc/sys/kernel/random/uuid`
 
 # 作業ディレクトリ作成
@@ -30,7 +30,7 @@ echo `date '+%Y-%m-%d %T'`": start: abaqus: unknown" >> /home/misystem/assets/wo
 # inp ファイル作成
 ssh $ssh_client "cd /tmp/$calc_dir; $client_cmd > /tmp/$calc_dir/remote_program_exec.log 2>&1"
 if [ $? = 0 ]; then
-    echo "created inp file"
+    ech "created inp file"
 else
     echo "faild create inp file"
     exit 1
