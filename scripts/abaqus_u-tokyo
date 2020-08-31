@@ -15,27 +15,27 @@ count=0
 token=""
 #ssh_client="192.168.1.234"
 ssh_client="rme-u-tokyo"
-client_cmd="~/create_inp_file.sh"
+client_cmd="~/remote_workflow/scripts/execute_remote_program.sh"
+calc_dir=`cat  cat /proc/sys/kernel/random/uuid`
 
 # 作業ディレクトリ作成
-ssh $ssh_client "if [ -e /tmp/node_calc ]; then rm -rf /tmp/node_calc; fi; mkdir /tmp/node_calc"
+ssh $ssh_client "if [ -e /tmp/$calc_dir ]; then rm -rf /tmp/$calc_dir; fi; mkdir /tmp/$calc_dir"
 # ファイルを転送
 for item in ${infiles[@]}; do
-    rsync -av -L -e ssh $item $ssh_client:/tmp/node_calc > /dev/null 2>&1
+    rsync -av -L -e ssh $item $ssh_client:/tmp/$calc_dir > /dev/null 2>&1
 done
 
 # プログラム実行
 echo `date '+%Y-%m-%d %T'`": start: abaqus: unknown" >> /home/misystem/assets/workflow/$MISYSTEM_SITEID/solver_logs/solver_execute.log
 # inp ファイル作成
-#ssh $ssh_client "cd /tmp/node_calc; python ~/abaqus_scripts/create_inputdata.py Modeldata.inp ~/abaqus_scripts/Cyclic_SSCurve_csv; mv XX_inp XX.inp > /tmp/node_calc/node_calc_exec.log 2>&1"
-ssh $ssh_client "cd /tmp/node_calc; $client_cmd > /tmp/node_calc/node_calc_exec.log 2>&1"
+ssh $ssh_client "cd /tmp/$calc_dir; $client_cmd > /tmp/$calc_dir/remote_program_exec.log 2>&1"
 if [ $? = 0 ]; then
     echo "created inp file"
 else
     echo "faild create inp file"
     exit 1
 fi
-ssh $ssh_client "cd /tmp/node_calc; $exec_path >> /tmp/node_calc/node_calc_exec.log 2>&1"
+ssh $ssh_client "cd /tmp/$calc_dir; $exec_path >> /tmp/$calc_dir/remote_program_exec.log 2>&1"
 if [ $? = 0 ]; then
     echo "success to execute abaqsu"
 else
@@ -49,9 +49,9 @@ fi
 echo `date '+%Y-%m-%d %T'`": normal end: abaqus: unknown" >> /home/misystem/assets/workflow/site00002/solver_logs/solver_execute.log
 
 # 出力結果の取得
-if [ -e /tmp/node_calc ]; then
-    rm -rf /tmp/node_calc
+if [ -e /tmp/$calc_dir ]; then
+    rm -rf /tmp/$calc_dir
 fi
-rsync -av -e ssh $ssh_client:/tmp/node_calc/ ./
+rsync -av -e ssh $ssh_client:/tmp/$calc_dir/ ./
 
 exit 0
