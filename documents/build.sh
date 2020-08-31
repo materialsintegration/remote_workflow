@@ -2,8 +2,8 @@
 # MIシステム利用手引書、ビルドスクリプト for Jenkins
 
 export PATH=/usr/local/bin:$PATH
-directories=(./)
-pdffilenames=(外部計算資源の利用)
+directories=(./manual1st ./manual2nd)
+pdffilenames=(外部計算資源の利用１期 外部計算資源の利用２期)
 count=0
 logfile="`pwd`/build.log"
 if [ -e $logfile ]; then
