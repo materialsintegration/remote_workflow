@@ -44,6 +44,10 @@ else
 fi
 if [ $? != 0 ]; then
     echo `date '+%Y-%m-%d %T'`": abnormal end: abaqus: unknown" >> /home/misystem/assets/workflow/site00002/solver_logs/solver_execute.log
+    rsync -av -e ssh $ssh_client:/tmp/$calc_dir/remote_program_exec.log ./
+    echo "---------- remote side log ----------------"
+    cat remote_program_exec.log
+    echo "---------- remote side log ----------------"
     exit 1
 fi
 echo `date '+%Y-%m-%d %T'`": normal end: abaqus: unknown" >> /home/misystem/assets/workflow/site00002/solver_logs/solver_execute.log
