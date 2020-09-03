@@ -31,11 +31,13 @@ release = '0.1.0'
 # mermaid compile? command setting
 mermaid_cmd = '/home/misystem/node_modules/.bin/mmdc'
 # mermaid_cmd = '/home/misystem/mmdc.sh'
-mermaid_params = ['-p', '/home/misystem/puppeteer-config.json', '--width', "200", "--height", "150"]
+#mermaid_params = ['-p', '/home/misystem/puppeteer-config.json', '--width', "200", "--height", "150"]
+mermaid_params = ['-p', '/home/misystem/puppeteer-config.json', '--backgroundColor', 'transparent']
 # mermaid_params = ['--width', '100']
 # mermaid_params = ['--height', '100']
-mermaid_output_format = 'svg'
+#mermaid_output_format = 'svg'
 #mermaid_pdfcrop = ['--papersize A5']
+numfig = True
 
 # -- General configuration ---------------------------------------------------
 
