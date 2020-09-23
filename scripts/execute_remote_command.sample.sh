@@ -15,7 +15,7 @@ count=0
 token=""
 #ssh_client="192.168.1.234"
 ssh_client="rme-u-tokyo"
-client_cmd="~/remote_workflow/scripts/execute_remote_program_ssh.sh"
+client_cmd="~/misrc_remote_workflow/scripts/execute_remote-side_program_ssh.sh"
 calc_dir=`cat  cat /proc/sys/kernel/random/uuid`
 
 # 作業ディレクトリ作成
