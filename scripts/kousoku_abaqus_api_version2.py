@@ -27,7 +27,7 @@ wf_tool.setOutportNames(outputports)
 wf_tool.setRealName(in_realnames, out_realnames)
 wf_tool.Initialize(translate_input=True, translate_output=True)
 
-cmd = "python3.6 /home/misystem/assets/modules/misrc_distributed_computing_assist_api/debug/mi-system-side/mi-system-wf.py https://nims.mintsys.jp rme-u-tokyo %s /home/manaka/remote_workflow/scripts/execute_remote_program_api.sh reduction_area.dat:tesile_strength.dat:yeild_strength.dat XX.dat:XX.inp"%(wf_tool.RunInfo["miwf_api_token"])
+cmd = "python3.6 /home/misystem/assets/modules/misrc_distributed_computing_assist_api/debug/mi-system-side/mi-system-wf.py https://nims.mintsys.jp rme-u-tokyo %s /home/manaka/misrc_remote_workflow/scripts/execute_remote-side_program_api.sh reduction_area.dat:tesile_strength.dat:yeild_strength.dat XX.dat:XX.inp"%(wf_tool.RunInfo["miwf_api_token"])
 
 wf_tool.solver_name = "mi-system-wf.py"
 wf_tool.ExecSolver(cmd)
