@@ -51,7 +51,7 @@ def goRemoteSession(client_name, client_cmd, client_files):
     cmd = "rsync -av -e ssh %s:/tmp/%s/ ./"%(client_name, calc_dir)
     p = subprocess.call(cmd, shell=True)
     if p == 0:
-        print("%s:/tmp/%s より全ファイルを送信しました。"%(client_name, calc_dir)
+        print("%s:/tmp/%s より全ファイルを送信しました。"%(client_name, calc_dir))
     else:
         sys.exit(1)
 
