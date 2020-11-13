@@ -300,17 +300,27 @@ module22--ssh経由--&gt;module12
 <div class="section" id="id14">
 <h3><span class="section-number">2.1.9. </span>MIntシステムと送受信されるデータ<a class="headerlink" href="#id14" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <p>MIntシステムへ送受信されるデータは、「execute_remote_command.sample.sh」で決まっており、以下の通り。</p>
-<ul>
-<li><p>送信されるデータ
-+ 「execute_remote_command.sample.sh」にパラメータとして記述したファイル。（モジュール内）</p></li>
-<li><p>返信されるデータ
-+ 計算結果としての出力ファイル。</p>
-<blockquote>
-<div><ul class="simple">
+<ul class="simple">
+<li><dl class="simple">
+<dt>送信されるデータ</dt><dd><ul>
+<li><p>「execute_remote_command.sample.sh」にパラメータとして記述したファイル。（モジュール内）</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>返信されるデータ</dt><dd><ul>
+<li><dl class="simple">
+<dt>計算結果としての出力ファイル。</dt><dd><ul>
 <li><p>計算専用ディレクトリを作成して計算され、そのディレクトリ以下のファイルは全て</p></li>
 <li><p>このディレクトリでの計算は、「execute_remote-side_program_ssh.sh」で行われるので、返信の必要の内ファイルはあらかじめこのスクリプト終了前に削除しておく。</p></li>
 </ul>
-</div></blockquote>
+</dd>
+</dl>
+</li>
+</ul>
+</dd>
+</dl>
 </li>
 </ul>
 <p>※ 秘匿データを配置してあるディレクトリまたはインストール後のセットアップで実行に必要なファイル、データとして指定されたものはMIntシステムで感知できないこと、およびシステム的に記録（GPDBなど）するための設定がなされていないため送り返されることは無い。</p>

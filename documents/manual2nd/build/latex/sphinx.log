@@ -1,4 +1,4 @@
-This is e-pTeX, Version 3.14159265-p3.8.2-190131-2.6 (utf8.euc) (TeX Live 2019) (preloaded format=platex 2020.3.19)  17 SEP 2020 13:29
+This is e-pTeX, Version 3.14159265-p3.8.2-190131-2.6 (utf8.euc) (TeX Live 2019) (preloaded format=platex 2020.3.19)  7 OCT 2020 13:41
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -897,12 +897,12 @@ File: mermaid-843b7d94ca60bce4ac98ac7327e34d6ed7561c12.png Graphic file (type b
 mp)
 <mermaid-843b7d94ca60bce4ac98ac7327e34d6ed7561c12.png>
  [11]
-Overfull \hbox (2.62596pt too wide) in paragraph at lines 462--462
+Overfull \hbox (2.62596pt too wide) in paragraph at lines 473--473
 []
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 462--462
+Underfull \hbox (badness 10000) in paragraph at lines 473--473
 
  []
 
@@ -933,21 +933,21 @@ mp)
 
 
 No file sphinx.ind.
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 751.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 762.
 [20
 
 ]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 751.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 762.
  (./sphinx.aux)
-Package atveryend Info: Empty hook `AtVeryEndDocument' on input line 751.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 751.
+Package atveryend Info: Empty hook `AtVeryEndDocument' on input line 762.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 762.
 Package rerunfilecheck Info: File `sphinx.out' has not changed.
 (rerunfilecheck)             Checksum: BDCAE4892EFBF9C84A78095D63C0C81F;3282.
 
 
 LaTeX Font Warning: Some font shapes were not available, defaults substituted.
 
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 751.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 762.
  ) 
 Here is how much of TeX's memory you used:
  9559 strings out of 481528
@@ -958,4 +958,4 @@ Here is how much of TeX's memory you used:
  935 hyphenation exceptions out of 8191
  38i,11n,49p,449b,511s stack positions out of 5000i,500n,10000p,200000b,80000s
 
-Output written on sphinx.dvi (23 pages, 80508 bytes).
+Output written on sphinx.dvi (23 pages, 80660 bytes).

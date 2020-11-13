@@ -37,7 +37,7 @@
 
 
 \title{外部計算資源の利用について}
-\date{2020年09月17日}
+\date{2020年10月07日}
 \release{0.1.0}
 \author{SIP-MI}
 \newcommand{\sphinxlogo}{\vbox{}}
@@ -380,14 +380,19 @@ MIntシステムの予測モジュールが実行する。
 \label{\detokenize{using_distributed_properties:id14}}
 MIntシステムへ送受信されるデータは、「execute\_remote\_command.sample.sh」で決まっており、以下の通り。
 \begin{itemize}
+\item {} \begin{description}
+\item[{送信されるデータ}] \leavevmode\begin{itemize}
 \item {} 
-送信されるデータ
-+ 「execute\_remote\_command.sample.sh」にパラメータとして記述したファイル。（モジュール内）
+「execute\_remote\_command.sample.sh」にパラメータとして記述したファイル。（モジュール内）
 
-\item {} 
-返信されるデータ
-+ 計算結果としての出力ファイル。
-\begin{itemize}
+\end{itemize}
+
+\end{description}
+
+\item {} \begin{description}
+\item[{返信されるデータ}] \leavevmode\begin{itemize}
+\item {} \begin{description}
+\item[{計算結果としての出力ファイル。}] \leavevmode\begin{itemize}
 \item {} 
 計算専用ディレクトリを作成して計算され、そのディレクトリ以下のファイルは全て
 
@@ -395,6 +400,12 @@ MIntシステムへ送受信されるデータは、「execute\_remote\_command.
 このディレクトリでの計算は、「execute\_remote\sphinxhyphen{}side\_program\_ssh.sh」で行われるので、返信の必要の内ファイルはあらかじめこのスクリプト終了前に削除しておく。
 
 \end{itemize}
+
+\end{description}
+
+\end{itemize}
+
+\end{description}
 
 \end{itemize}
 
