@@ -1,1 +1,10 @@
 *.log
+*.ist
+*.aux
+*.dvi
+*.lof
+*.log
+*.sty
+*.tex
+*.toc
+latexmkjarc
