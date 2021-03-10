@@ -21,13 +21,16 @@ in_realnames = {"断面減少率":"reduction_area.dat",
 out_realnames = {"XX.dat":"応力分布データ",
                  "XX.inp":"Abaqus入力データ"}
 
+REMOTE_SIDE_DIRECTORY = "/home/manaka"
+REMOTE_SIDE_SSHKEY = "rme-u-tokyo"
+
 wf_tool = MIApiCommandClass()
 wf_tool.setInportNames(inputports)
 wf_tool.setOutportNames(outputports)
 wf_tool.setRealName(in_realnames, out_realnames)
 wf_tool.Initialize(translate_input=True, translate_output=True)
 
-cmd = "python3.6 /home/misystem/assets/modules/misrc_remote_workflow/scripts/execute_remote_command.sample.py client_name:rme-u-tokyo client_cmd:/home/manaka/misrc_remote_workflow/scripts/execute_remote-side_program_ssh.sh client_files:reduction_area.dat,tesile_strength.dat,yeild_strength.dat"
+cmd = "python3.6 /home/misystem/assets/modules/misrc_remote_workflow/scripts/execute_remote_command.sample.py client_name:%s client_cmd:%s/misrc_remote_workflow/scripts/execute_remote-side_program_ssh.sh client_files:reduction_area.dat,tesile_strength.dat,yeild_strength.dat"%(REMOTE_SIDE_DIRECTORY,REMOTE_SIDE_SSHKEY)
 
 wf_tool.solver_name = "execute_remote_command.sample.py"
 wf_tool.ExecSolver(cmd)

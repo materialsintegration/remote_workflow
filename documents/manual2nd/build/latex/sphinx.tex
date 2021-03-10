@@ -12,16 +12,11 @@
 \usepackage[T1]{fontenc}
 \usepackage{amsmath,amssymb,amstext}
 
-
-
 \usepackage{times}
-
 
 \usepackage[,numfigreset=1,mathnumfig]{sphinx}
 
-\fvset{fontsize=\small}
 \usepackage[dvipdfm]{geometry}
-
 
 % Include hyperref last.
 \usepackage{hyperref}
@@ -31,25 +26,31 @@
 \urlstyle{same}
 \renewcommand{\contentsname}{目次:}
 
-\usepackage{sphinxmessages}
+\renewcommand{\figurename}{図}
+\renewcommand{\tablename}{表}
+\renewcommand{\literalblockname}{リスト}
+
+\renewcommand{\literalblockcontinuedname}{前のページからの続き}
+\renewcommand{\literalblockcontinuesname}{次のページに続く}
+
+\def\pageautorefname{ページ}
+
 \setcounter{tocdepth}{2}
 
 
 
 \title{外部計算資源の利用について}
-\date{2020年10月07日}
+\date{2020年12月18日}
 \release{0.1.0}
 \author{SIP-MI}
 \newcommand{\sphinxlogo}{\vbox{}}
 \renewcommand{\releasename}{リリース}
 \makeindex
+
 \begin{document}
 
-\pagestyle{empty}
-\sphinxmaketitle
-\pagestyle{plain}
+\maketitle
 \sphinxtableofcontents
-\pagestyle{normal}
 \phantomsection\label{\detokenize{index::doc}}
 
 
@@ -124,10 +125,10 @@ API方式のためのシステム構築用のプログラム、サンプルが�
 API本体は直下に
 
 \item {} 
-ワークフローで使用するプログラムは\textasciigrave{}\textasciigrave{}\textasciigrave{}debug/mi\sphinxhyphen{}system\sphinxhyphen{}side\textasciigrave{}\textasciigrave{}\textasciigrave{}に
+ワークフローで使用するプログラムは{}`{}`{}`debug/mi-system-side{}`{}`{}`に
 
 \item {} \begin{description}
-\item[{外部計算機側で使用するプログラムは\textasciigrave{}\textasciigrave{}\textasciigrave{}debug/remote\sphinxhyphen{}side\textasciigrave{}\textasciigrave{}\textasciigrave{}に}] \leavevmode\begin{itemize}
+\item[{外部計算機側で使用するプログラムは{}`{}`{}`debug/remote-side{}`{}`{}`に}] \leavevmode\begin{itemize}
 \item {} 
 ここから実行されるプログラムのサンプルは上記misrc\_remote\_workflowリポジトリを使用している。
 
@@ -162,8 +163,6 @@ sshアクセスではパスワードなしでの運用も可能であり、本�
 \begin{figure}[htbp]
 \centering
 \capstart
-
-\sphinxincludegraphics[scale=0.5]{{mermaid-456b5511601d31cc1dd1b3902f65e33b31eb522a}.png}
 \caption{SSH実行のイメージ}\label{\detokenize{using_distributed_properties:id43}}\end{figure}
 
 
@@ -286,6 +285,7 @@ sshアクセスではパスワードなしでの運用も可能であり、本�
 
 \end{itemize}
 
+\fvset{hllines={, ,}}%
 \begin{sphinxVerbatim}[commandchars=\\\{\}]
 \PYGZti{}/ユーザーディレクトリ
   + remote\PYGZus{}workflow
@@ -301,8 +301,6 @@ sshアクセスではパスワードなしでの運用も可能であり、本�
 \begin{figure}[htbp]
 \centering
 \capstart
-
-\sphinxincludegraphics[scale=0.5]{{mermaid-d581b6646b03a72f2e130d760749b52724eea0e0}.png}
 \caption{SSH接続経由によるコマンド実行の流れ}\label{\detokenize{using_distributed_properties:id45}}\end{figure}
 \begin{itemize}
 \item {} \begin{description}
@@ -343,7 +341,7 @@ MIntシステムの予測モジュールが実行する。
 \end{description}
 
 \item {} \begin{description}
-\item[{プログラム（Ｃ）: execute\_remote\sphinxhyphen{}side\_program\_ssh.sh}] \leavevmode\begin{itemize}
+\item[{プログラム（Ｃ）: execute\_remote-side\_program\_ssh.sh}] \leavevmode\begin{itemize}
 \item {} 
 （Ｂ）からsshで実行される。
 
@@ -351,9 +349,9 @@ MIntシステムの予測モジュールが実行する。
 実行されるプログラムは外部計算機側で任意のものが指定可能。
 
 \item {} 
-インストール時はexecute\_remote\sphinxhyphen{}side\_program\_ssh.sample.sh %
+インストール時はexecute\_remote-side\_program\_ssh.sample.sh %
 \begin{footnote}[2]\sphinxAtStartFootnote
-本システムでは、MIntシステムは「execute\_remote\_command.sample.sh」を実行し、外部計算機で実行を行うプログラムとして「execute\_remote\sphinxhyphen{}side\_program\_ssh.sh」を呼び出す。外部計算機側ではインストール後にこのファイル（インストール直後は、execute\_remote\_program\_ssh.sample.shと言う名前）を必要に応じて編集して使用することで、別なコマンドを記述することが可能になっている。
+本システムでは、MIntシステムは「execute\_remote\_command.sample.sh」を実行し、外部計算機で実行を行うプログラムとして「execute\_remote-side\_program\_ssh.sh」を呼び出す。外部計算機側ではインストール後にこのファイル（インストール直後は、execute\_remote\_program\_ssh.sample.shと言う名前）を必要に応じて編集して使用することで、別なコマンドを記述することが可能になっている。
 %
 \end{footnote} となっている。
 
@@ -362,7 +360,7 @@ MIntシステムの予測モジュールが実行する。
 \end{description}
 
 \item {} \begin{description}
-\item[{プログラム（Ｄ）: remote\sphinxhyphen{}side\_scripts}] \leavevmode\begin{itemize}
+\item[{プログラム（Ｄ）: remote-side\_scripts}] \leavevmode\begin{itemize}
 \item {} 
 （Ｄ）から実行されるようになっており、いくつかのスクリプトを実行するよう構成されている。
 
@@ -397,7 +395,7 @@ MIntシステムへ送受信されるデータは、「execute\_remote\_command.
 計算専用ディレクトリを作成して計算され、そのディレクトリ以下のファイルは全て
 
 \item {} 
-このディレクトリでの計算は、「execute\_remote\sphinxhyphen{}side\_program\_ssh.sh」で行われるので、返信の必要の内ファイルはあらかじめこのスクリプト終了前に削除しておく。
+このディレクトリでの計算は、「execute\_remote-side\_program\_ssh.sh」で行われるので、返信の必要の内ファイルはあらかじめこのスクリプト終了前に削除しておく。
 
 \end{itemize}
 
@@ -450,8 +448,6 @@ sshの場合と比べて外部計算資源の利用および実行のための�
 \begin{figure}[htbp]
 \centering
 \capstart
-
-\sphinxincludegraphics[scale=0.5]{{mermaid-843b7d94ca60bce4ac98ac7327e34d6ed7561c12}.png}
 \caption{ポーリングシステムの流れ}\label{\detokenize{using_distributed_properties:id46}}\end{figure}
 
 \newpage
@@ -564,6 +560,7 @@ MIntシステム側のディレクトリ構造は以下のようになってい�
 
 \end{itemize}
 
+\fvset{hllines={, ,}}%
 \begin{sphinxVerbatim}[commandchars=\\\{\}]
 \PYGZti{}/misystemディレクトリ
  + remote\PYGZus{}workflow
@@ -594,6 +591,7 @@ MIntシステム側のディレクトリ構造は以下のようになってい�
 
 \end{itemize}
 
+\fvset{hllines={, ,}}%
 \begin{sphinxVerbatim}[commandchars=\\\{\}]
 \PYGZti{}/ユーザーディレクトリ
   + remote\PYGZus{}workflow
@@ -609,6 +607,7 @@ MIntシステム側のディレクトリ構造は以下のようになってい�
 
 \end{itemize}
 
+\fvset{hllines={, ,}}%
 \begin{sphinxVerbatim}[commandchars=\\\{\}]
 /tmp/\PYGZlt{}uuid\PYGZgt{}
 \end{sphinxVerbatim}
@@ -619,12 +618,10 @@ MIntシステム側のディレクトリ構造は以下のようになってい�
 \begin{figure}[htbp]
 \centering
 \capstart
-
-\sphinxincludegraphics[scale=0.5]{{mermaid-2e296a282362a54268a0e863694b53e6c5081acf}.png}
 \caption{ポーリング方式でのコマンドの流れ}\label{\detokenize{using_distributed_properties:id48}}\end{figure}
 
 本システムでは、MIntシステムのAPIに設定したプログラムを外部計算機での実行に使用する。
-サンプルワークフローでは、「execute\_remote\sphinxhyphen{}side\_program\_api.sh」となっている。
+サンプルワークフローでは、「execute\_remote-side\_program\_api.sh」となっている。
 外部計算機側ではインストール後にこのファイル（インストール直後は、execute\_remote\_program\_api.sample.shと言う名前）を必要に応じて編集して使用する。
 
 
