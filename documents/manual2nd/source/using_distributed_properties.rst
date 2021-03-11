@@ -479,7 +479,7 @@ MIntシステムで送受信されるデータは、MIntシステム側のAPIと
 
 インストールおよびプログラムの準備など説明する。SSH方式、API方式のそれぞれの準備から実行までを記述する。
 
-本システムの利用者はMIntシステムのアカウントは既に発行済であるものとし、その手順は記載しない。
+本システムの利用者はMIntシステムのアカウントは既に発行済であるものとし、その手順は記載しない。またgitコマンドなどの利用方法はシステム管理者などに問い合わせることとし、ここではそれらのインストール、詳細な使用方法は言及しない。
 
 手順は以下のようになっている。
 
@@ -492,74 +492,158 @@ MIntシステムで送受信されるデータは、MIntシステム側のAPIと
 事前決定事項
 ============
 
-事前に準備する項目は以下の通り。
+事前に決定しておく項目は以下の通り。
 
+* misrc_remote_workflowリポジトリの展開場所
+    + クライアント側のプログラム実行場所として使用する。
+    + 実行プログラム用のテンプレートなどが入っているのでこれを利用する。
+* misrc_distributed_computing_assist_apiリポジトリの展開
+    + API方式の場合に必要
+    + debug/remote-side/mi-system-reote.pyがポーリングプログラムで、これを実行しておく。
 * 実行するプログラム
-    + 事前に外部計算資源側で実行するプログラム及び必要なパラメータの調査を行う。
+    + 外部計算資源側で実行するプログラム及び必要なパラメータの調査。
+    + MIntシステムから最初に呼び出されるスクリプトを決める
 * SSHの場合
-    + sshログインのための情報（鍵暗号方式によるパスワードなし接続が望ましい）
-    + misrc_remote_workflowリポジトリの展開
+    + MInt側からクライアント計算機へのsshログインのための情報
+    + 鍵暗号化方式によるパスワードなし、パスフレーズなし接続が望ましい。
 * APIの場合
-    + API方式の場合は不特定多数の利用者とAPIプログラムを共有するので、利用可能なコマンドはAPIに事前登録しておく必要がある。
-    + misrc_remote_workflowリポジトリとmisrc_distributed_computing_assist_apiリポジトリの展開
+    + API方式の場合は不特定多数の利用者とAPIプログラムを共有するので、設定事項をMIntシステム側に事前設定しておく。
+
+API方式の場合の設定事項
+------------------------
+API方式では、sshとはまた違う認証情報が必要なため、それらを記述する。以下の情報は外部計算機側でポーリングプログラムを実行する際に必要である。
+
+* APIトークン
+    + 本方式ではMIntシステムのAPI認証システムを使用しているので、そのトークンが必要となる。NIMS側に問い合わせて取得しておく。
+* ホスト情報
+    + MIntシステム側でAPI問い合わせに対する個別の識別を行うためにサイト情報（文字列として区別できれば何でもよい）が必要である。
+* MIntシステムのURL
+    + MIntシステムのURL（エンドポイントは不要）が必要である。NIMS側に問い合わせておく。
+
+.. raw:: latex
+
+    \newpage
 
 SSH方式
 =======
-
-
-事前準備
---------
-
-MIntシステム側
---------------
+SSH方式での準備を決定事項にしたがって実施する。
 
 外部計算機資源側
------------------
+--------
 
-ワークフローの準備
+1. misrc_remote_workflowリポジトリを以下の手順で作成しておく。
+
+  .. code::
+  
+     $ git clone https://gitlab.mintsys.jp/midev/misrc_remote_workflow
+     $ cd misrc_remote_workflow
+     $ ls
+     README.md  documents  inventories  misrc_remote_workflow.json  modulesxml  sample_data  scripts
+     $ cd scripts
+     $ ls
+     abaqus                                     execute_remote_command.sample.sh  kousoku_abaqus_ssh.sh
+     create_inputdata.py                        input_data                        kousoku_abaqus_ssh_version2.py
+     execute_remote-side_program_api.sample.sh  kousoku_abaqus_api_version2.py    kousoku_abaqus_ssh_version2.sh
+     execute_remote-side_program_ssh.sample.sh  kousoku_abaqus_api_version2.sh    remote-side_scripts
+     execute_remote_command.sample.py           kousoku_abaqus_http.py
+
+
+2. 外部計算機資源側で実行するスクリプトがあれば、「remote-side_scripts」に配置する。
+3. MIntシステム側から外部計算機資源側へsshログインして最初に実行されるプログラム名は「execute_remote-side_program_ssh.sh」です。
+このため「execute_remote-side_program_ssh.sample.sh」を「execute_remote-side_program_ssh.sh」にコピーするか、「「execute_remote-side_program_ssh.sh」」を独自に作成し、2.などの実行および必要な手順をスクリプト化しておきます。
+
+MIntシステム側
 ------------------
+
+1. ワークフローを作成する場合に「misrc_remote_workflow/scripts/execute_remote_command.sample.sh」を必要な名称に変更し、内容を参考にしてssh 経由実行が可能なように編集し、ワークフローから実行させる。
+2. 1.を実行可能な通常どおりのワークフローを作成する。作成方法に差は無い。
 
 API方式
 =======
 
-MIntシステム側
---------------
-
 外部計算機資源側
 -----------------
 
-ワークフローの準備
-------------------
+1. misrc_distributed_computing_assist_apiリポジトリを以下の手順で作成しておく。
 
-秘匿データの扱い
+  .. code::
+  
+     $ git clone https://gitlab.mintsys.jp/midev/misrc_distributed_computing_assist_api
+     $ cd misrc_distributed_computing_assist_api
+     $ ls
+     README.md  logging.cfg     mi_dicomapi_infomations.py           syslogs
+     debug      mi_dicomapi.py  mi_distributed_computing_assist.ini
+     $ cd debug
+     $ ls
+     api_status.py  api_status_gui.py  api_status_gui.pyc  mi-system-side  remote-side
+     $ cd remote-side
+     $ ls
+     api-debug.py  debug_gui.py  mi-system-remote.py
+
+2. my-system-remote.pyを実行しておく。
+
+  .. code::
+  
+     $ python mi-system-remote.py rme-u-tokyo https://nims.mintsys.jp <API token>
+
+
+MIntシステム側
+--------------
+
+1. misrc_distributed_computing_assist_apiリポジトリを展開。
+2. mi_dicomapi.pyが本体であるが、まだ動作させてなければ、mi_distributed_computing_assist.iniに外部計算機資源側の設定を実施する。動作させていたら、設定の再読み込みを実施する。
+
+  .. code::
+
+     $ python
+     >>> import requests
+     >>> session = requests.Session()
+     >>> ret = session.post("https://nims.mintsys.jp/reload-ini")
+     >>>
+
+3. まだ動作していなかったら、動作させて待ち受け状態にしておく。
+
+  .. code::
+
+     $ python mi_dicomapi.py
+
+
+ワークフローについて
 ====================
 
-ワークフローの実行
-==================
+外部計算機資源利用を行うワークフローの作成の仕方を記述する。
 
-misrc_remote_workflowリポジトリにある、sample_dataディレクトリにワークフロー実行用のサンプルファイルが用意されている。これを利用してワークフローおよび外部計算機側の動作の実行テストが可能である。
+共通事項
+--------
 
-===============================
-API形式を独自実装するための情報
-===============================
+SSH方式とAPI方式の両方に共通する事項である。
 
-共通
-====
+* 予測モジュール
+    - pbsNodeGroup設定で、ssh-node01を設定する。他の計算機では外へアクセスすることができないため。
+    - pbsQueueなどCPU数などは指定できない。
+    - 外部計算機資源側で別途Torqueなどのバッチジョブシステムに依存する。
 
-リソース
-========
+SSH方式
+-------
 
-MIntシステム用
---------------
+予測モジュールの実行プログラムから misrc_remote_workflow/scripts/execute_remote_command.sample.sh またはこのファイルを専用に別名コピー編集したものを必要なパラメータとともに実行するように構成する。
 
-外部計算資源用
---------------
+API方式
+-------
 
-設定
-====
+予測モジュールの実行プログラム内で、misrc_distributed_computing_assist_api/debug/mi-system-side/mi-system-wf.py を必要なパラメータとともに実行するように構成する。
 
-エラー情報
-==========
+.. _sample:
+
+サンプル
+--------
+
+misrc_remote_workflowリポジトリにある、sample_dataディレクトリにテストで使用したワークフロー実行用のサンプルファイルが用意されている。これを利用してワークフローおよび外部計算機側の動作の実行テストが可能である。
+
+また、misrc_remote_workflow/scriptsにこの時の予測モジュール実行プログラムがある。これを参考に別な予測モジュール実行プログラムを作成することが可能である。
+
+* kousoku_abaqus_api_version2.py : API方式の予測モジュール実行スクリプト
+* kousoku_abaqus_ssh_version2.py : SSH方式の予測モジュール実行スクリプト
 
 以上
 
