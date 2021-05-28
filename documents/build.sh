@@ -3,8 +3,8 @@
 
 export PATH=/usr/local/bin:$PATH
 export LD_LIBRARY_PATH=/usr/local/gcc-4.8.5/lib
-directories=(./manual1st ./manual2nd)
-pdffilenames=(外部計算資源の利用１期 外部計算資源の利用２期)
+directories=(./manual1st ./manual2nd ./activities_of_nims)
+pdffilenames=(外部計算資源の利用１期 外部計算資源の利用２期 NIMSの取り組みについて)
 count=0
 logfile="`pwd`/build.log"
 if [ -e $logfile ]; then
@@ -47,7 +47,9 @@ do
     #fi >> $logfile
     #cp -rp html /var/lib/mi-docroot/static/misystem-user-manual
     #cd ../
-    cp source/images/*.png build/html/_images
+    if [ -e "source/images" ]; then
+        cp source/images/*.png build/html/_images
+    fi
     cd ../
 done
 

@@ -20,13 +20,13 @@
 # -- Project information -----------------------------------------------------
 
 project = '外部計算資源の利用について'
-copyright = '2019, SIP-MI'
+copyright = '2021, SIP-MI'
 author = 'SIP-MI'
 
 # The short X.Y version
 version = ''
 # The full version, including alpha/beta/rc tags
-release = '0.1.1'
+release = '0.2.0'
 
 # mermaid compile? command setting
 mermaid_cmd = '/home/misystem/node_modules/.bin/mmdc'
@@ -136,6 +136,12 @@ latex_elements = {
     # 'figure_align': 'htbp',
       'extraclassoptions': 'openany',
 
+    'preamble': '\n'.join([
+        # 段落調整、箇条書きの行間調整
+        r'\setlength{\parskip}{0ex}',
+        # 字下げ
+        r'\setlength{\parindent}{1zw}',
+    ])
 }
 
 # Grouping the document tree into LaTeX files. List of tuples
