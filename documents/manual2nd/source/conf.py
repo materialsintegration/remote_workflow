@@ -140,7 +140,7 @@ latex_elements = {
         # 段落調整、箇条書きの行間調整
         r'\setlength{\parskip}{0ex}',
         # 字下げ
-        r'\setlength{\parindent}{1zw}',
+        # r'\setlength{\parindent}{1zw}',
     ])
 }
 
