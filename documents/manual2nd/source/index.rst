@@ -13,10 +13,3 @@
 
    using_distributed_properties.rst
 
-
-.. raw:: latex
-
-   \listoffigures
-   \listoftables
-
-
