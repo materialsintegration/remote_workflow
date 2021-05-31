@@ -8,6 +8,18 @@
 2. 外部計算機及び接続ネットワークが十分なセキュリティ対策を実施いていること。
 3. SSHによる外部計算機資源を利用する場合には、外部計算機資源の受け入れとして、接続元IPのみ接続可能とする設定を行い、脆弱性対策を講じていることとする。
 
+.. figure:: images/image_for_use.eps
+  :scale: 70%
+  :align: center
+
+  外部計算機資源を有効活用するイメージ図
+
+.. raw:: html
+
+   <A HREF="_images/remote_execution_image.png"><img src="_images/remote_execution_image.png" /></A>
+
+  外部計算機資源を有効活用するイメージ図
+
 NIMSの取り組みについてはこちら [activities_of_NIMS]_ を参照。
 
 ====
