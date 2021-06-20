@@ -205,4 +205,23 @@ SSH方式での利用方法
 .. raw:: latex
 
    \newpage
+外部計算機でのディレクトリ
+-----------------------
+
+外部計算機のディレクトリ構造は下記の通りである。インストール方法は後述する。
+
+* ユーザーディレクトリ
+
+.. code-block:: none
+  
+  ~/ユーザーディレクトリ
+    + remote_workflow
+      + scripts
+        + input_data
+
+* ワーキングディレクトリ
+
+.. code-block:: none
+
+  /tmp/<uuid>
 
