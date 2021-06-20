@@ -205,7 +205,7 @@ SSH方式での利用方法
 .. raw:: latex
 
    \newpage
-外部計算機でのディレクトリ
+外部計算機でのディレクトリ構造
 -----------------------
 
 外部計算機のディレクトリ構造は下記の通りである。インストール方法は後述する。
@@ -224,4 +224,78 @@ SSH方式での利用方法
 .. code-block:: none
 
   /tmp/<uuid>
+
+コマンドの流れ
+--------------
+
+ワークフローの該当モジュールから外部計算機のコマンドが実行されるまでの流れを下記に示す。
+
+.. mermaid::
+   :caption: SSH接続経由によるコマンド実行の流れ
+   :align: center
+
+   sequenceDiagram;
+
+     participant A as モジュール
+     participant B as プログラム（Ａ）
+     participant C as プログラム（Ｂ）
+     participant D as プログラム（Ｃ）
+     participant E as プログラム（Ｄ）
+
+     Note over A,C : NIMS機構内
+     Note over D,E : 外部計算機資源内
+
+     A->>B:モジュールが実行
+     B->>C:（Ａ）が実行
+     C->>D:（Ｂ）がSSH経由で外部計算機の（Ｃ）を実行
+     D->>E:（Ｃ）が実行
+
+* ワークフロー : 予測モジュール
+
+    + MIntシステムが実行する予測モジュール
+    + （Ａ）を実行する
+* プログラム（Ａ）: kousoku_abaqus_ssh_version2.sh（サンプル用）
+
+    + MIntの予測モジュールが実行する。
+    + モジュールごとに用意する。名前は任意。:ref:`how_to_use` で説明する編集を行う。
+    + モジュール定形の処理などを行い、（Ｂ）を実行する。
+        - （Ｂ）の名前は固定である。
+* プログラム（Ｂ）: execute_remote_command.sample.sh
+
+    + （Ａ）から実行された後、外部計算機実行のための準備を行い、SSH経由で（Ｃ）を実行する。
+    + 名前は固定である。このプログラムが外部計算機資源との通信を行う。
+    + :ref:`how_to_use` で説明する編集を行う。
+        - 送信するファイルはパラメータとして記述。
+        - （Ｃ）の名前は固定である。
+    + 受信するファイルは外部計算機資源上の計算用ディレクトリ [#calc_dir1]_ のファイル全部。
+* プログラム（Ｃ）: execute_remote-side_program_ssh.sh
+
+    + （Ｂ）からSSHで実行される。
+    + 外部計算機で実行されるプログラムはここへシェルスクリプトとして記述する。
+    + インストール時はexecute_remote-side_program_ssh.sample.sh [#sample_name1]_ となっている。
+* プログラム（Ｄ）: remote-side_scripts
+    + （Ｄ）から実行されるようになっており、いくつかのスクリプトを実行するよう構成されている。
+    + サンプル専用であり、必ず使うものではない。（Ｃ）に依存する。
+
+
+.. [#calc_dir1] 外部計算機では、計算は/tmpなどに作成した一時ディレクトリで実行される。
+.. [#sample_name1] 本システムでは、MIntは「execute_remote_command.sample.sh」を実行し、外部計算機で実行を行うプログラムとして「execute_remote-side_program_ssh.sh」を呼び出す。外部計算機側ではインストール後にこのファイル（インストール直後は、execute_remote_program_ssh.sample.shと言う名前）を必要に応じて編集して使用することで、別なコマンドを記述することが可能になっている。
+
+MIntへ送受信されるデータ
+----------------------
+
+MIntへ送受信されるデータは、「execute_remote_command.sample.sh」に記述しておく。
+
+* MIntから外部計算機への送信
+
+    + 「execute_remote_command.sample.sh」にパラメータとして記述したファイル。（モジュール内）
+* 外部計算機からMIntへの返信
+
+    + 計算結果としての出力ファイル。
+        - 計算専用ディレクトリを作成して計算され、そのディレクトリ以下のファイルは全て (★★)
+        - このディレクトリでの計算は、「execute_remote-side_program_ssh.sh」で行われるので、返信しないファイルはスクリプト終了前に削除されるようスクリプトを構成する。
+
+.. raw:: latex
+
+    \newpage
 
