@@ -131,7 +131,6 @@ SSH方式での利用方法
     + 必要資材の展開
     + 実行プログラムのパス・パラメータ・秘匿データの配置などの設定
 
-
 MInt側
 ------
 
@@ -286,23 +285,3 @@ MInt側
 
 .. [#calc_dir1] 外部計算機では、計算は/tmpなどに作成した一時ディレクトリで実行される。
 .. [#sample_name1] 本システムでは、MIntは「execute_remote_command.sample.sh」を実行し、外部計算機で実行を行うプログラムとして「execute_remote-side_program_ssh.sh」を呼び出す。外部計算機側ではインストール後にこのファイル（インストール直後は、execute_remote_program_ssh.sample.shと言う名前）を必要に応じて編集して使用することで、別なコマンドを記述することが可能になっている。
-
-MIntへ送受信されるデータ
---------------------------------
-
-MIntへ送受信されるデータは、「execute_remote_command.sample.sh」に記述しておく。
-
-* MIntから外部計算機への送信
-
-    + 「execute_remote_command.sample.sh」にパラメータとして記述したファイル。（モジュール内）
-* 外部計算機からMIntへの返信
-
-    + 計算結果としての出力ファイル。
-        - 計算専用ディレクトリを作成して計算され、そのディレクトリ以下のファイルは全て (★★)
-        - このディレクトリでの計算は、「execute_remote-side_program_ssh.sh」で行われるので、返信しないファイルはスクリプト終了前に削除されるようスクリプトを構成する。
-
-.. raw:: latex
-
-    \newpage
-
-
