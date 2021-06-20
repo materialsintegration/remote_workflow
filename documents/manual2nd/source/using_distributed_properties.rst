@@ -336,8 +336,8 @@ SSH方式、WebAPI方式のそれぞれの準備から実行までを記述す�
 
 .. _before_descide_items:
 
-準備
-====
+事前決定事項
+============
 
 事前に決定しておく項目は以下の通り。
 
@@ -355,7 +355,7 @@ SSH方式、WebAPI方式のそれぞれの準備から実行までを記述す�
         - MIntと外部計算機の間を受け渡すパラメータ・ファイルの設計
         - MInt側の前処理・後処理の設計
         - 外部計算機側スクリプトの設計
-3. インストール資材の取得
+3. 資材のインストール資材の取得
 
     + misrc_remote_workflowリポジトリの取得および展開場所の決定。
         - クライアント側のプログラム実行場所として使用する。
@@ -464,7 +464,7 @@ SSH方式の外部計算機側準備
 SSH方式のMInt側準備
 -------------------
 
-1. ワークフローの作成時に「misrc_remote_workflow/scripts/execute_remote_command.sample.sh」を必要な名称に変更し、内容を参考にしてSSH 経由実行が可能なように編集し、ワークフローから実行させる。
+1. 外部計算資源を利用するモジュールが「misrc_remote_workflow/scripts/execute_remote_command.sample.sh」に相当するスクリプト(実際にはリネームされている)が必要なパラメータとともに実行するように構成する。
 2. 1.を実行可能なワークフローを、外部計算を含まないものと同じ手順で作成する。
 
 WebAPI方式の外部計算機側準備
@@ -513,36 +513,21 @@ WebAPI方式のMInt側準備
 
      $ python mi_dicomapi.py
 
-ワークフローの作成
-================
+4. モジュールの実行プログラム内で、misrc_distributed_computing_assist_api/debug/mi-system-side/mi-system-wf.py を必要なパラメータとともに実行するように構成する。
 
-外部計算機を利用するワークフローの作成方法を記述する。
+その他MInt側事項
+------------
 
-共通事項
---------
+SSH, WebAPIによらず、予測モジュールでは下記の事項に留意する。
 
-SSH方式とWebAPI方式の両方に共通する事項である。
-
-* 予測モジュール
-
-    - pbsNodeGroup設定で、ssh-node01を設定する。他の計算機では外へアクセスすることができないため。
-    - pbsQueueなどCPU数などは指定できない。
-    - 外部計算機側で別途Torqueなどのバッチジョブシステムに依存する。
-
-SSH方式
--------
-
-モジュールの実行プログラムから misrc_remote_workflow/scripts/execute_remote_command.sample.sh に相当するスクリプトを必要なパラメータとともに実行するように構成する。
-
-WebAPI方式
-----------
-
-モジュールの実行プログラム内で、misrc_distributed_computing_assist_api/debug/mi-system-side/mi-system-wf.py を必要なパラメータとともに実行するように構成する。
+* pbsNodeGroup設定で、ssh-node01を設定する。他の計算機では外へアクセスすることができないため。
+* pbsQueueなどCPU数などは指定できない。
+* 外部計算機側で別途Torqueなどのバッチジョブシステムに依存する。
 
 .. _sample:
 
-サンプル
---------
+ワークフローサンプル
+==================
 
 misrc_remote_workflow/sample_dataに、ワークフロー実行用のサンプルが用意されている。
 これを利用して、ワークフローおよび外部計算機側のテストが可能である。
