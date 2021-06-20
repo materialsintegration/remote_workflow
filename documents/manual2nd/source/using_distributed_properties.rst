@@ -108,11 +108,6 @@ SSH方式とWebAPI方式では、下記のように外部計算機にアクセ�
 .. [#whatisRepository] 本機能を実現する資材などを格納したサーバ。GitHubを利用しているが、MIntがアカウントを発行したユーザのみダウンロードが可能である。
 .. [#whatisOtherthanfiles] misrc_remote_workflow/scripts以下にある、SSH方式でのexecute_remote-side_program_ssh.sample.shを複製したファイルと、WebAPI方式でのexecute_remote-side_program_api.sample.shおよびこれらを複製したスクリプトファイルを指す。
 
-ワークフローの廃止
-----------------
-
-本機能を利用したワークフローを廃止する際は、廃止届を提出する。廃止されたワークフローはMInt上で「無効」のステータスを付与され参照・実行不能となる。
-
 =================
 SSH方式での利用方法
 =================
@@ -707,7 +702,7 @@ MIntシステム側
 
 
 ワークフローの作成
-====================
+================
 
 外部計算機を利用するワークフローの作成方法を記述する。
 
@@ -745,6 +740,14 @@ misrc_remote_workflowリポジトリのsample_dataディレクトリに、ワー
 
 * kousoku_abaqus_api_version2.py : WebAPI方式の予測モジュール実行スクリプト
 * kousoku_abaqus_ssh_version2.py : SSH方式の予測モジュール実行スクリプト
+
+ワークフローの廃止
+================
+
+本機能を利用したワークフローを廃止する際は、ユーザが廃止届を提出する。廃止されたワークフローはMInt上で「無効」のステータスを付与され参照・実行不能となる。
+
+
+
 
 以上
 
