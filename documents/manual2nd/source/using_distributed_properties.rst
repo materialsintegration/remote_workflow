@@ -79,7 +79,7 @@ SSH方式とWebAPI方式の比較
 * WebAPI方式
     + 外部計算機からMIntのAPIサーバにポーリングを行い、要処理案件の有無を確認する。ポーリング間隔は数分程度を想定している。案件があれば必要なデータとコマンドをプルし、自らコマンドを実行し、APIで結果を送信する。
     + ファイルはBase64エンコードされ、サイズはエンコード後に2GiB未満である必要がある。
-    + コマンドラインなどの文字列はBase64エンコード無しで送受信される。(★★ホント？)
+    + コマンドラインなどの文字列はBase64エンコード無しで送受信される。(★ホント？★)
     + MIntのAPIサーバへのhttps(TCP/443)のアウトバウンドアクセスの許可が必要である。
 
 .. raw:: latex
@@ -127,7 +127,7 @@ SSH 方式での外部計算の実行イメージを下図に示す。
    module21-->module22
    module22--SSH経由-->module12
 
-動作イメージ (★★この節は必要か？)
+動作イメージ (★この節は必要か？★)
 -----------------------------------
 
 下記のサンプルが用意されている。
@@ -214,7 +214,7 @@ SSH 方式での外部計算の実行イメージを下図に示す。
     + 外部計算機上のプログラムを（Ｃ）のみで完結させ、本スクリプト群は用意しない運用も可。
 
 .. [#calc_dir1] 外部計算機では、処理は/tmpなどに作成した一時ディレクトリで実行される。
-.. [#sample_name1] 本システムでは、MIntは「execute_remote_command.sample.sh」を実行し、外部計算機で実行するプログラムとして「execute_remote-side_program_ssh.sh」を呼び出す。外部計算機側ではインストール後にこのファイル（インストール直後は、execute_remote_program_ssh.sample.sh(★★正しい？)と言う名前）を必要に応じて編集して使用することで、別なコマンドを記述することが可能になっている。
+.. [#sample_name1] 本システムでは、MIntは「execute_remote_command.sample.sh」を実行し、外部計算機で実行するプログラムとして「execute_remote-side_program_ssh.sh」を呼び出す。外部計算機側ではインストール後にこのファイル（インストール直後は、execute_remote_program_ssh.sample.sh(★正しい？★)と言う名前）を必要に応じて編集して使用することで、別なコマンドを記述することが可能になっている。
 
 .. raw:: latex
 
@@ -265,7 +265,7 @@ WebAPI方式での外部計算の実行イメージを下図に示す。
        B->>A:ジョブの終了要求
      end
 
-動作イメージ (★★この節は必要か？)
+動作イメージ (★この節は必要か？★)
 -----------------------------------
 
 下記のサンプルが用意されている。
@@ -489,14 +489,14 @@ WebAPI方式の外部計算機側準備
 
   .. code::
   
-     $ python mi-system-remote.py rme-u-tokyo (★★具体名が出ちゃってる？) https://nims.mintsys.jp <API token>
+     $ python mi-system-remote.py rme-u-tokyo (★具体名が出ちゃってる？★) https://nims.mintsys.jp <API token>
 
 
 WebAPI方式のMInt側準備
 ----------------------
 
 1. misrc_distributed_computing_assist_apiリポジトリを展開する。
-2. mi_dicomapi.pyをまだ動作させてなければ、mi_distributed_computing_assist.iniに外部計算機側の設定を実施する。動作させていたら、設定を再読み込みする。
+2. mi_dicomapi.pyが未動作であれば、mi_distributed_computing_assist.iniに外部計算機の設定を実施する。動作中であれば、設定を再読み込みする。
 
   .. code::
 
@@ -555,7 +555,7 @@ misrc_remote_workflow/sample_dataに、ワークフロー実行用のサンプ�
 ワークフローの廃止
 ================
 
-本機能を利用したワークフローを廃止する際は、ユーザが廃止届を提出する。廃止されたワークフローはMInt上で「無効」のステータスを付与され参照・実行不能となる。
+ユーザがワークフローの廃止届を提出する。当該ワークフローはMInt上で「無効」のステータスを付与され参照・実行不能となる。
 
 以上
 
