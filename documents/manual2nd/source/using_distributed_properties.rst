@@ -131,3 +131,47 @@ SSH方式での利用方法
     + 必要資材の展開
     + 実行プログラムのパス・パラメータ・秘匿データの配置などの設定
 
+処理概要
+=========
+
+* MInt側
+
+    + パラメータ類を外部計算機へ送信（外部計算機側にあるパラメータまたはファイルの指定も可）
+    + 外部計算機でプログラムの実行
+    + 結果ファイルの取得
+* 外部計算機側
+
+    + リポジトリから取得した資材の展開
+    + 実行プログラムパスの調整
+    + 秘匿データ（ある場合）の指定ディレクトリへの配置
+
+.. mermaid::
+   :caption: SSH実行のイメージ
+   :align: center
+
+   graph LR;
+
+   subgraph NIMS所外
+     input3[\秘匿データ/]
+     module21[専用プログラム実行]
+     module22[データ返却]
+   end
+   subgraph MIntシステム
+     subgraph ワークフロー
+       input1[\入力/]
+       module11[SSH実行開始]
+       module12[SSHデータ受け取り]
+       module13[計算]
+       output1[/出力\]
+     end
+   end
+
+   input1-->module11
+   module11-->module12
+   module12-->module13
+   module13-->output1
+   input3-->module21
+   module11--SSH経由-->module21
+   module21-->module22
+   module22--SSH経由-->module12
+
