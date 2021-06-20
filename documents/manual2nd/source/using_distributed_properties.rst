@@ -175,3 +175,34 @@ SSH方式での利用方法
    module21-->module22
    module22--SSH経由-->module12
 
+サンプルワークフロー
+------------------
+
+下記のサンプルが用意されている。
+
+.. figure:: images/remote_execution_image.eps
+  :scale: 70%
+  :align: center
+
+  遠隔実行のイメージ
+
+.. raw:: html
+
+   <A HREF="_images/remote_execution_image.png"><img src="_images/remote_execution_image.png" /></A>
+
+  遠隔実行のイメージ
+
+モジュール(Abaqus2017)と、外部計算用の計算ノード(計算ノード２)を用意することで、外部計算資源を利用したワークフローが実行可能となる。またAbaqus2017と謳ってはいるが実行するプログラムはこれに限らず、様々なコマンド、プログラム、アプリケーションを実行することが可能なように作られている。
+
+.. figure:: images/workflow_with_sshmodule.png
+  :scale: 80%
+  :align: center
+
+  動作検証用のワークフロー
+
+※赤枠の部分が遠隔実行の行われるモジュールである。
+
+.. raw:: latex
+
+   \newpage
+
