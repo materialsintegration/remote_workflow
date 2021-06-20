@@ -844,10 +844,10 @@ MIntシステム側
      $ python mi_dicomapi.py
 
 
-ワークフローについて
+ワークフローの作成
 ====================
 
-外部計算機資源利用を行うワークフローの作成の仕方を記述する。
+外部計算機を利用するワークフローの作成方法を記述する。
 
 共通事項
 --------
@@ -863,21 +863,23 @@ SSH方式とWebAPI方式の両方に共通する事項である。
 SSH方式
 -------
 
-予測モジュールの実行プログラムから misrc_remote_workflow/scripts/execute_remote_command.sample.sh またはこのファイルを専用に別名コピー編集したものを必要なパラメータとともに実行するように構成する。
+モジュールの実行プログラムから misrc_remote_workflow/scripts/execute_remote_command.sample.sh に相当するスクリプトを必要なパラメータとともに実行するように構成する。
 
 WebAPI方式
 ----------
 
-予測モジュールの実行プログラム内で、misrc_distributed_computing_assist_api/debug/mi-system-side/mi-system-wf.py を必要なパラメータとともに実行するように構成する。
+モジュールの実行プログラム内で、misrc_distributed_computing_assist_api/debug/mi-system-side/mi-system-wf.py を必要なパラメータとともに実行するように構成する。
 
 .. _sample:
 
 サンプル
 --------
 
-misrc_remote_workflowリポジトリにある、sample_dataディレクトリにテストで使用したワークフロー実行用のサンプルファイルが用意されている。これを利用してワークフローおよび外部計算機側の動作の実行テストが可能である。
+misrc_remote_workflowリポジトリのsample_dataディレクトリに、ワークフロー実行用のサンプルファイルが用意されている。
+これを利用して、ワークフローおよび外部計算機側のテストが可能である。
 
-また、misrc_remote_workflow/scriptsにこの時の予測モジュール実行プログラムがある。これを参考に別な予測モジュール実行プログラムを作成することが可能である。
+また、misrc_remote_workflow/scriptsに、この時のモジュール実行プログラムがある。
+これを参考に別な予測モジュール実行プログラムを作成することが可能である。
 
 * kousoku_abaqus_api_version2.py : WebAPI方式の予測モジュール実行スクリプト
 * kousoku_abaqus_ssh_version2.py : SSH方式の予測モジュール実行スクリプト
