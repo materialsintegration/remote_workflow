@@ -110,3 +110,8 @@ SSH方式とWebAPI方式では、下記のように外部計算機にアクセ�
 
 .. [#whatisRepository] 本機能を実現する資材などを格納したサーバのこと。GitHubを利用しているが、MIntがアカウントを発行したユーザのみダウンロードが可能である。アップロードはユーザには通常許可していない。
 .. [#whatisOtherthanfiles] misrc_remote_workflow/scripts以下にある、SSH方式でのexecute_remote-side_program_ssh.sample.shを複製したファイルと、WebAPI方式でのexecute_remote-side_program_api.sample.shおよびこれらを複製したスクリプトファイルを指す。
+
+ワークフローの廃止
+----------------
+
+本機能を利用したワークフローを廃止する際は、廃止届を提出する。廃止されたワークフローはMInt上で「無効」のステータスを付与され参照・実行不能となる。
