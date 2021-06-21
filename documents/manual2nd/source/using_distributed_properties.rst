@@ -447,10 +447,8 @@ SSH, WebAPI方式共通
 * ワーキングディレクトリ
     + 複雑なので省略する。
 
-MInt側注意事項
---------------
-
-SSH, WebAPIによらず、予測モジュールでは下記に注意する。
+(参考) MInt側注意事項
+---------------------
 
 * pbsNodeGroup設定でssh-node01を設定する。他の計算機では外へアクセスすることができないため。
 * pbsQueueなどCPU数などは指定できない。
@@ -513,8 +511,8 @@ SSH方式
 2. 外部計算機側で実行するスクリプトがあれば「remote-side_scripts」に配置する。
 3. MIntが外部計算機へログインして最初に実行するプログラム名は前述のとおり「execute_remote-side_program_ssh.sh」に固定されている。このため「execute_remote-side_program_ssh.sample.sh」をこの名前でコピーするか、新規に作成して、必要な手順をスクリプト化する。
 
-MInt側準備
-----------
+(参考)MInt側準備
+----------------
 
 1. 外部計算資源を利用するモジュールが「misrc_remote_workflow/scripts/execute_remote_command.sample.sh」に相当するスクリプト(実際にはリネームされている)が必要なパラメータとともに実行するように構成する。
 2. 1.を実行可能なワークフローを、外部計算を含まないものと同じ手順で作成する。
@@ -562,8 +560,8 @@ MInt側担当者に問い合わせて下記の情報を用意する。
   
      $ python mi-system-remote.py rme-u-tokyo (★具体名が出ちゃってる？★) https://nims.mintsys.jp <API token>
 
-MInt側準備
-----------
+(参考)MInt側準備
+----------------
 
 1. misrc_distributed_computing_assist_apiリポジトリを展開する。
 2. mi_dicomapi.pyが未動作であれば、mi_distributed_computing_assist.iniに外部計算機の設定を実施する。動作中であれば、設定を再読み込みする。
