@@ -405,13 +405,6 @@ misrc_remote_workflow/sample_dataに、ワークフローのサンプルが用�
 * kousoku_abaqus_ssh_version2.py : SSH方式のモジュール実行スクリプト
 * kousoku_abaqus_api_version2.py : WebAPI方式のモジュール実行スクリプト
 
-(参考) MInt側注意事項
----------------------
-
-* pbsNodeGroup設定でssh-node01を設定する。他の計算機では外へアクセスすることができないため。
-* pbsQueueなどCPU数などは指定できない。
-* 外部計算機側で別途Torqueなどのバッチジョブシステムに依存する。
-
 SSH方式
 =======
 
@@ -541,6 +534,13 @@ MInt側担当者に問い合わせて下記の情報を用意する。
 4. モジュールの実行プログラム内で、misrc_distributed_computing_assist_api/debug/mi-system-side/mi-system-wf.py を必要なパラメータとともに実行するように構成する。
 
 .. _sample:
+
+その他MInt側注意事項
+---------------------
+
+* pbsNodeGroup設定でssh-node01を設定する。他の計算機では外へアクセスすることができないため。
+* pbsQueueなどCPU数などは指定できない。
+* 外部計算機側で別途Torqueなどのバッチジョブシステムに依存する。
 
 ワークフローの廃止
 ================
