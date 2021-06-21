@@ -331,8 +331,9 @@ APIに設定したプログラムを外部計算機での実行に使用する�
 使用方法
 ========
 
-インストールおよびプログラムの準備など説明する。
-SSH方式、WebAPI方式のそれぞれの準備から実行までを記述する。
+SSH方式、WebAPI方式それぞれのインストールおよびプログラムの実行までを説明する。
+なお、外部計算機はbashスクリプトとPythonスクリプトの動作するLinuxホストを想定しているが、MInt側の通信が正常に確立できるならば、これ以外の環境でも構わない。
+また、外部計算機側で秘匿データを扱う際は、これに関する仕様をMInt側に開示する必要も無い。
 
 .. _before_descide_items:
 
@@ -346,15 +347,12 @@ SSH方式、WebAPI方式のそれぞれの準備から実行までを記述す�
     + 外部計算機側, MInt側のユーザアカウントの準備
     + SSH or WebAPIの方式選択
     + 認証関連情報の準備
-2. ワークフロー・モジュールの仕様策定
+2. ワークフロー・モジュールの仕様策定 (実装調査書の作成)
  
-    + 外部計算を利用する予定のワークフローの設計
-        - 実装調査書の作成
-    + ワークフロー内で外部計算を利用するモジュールの設計
-        - MIntと外部計算機の役割分担の決定
-        - MIntと外部計算機の間を受け渡すパラメータ・ファイルの設計
-        - MInt側の前処理・後処理の設計
-        - 外部計算機側スクリプトの設計
+    + MIntと外部計算機の役割分担の決定
+    + MIntと外部計算機の間を受け渡すパラメータ・ファイルの設計
+    + MInt側の前処理・後処理の設計
+    + 外部計算機側スクリプトの設計
 3. 資材の展開場所(パス)の決定
 
     + misrc_remote_workflowリポジトリの展開場所の決定
@@ -431,6 +429,48 @@ MInt側担当者に問い合わせて下記の情報を用意する。
 
 .. [#whatisRepository] 本機能を実現する資材などを格納したサーバ。GitHubを利用しているが、MIntがアカウントを発行したユーザのみダウンロードが可能である。
 .. [#whatisOtherthanfiles] misrc_remote_workflow/scripts以下にある、SSH方式でのexecute_remote-side_program_ssh.sample.shを複製したファイルと、WebAPI方式でのexecute_remote-side_program_api.sample.shおよびこれらを複製したスクリプトファイルを指す。
+
+外部計算機側のディレクトリ構造
+------------------------------
+
+資材展開後の外部計算機側のディレクトリ構造は以下のようになる。
+
+* ユーザーディレクトリ
+
+.. code-block:: none
+  
+  ~/ユーザーディレクトリ
+    + remote_workflow
+      + scripts
+        + input_data
+    + misrc_distributed_computing_assist_api
+      + debug
+        + remote-side
+
+* ワーキングディレクトリ
+
+.. code-block:: none
+
+  /tmp/<uuid>
+
+MInt側のディレクトリ構造
+------------------------
+
+資材展開後のMInt側のディレクトリ構造は以下のようになる。
+
+* ユーザーディレクトリ
+
+.. code-block:: none
+
+   ~/misystemディレクトリ
+    + remote_workflow
+      + scripts
+    + misrc_distributed_computing_assist_api
+      + debug
+        + mi-system-side
+     
+* ワーキングディレクトリ
+    + 複雑なので省略する。
 
 .. raw:: latex
 
