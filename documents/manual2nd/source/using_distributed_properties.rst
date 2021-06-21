@@ -392,27 +392,27 @@ SSH方式の認証情報
 鍵は既存のものでも良いが、下記のコマンドで新規に作成しても良い。
 
   .. code::
-   $ ssh-keygen -t rsa
-   Generating public/private rsa key pair.
-   Enter file in which to save the key (/home/misystem/.ssh/id_rsa):
-   Enter passphrase (empty for no passphrase): 
-   Enter same passphrase again: 
-   Your identification has been saved in /home/misystem/.ssh/id_test_rsa.
-   Your public key has been saved in /home/misystem/.ssh/id_test_rsa.pub.
-   The key fingerprint is:
-   fd:f6:ab:3c:55:8d:f5:4d:52:60:27:2b:9b:b8:49:fb misystem@zabbix-server
-   The key's randomart image is:
-   +--[ RSA 2048]----+
-   |              +oo|
-   |             ..+o|
-   |            . .=+|
-   |         . . +. =|
-   |        S + o  . |
-   |         . =  .  |
-   |          + o.   |
-   |           +..   |
-   |            Eoo. |
-   +-----------------+
+     $ ssh-keygen -t rsa
+     Generating public/private rsa key pair.
+     Enter file in which to save the key (/home/misystem/.ssh/id_rsa):
+     Enter passphrase (empty for no passphrase): 
+     Enter same passphrase again: 
+     Your identification has been saved in /home/misystem/.ssh/id_test_rsa.
+     Your public key has been saved in /home/misystem/.ssh/id_test_rsa.pub.
+     The key fingerprint is:
+     fd:f6:ab:3c:55:8d:f5:4d:52:60:27:2b:9b:b8:49:fb misystem@zabbix-server
+     The key's randomart image is:
+     +--[ RSA 2048]----+
+     |              +oo|
+     |             ..+o|
+     |            . .=+|
+     |         . . +. =|
+     |        S + o  . |
+     |         . =  .  |
+     |          + o.   |
+     |           +..   |
+     |            Eoo. |
+     +-----------------+
 
 WebAPI方式の認証関連情報
 ========================
