@@ -392,6 +392,7 @@ SSH方式の認証情報
 鍵は既存のものでも良いが、下記のコマンドで新規に作成しても良い。
 
   .. code::
+
      $ ssh-keygen -t rsa
      Generating public/private rsa key pair.
      Enter file in which to save the key (/home/misystem/.ssh/id_rsa):
