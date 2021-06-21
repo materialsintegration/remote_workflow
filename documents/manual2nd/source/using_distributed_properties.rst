@@ -384,8 +384,83 @@ SSH方式、WebAPI方式それぞれのインストールおよびプログラ�
     + misrc_distributed_computing_assist_apiリポジトリの展開場所の決定
         - WebAPI方式の場合に必要
 
-SSH方式の認証情報
-=================
+SSH, WebAPI方式共通
+==================
+
+資材の入手
+----------
+
+外部計算資源の利用に必要な資材は GitHub 上のリポジトリ [#whatisRepository]_ に用意されている。
+ユーザは外部計算機上にこれらを展開し、必要なカスタマイズを行う。
+
+- misrc_remote_workflow 
+
+    - 主に外部計算機側で実行されるスクリプトのサンプルが同梱されている。
+- misrc_distributed_computing_assist.api 
+
+    - WebAPI方式用のプログラムおよびサンプルが同梱されている。
+    - MInt側資材は「debug/mi-system-side」、外部計算機側資材は「debug/remote-side」にある。 
+
+リポジトリ上の資材に関しては、以下の条件が適用される。
+
+1. 一部のファイル [#whatisOtherthanfiles]_ を除いてライセンスは「★何？★」が適用され、ソースコードの著作権はMIntが保持する。
+2. ユーザはダウンロードしたファイルを改変できるが、この改変が原因で外部計算を利用するワークフローが動作しなかった場合、MInt側は責を負わない。(★この表現で良いのか？★)
+3. ユーザが改変したファイルの帰属は………… (★なに？★)
+4. 外部計算機側独自の改変を1. 以外のスクリプトに適用したい場合は、MInt担当者(★これでＯＫ？★)と個別に協議する。
+
+.. [#whatisRepository] 本機能を実現する資材などを格納したサーバ。GitHubを利用しているが、MIntがアカウントを発行したユーザのみダウンロードが可能である。
+.. [#whatisOtherthanfiles] misrc_remote_workflow/scripts以下にある、SSH方式でのexecute_remote-side_program_ssh.sample.shを複製したファイルと、WebAPI方式でのexecute_remote-side_program_api.sample.shおよびこれらを複製したスクリプトファイルを指す。
+
+資材展開後の外部計算機側のディレクトリ構造は以下のようになる。
+
+* ユーザーディレクトリ
+
+.. code-block:: none
+  
+  ~/ユーザーディレクトリ
+    + remote_workflow
+      + scripts
+        + input_data
+    + misrc_distributed_computing_assist_api
+      + debug
+        + remote-side
+
+* ワーキングディレクトリ
+
+.. code-block:: none
+
+  /tmp/<uuid>
+
+資材展開後のMInt側のディレクトリ構造は以下のようになる。
+
+* ユーザーディレクトリ
+
+.. code-block:: none
+
+   ~/misystemディレクトリ
+    + remote_workflow
+      + scripts
+    + misrc_distributed_computing_assist_api
+      + debug
+        + mi-system-side
+     
+* ワーキングディレクトリ
+    + 複雑なので省略する。
+
+MInt側注意事項
+--------------
+
+SSH, WebAPIによらず、予測モジュールでは下記に注意する。
+
+* pbsNodeGroup設定でssh-node01を設定する。他の計算機では外へアクセスすることができないため。
+* pbsQueueなどCPU数などは指定できない。
+* 外部計算機側で別途Torqueなどのバッチジョブシステムに依存する。
+
+SSH方式
+=======
+
+公開鍵の用意
+----------
 
 パスフレーズ無しの公開鍵認証を原則とする。
 外部計算機側で作成したRSA公開鍵 (例: ~/.ssh/id_rsa.pub) をMInt担当者に送付する。
@@ -415,89 +490,8 @@ SSH方式の認証情報
      |            Eoo. |
      +-----------------+
 
-WebAPI方式の認証関連情報
-========================
-
-MInt側担当者に問い合わせて下記の情報を用意する。
-
-* ホスト情報
-
-    + MInt側でAPIの発行者を識別するための文字列。ユーザ企業のドメインなどと一致させる必要は無い。
-* APIトークン
-
-    + MIntのAPI認証システムを使用するためのトークン。MInt担当者に問い合わせて取得する。
-* MIntのURL
-
-    + MIntのURL(エンドポイントは不要)を、MInt担当者に問い合わせておく。
-
-資材の入手
-==========
-
-外部計算資源の利用に必要な資材は GitHub 上のリポジトリ [#whatisRepository]_ に用意されている。
-ユーザは外部計算機上にこれらを展開し、必要なカスタマイズを行う。
-
-- misrc_remote_workflow 
-
-    - 主に外部計算機側で実行されるスクリプトのサンプルが同梱されている。
-- misrc_distributed_computing_assist.api 
-
-    - WebAPI方式用のプログラムおよびサンプルが同梱されている。
-    - MInt側資材は「debug/mi-system-side」、外部計算機側資材は「debug/remote-side」にある。 
-
-リポジトリ上の資材に関しては、以下の条件が適用される。
-
-1. 一部のファイル [#whatisOtherthanfiles]_ を除いてライセンスは「★何？★」が適用され、ソースコードの著作権はMIntが保持する。
-2. ユーザはダウンロードしたファイルを改変できるが、この改変が原因で外部計算を利用するワークフローが動作しなかった場合、MInt側は責を負わない。(★この表現で良いのか？★)
-3. ユーザが改変したファイルの帰属は………… (★なに？★)
-4. 外部計算機側独自の改変を1. 以外のスクリプトに適用したい場合は、MInt担当者(★これでＯＫ？★)と個別に協議する。
-
-.. [#whatisRepository] 本機能を実現する資材などを格納したサーバ。GitHubを利用しているが、MIntがアカウントを発行したユーザのみダウンロードが可能である。
-.. [#whatisOtherthanfiles] misrc_remote_workflow/scripts以下にある、SSH方式でのexecute_remote-side_program_ssh.sample.shを複製したファイルと、WebAPI方式でのexecute_remote-side_program_api.sample.shおよびこれらを複製したスクリプトファイルを指す。
-
-外部計算機側のディレクトリ構造
-------------------------------
-
-資材展開後の外部計算機側のディレクトリ構造は以下のようになる。
-
-* ユーザーディレクトリ
-
-.. code-block:: none
-  
-  ~/ユーザーディレクトリ
-    + remote_workflow
-      + scripts
-        + input_data
-    + misrc_distributed_computing_assist_api
-      + debug
-        + remote-side
-
-* ワーキングディレクトリ
-
-.. code-block:: none
-
-  /tmp/<uuid>
-
-MInt側のディレクトリ構造
-------------------------
-
-資材展開後のMInt側のディレクトリ構造は以下のようになる。
-
-* ユーザーディレクトリ
-
-.. code-block:: none
-
-   ~/misystemディレクトリ
-    + remote_workflow
-      + scripts
-    + misrc_distributed_computing_assist_api
-      + debug
-        + mi-system-side
-     
-* ワーキングディレクトリ
-    + 複雑なので省略する。
-
-SSH方式の外部計算機側準備
-=========================
+資材の展開
+----------
 
 1. misrc_remote_workflowリポジトリを展開する。
 
@@ -519,14 +513,32 @@ SSH方式の外部計算機側準備
 2. 外部計算機側で実行するスクリプトがあれば「remote-side_scripts」に配置する。
 3. MIntが外部計算機へログインして最初に実行するプログラム名は前述のとおり「execute_remote-side_program_ssh.sh」に固定されている。このため「execute_remote-side_program_ssh.sample.sh」をこの名前でコピーするか、新規に作成して、必要な手順をスクリプト化する。
 
-SSH方式のMInt側準備
-===================
+MInt側準備
+----------
 
 1. 外部計算資源を利用するモジュールが「misrc_remote_workflow/scripts/execute_remote_command.sample.sh」に相当するスクリプト(実際にはリネームされている)が必要なパラメータとともに実行するように構成する。
 2. 1.を実行可能なワークフローを、外部計算を含まないものと同じ手順で作成する。
 
-WebAPI方式の外部計算機側準備
-============================
+WebAPI方式
+==========
+
+認証関連情報の用意
+------------------
+
+MInt側担当者に問い合わせて下記の情報を用意する。
+
+* ホスト情報
+
+    + MInt側でAPIの発行者を識別するための文字列。ユーザ企業のドメインなどと一致させる必要は無い。
+* APIトークン
+
+    + MIntのAPI認証システムを使用するためのトークン。MInt担当者に問い合わせて取得する。
+* MIntのURL
+
+    + MIntのURL(エンドポイントは不要)を、MInt担当者に問い合わせておく。
+
+資材の展開
+----------
 
 1. misrc_distributed_computing_assist_apiリポジトリを展開する。
 
@@ -550,9 +562,8 @@ WebAPI方式の外部計算機側準備
   
      $ python mi-system-remote.py rme-u-tokyo (★具体名が出ちゃってる？★) https://nims.mintsys.jp <API token>
 
-
-WebAPI方式のMInt側準備
-======================
+MInt側準備
+----------
 
 1. misrc_distributed_computing_assist_apiリポジトリを展開する。
 2. mi_dicomapi.pyが未動作であれば、mi_distributed_computing_assist.iniに外部計算機の設定を実施する。動作中であれば、設定を再読み込みする。
@@ -572,15 +583,6 @@ WebAPI方式のMInt側準備
      $ python mi_dicomapi.py
 
 4. モジュールの実行プログラム内で、misrc_distributed_computing_assist_api/debug/mi-system-side/mi-system-wf.py を必要なパラメータとともに実行するように構成する。
-
-その他MInt側事項
-==============
-
-SSH, WebAPIによらず、予測モジュールでは下記に注意する。
-
-* pbsNodeGroup設定でssh-node01を設定する。他の計算機では外へアクセスすることができないため。
-* pbsQueueなどCPU数などは指定できない。
-* 外部計算機側で別途Torqueなどのバッチジョブシステムに依存する。
 
 .. _sample:
 
