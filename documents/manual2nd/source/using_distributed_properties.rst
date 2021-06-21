@@ -511,7 +511,7 @@ SSH方式
 2. 外部計算機側で実行するスクリプトがあれば「remote-side_scripts」に配置する。
 3. MIntが外部計算機へログインして最初に実行するプログラム名は前述のとおり「execute_remote-side_program_ssh.sh」に固定されている。このため「execute_remote-side_program_ssh.sample.sh」をこの名前でコピーするか、新規に作成して、必要な手順をスクリプト化する。
 
-(参考)MInt側準備
+(参考)MInt側作業
 ----------------
 
 1. 外部計算資源を利用するモジュールが「misrc_remote_workflow/scripts/execute_remote_command.sample.sh」に相当するスクリプト(実際にはリネームされている)が必要なパラメータとともに実行するように構成する。
@@ -560,7 +560,7 @@ MInt側担当者に問い合わせて下記の情報を用意する。
   
      $ python mi-system-remote.py rme-u-tokyo (★具体名が出ちゃってる？★) https://nims.mintsys.jp <API token>
 
-(参考)MInt側準備
+(参考)MInt側作業
 ----------------
 
 1. misrc_distributed_computing_assist_apiリポジトリを展開する。
@@ -593,8 +593,8 @@ misrc_remote_workflow/sample_dataに、ワークフロー実行用のサンプ�
 また、misrc_remote_workflow/scriptsに、この時のモジュール実行プログラムがある。
 これを参考に、他のモジュール実行プログラムを作成することが可能である。
 
-* kousoku_abaqus_api_version2.py : WebAPI方式のモジュール実行スクリプト
 * kousoku_abaqus_ssh_version2.py : SSH方式のモジュール実行スクリプト
+* kousoku_abaqus_api_version2.py : WebAPI方式のモジュール実行スクリプト
 
 ワークフローの廃止
 ================
