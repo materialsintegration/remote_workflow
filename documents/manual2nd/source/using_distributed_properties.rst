@@ -43,7 +43,7 @@ MIntには、ワークフローを構成するモジュール内の一部分の�
 利用イメージ
 ============
 
-外部計算資源の利用イメージを(★図番号★)に示す。
+外部計算資源の利用イメージを( :numref:`image_for_use_eps` )に示す。
 
 * MIntはNIMS構内のDMZ [#whatisDMZ]_ に存在する。
 * ユーザはMInt上に、外部計算を利用するモジュールを含んだワークフローを持つ。当該モジュールやワークフローの参照・実行権限は自機関内などに限定できる。
@@ -57,11 +57,15 @@ MIntには、ワークフローを構成するモジュール内の一部分の�
   外部計算資源の利用イメージ
   
 .. figure:: images/image_for_use.eps
-  :scale: 70%
+  :scale: 60%
   :align: center
+  :name: image_for_use_eps
 
   外部計算資源の利用イメージ
 
+.. raw:: latex
+
+    \newpage
 
 .. [#whatisDMZ] 物理的にはNIMS構内のサーバ室に存在するが、ネットワーク的には機構内LANとインターネットの双方からファイアウォールで切り離された領域。
 
@@ -92,7 +96,9 @@ SSH方式
 動作イメージ
 ------------
 
-SSH 方式での外部資源利用のイメージを(★図番号★)に示す。
+SSH 方式での外部資源利用のイメージを( :numref:`ssh_project_create_flow` )に示す。
+
+.. _ssh_project_create_flow:
 
 .. mermaid::
    :caption: SSH方式の外部資源利用のイメージ
@@ -173,16 +179,15 @@ SSH方式の外部資源利用を含むワークフローを、MIntのワーク�
 * モジュール
 
     + MIntのワークフローシステムによって実行されるモジュール
-    + （Ａ）を実行する
+    + プログラム（Ａ）を実行する
 * プログラム（Ａ）
 
+    + モジュールによって実行されるプログラム
     + モジュール固有の前処理を行う。
     + モジュールごとに任意の名前で用意する。
     + :ref:`how_to_use` で説明する編集を行う。
     + （Ｂ）を実行する。
-* プログラム（Ｂ）
-
-このプログラムが外部計算機と通信を行う。
+* プログラム（Ｂ） このプログラムが外部計算機と通信を行う。
 
     + 外部計算の準備を行う。
     + 名前は「execute_remote_command.sh」固定である。(インストール資材に含まれるサンプルファイルはリネームが必要)
@@ -201,7 +206,7 @@ SSH方式の外部資源利用を含むワークフローを、MIntのワーク�
     + 外部計算機上のプログラムを（Ｃ）のみで完結させ、本スクリプト群は用意しない運用も可。
 
 .. [#calc_dir1] 外部計算機では、処理は/tmpなどに作成した一時ディレクトリで実行される。
-.. [#sample_name1] 本システムでは、MIntは「execute_remote_command.sample.sh」を実行し、外部計算機で実行するプログラムとして「execute_remote-side_program_ssh.sh」を呼び出す。外部計算機側ではインストール後にこのファイル（インストール直後は、execute_remote_program_ssh.sample.sh(★正しい？★)と言う名前）を必要に応じて編集して使用することで、別なコマンドを記述することが可能になっている。
+.. [#sample_name1] 本システムでは、MIntは「execute_remote_command.sample.sh」を実行し、外部計算機で実行するプログラムとして「execute_remote-side_program_ssh.sh」を呼び出す。外部計算機側ではインストール後にこのファイル（インストール直後は、execute_remote_program_ssh.sample.shと言う名前）を必要に応じて編集して使用することで、別なコマンドを記述することが可能になっている。
 
 .. raw:: latex
 
@@ -213,7 +218,9 @@ WebAPI方式
 動作イメージ
 ------------
 
-WebAPI方式での外部計算の実行イメージを(★図番号★)に示す。
+WebAPI方式での外部計算の実行イメージを( :numref:`WebAPI方式の流れ` )に示す。
+
+.. _WebAPI方式の流れ:
 
 .. mermaid::
    :caption: WebAPI方式の流れ
@@ -288,7 +295,7 @@ WebAPI方式の外部資源利用を含むワークフローを、MIntのワー�
 
      participant A as モジュール
      participant B as プログラム（Ａ）
-     participant C as API
+     participant C as WebAPI
      participant D as プログラム（Ｃ）
      participant E as プログラム（Ｄ）
 
@@ -300,10 +307,33 @@ WebAPI方式の外部資源利用を含むワークフローを、MIntのワー�
      D->>C:（Ｃ）がhttps経由でAPI発行
      D->>E:（Ｃ）が実行
 
-APIに設定したプログラムを外部計算機での実行に使用する。
-サンプルワークフローでは「execute_remote-side_program_api.sh」となっている。
-外部計算機側ではインストール後にこのファイル（インストール直後は、execute_remote_program_api.sample.shと言う名前）を必要に応じて編集して使用する。
-(★SSH方式の書きぶりに揃える。追記by間中さん★)
+* モジュール
+
+    + MIntのワークフローシステムによって実行されるモジュール
+    + プログラム（Ａ）を実行する
+* プログラム（Ａ）
+
+    + モジュールによって実行されるプログラム
+    + モジュール固有の前処理を行う。
+    + モジュールごとに任意の名前で用意する。
+    + misrc_distributed_computing_assist_api/debug/mi-system-side/mi-system-wf.pyを実行しておく。
+    + WebAPIへ計算の情報を登録する。
+* WebAPI (このプログラムがMIntシステムと外部計算機との通信を中継する。)
+
+    + 外部計算の準備を行う。
+        - 送受信するファイルはパラメータとしてあらかじめ設定しておく。
+    + WebAPI経由で（Ｃ）からのアクセスを受け付ける
+    + （Ａ）から計算の情報登録が無い限り、（Ｃ）からアクセスがあっても計算は始まらない。
+* プログラム（Ｃ）
+
+    + ポーリングプログラムである。
+    + misrc_distributed_computing_assist_api/debug/remote-side/mi-system-remote.pyを実行しておく。
+    + 外部計算機上で実行するプログラム名は、このプログラム経由でMIntシステムから受信され、このプログラムが実行する。
+* プログラム（Ｄ）
+
+    + （Ｃ）から実行される外部計算用スクリプト。
+    + 名前は任意。（プログラム（Ｃ）経由で伝えられるため、あらかじめMIntシステム側に設定が必要）
+    + 「execute_remote_command_api.sh」を参考にして作成しておく。
 
 .. _how_to_use:
 
@@ -395,15 +425,16 @@ SSH, WebAPI方式共通
 ワークフローサンプル
 ------------------
 
-(★商用ライセンス不要の軽いサンプルに差し替えるby間中さん★)
-
-misrc_remote_workflow/sample_dataに、ワークフローのサンプルが用意されている。
+misrc_remote_workflow/sample_dataに、Abaqus実行環境が用意可能な場合に使用可能なワークフローおよび、そのサンプル入力ファイルが用意されている。
 これを利用して、MInt側と外部計算機側のテストが可能である。
 また、misrc_remote_workflow/scriptsに、この時のモジュール実行プログラムがある。
 これを参考に、他のモジュール実行プログラムを作成することが可能である。
+利用する際にはMIntシステム側と調整が必要である。
 
 * kousoku_abaqus_ssh_version2.py : SSH方式のモジュール実行スクリプト
 * kousoku_abaqus_api_version2.py : WebAPI方式のモジュール実行スクリプト
+
+もっと簡易な例題ワークフローは現在準備中である。
 
 SSH方式
 =======
@@ -509,7 +540,7 @@ MInt側担当者に問い合わせて下記の情報を用意する。
 
   .. code::
   
-     $ python mi-system-remote.py rme-u-tokyo (★具体名が出ちゃってる？★) https://nims.mintsys.jp <API token>
+     $ python mi-system-remote.py <ホスト情報> https://nims.mintsys.jp <API token>
 
 (参考)MInt側作業
 ----------------

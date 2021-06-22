@@ -141,6 +141,12 @@ latex_elements = {
         r'\setlength{\parskip}{0ex}',
         # 字下げ
         # r'\setlength{\parindent}{1zw}',
+        # 「n章」と「章タイトル」を１行に出力
+        #r'\usepackage{titlesec}',
+        #r'',
+        #r'\titleformat{\chapter}[block]',
+        #r'  {\normalfont\huge\bfseries}{\thechapter.}{1em}{\Huge}',
+        #r'  \titlespacing*{\chapter}{0pt}{-19pt}{0pt}',
     ])
 }
 
