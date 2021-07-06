@@ -26,7 +26,7 @@ author = 'SIP-MI'
 # The short X.Y version
 version = ''
 # The full version, including alpha/beta/rc tags
-release = '0.2.0'
+release = '1.0.0'
 
 # mermaid compile? command setting
 mermaid_cmd = '/home/misystem/node_modules/.bin/mmdc'
