@@ -124,7 +124,7 @@
 <div class="section" id="id6">
 <h3><span class="section-number">3.1.1. </span>動作イメージ<a class="headerlink" href="#id6" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <p>SSH 方式での外部資源利用のイメージを( <a class="reference internal" href="#ssh-project-create-flow"><span class="std std-numref">図 3.1</span></a> )に示す。</p>
-<div class="figure align-center" id="id28">
+<div class="figure align-center" id="id29">
 <span id="ssh-project-create-flow"></span>
             <style>
             /* mermaid issue 527 workaround */
@@ -158,7 +158,7 @@ input3--&gt;module21
 module11--SSH経由--&gt;module21
 module21--&gt;module22
 module22--SSH経由--&gt;module12
-        </div><p class="caption"><span class="caption-number">図 3.1 </span><span class="caption-text">SSH方式の外部資源利用のイメージ</span><a class="headerlink" href="#id28" title="この画像へのパーマリンク">¶</a></p>
+        </div><p class="caption"><span class="caption-number">図 3.1 </span><span class="caption-text">SSH方式の外部資源利用のイメージ</span><a class="headerlink" href="#id29" title="この画像へのパーマリンク">¶</a></p>
 </div>
 </div>
 <div class="section" id="id7">
@@ -166,15 +166,15 @@ module22--SSH経由--&gt;module12
 <p>SSH方式の外部資源利用を含むワークフローを、MIntのワークフローデザイナで表示した例を示す。
 赤枠の部分が遠隔実行の行われるモジュールである。
 なお、本ワークフローは動作検証用サンプルとして、<a class="reference internal" href="#how-to-use"><span class="std std-ref">使用方法</span></a> で説明するインストール資材に含まれている。</p>
-<div class="figure align-center" id="id29">
+<div class="figure align-center" id="id30">
 <a class="reference internal image-reference" href="_images/workflow_with_sshmodule.png"><img alt="_images/workflow_with_sshmodule.png" src="_images/workflow_with_sshmodule.png" style="width: 796.0px; height: 441.6px;" /></a>
-<p class="caption"><span class="caption-number">図 3.2 </span><span class="caption-text">動作検証用のワークフロー</span><a class="headerlink" href="#id29" title="この画像へのパーマリンク">¶</a></p>
+<p class="caption"><span class="caption-number">図 3.2 </span><span class="caption-text">動作検証用のワークフロー</span><a class="headerlink" href="#id30" title="この画像へのパーマリンク">¶</a></p>
 </div>
 </div>
 <div class="section" id="id8">
 <h3><span class="section-number">3.1.3. </span>モジュール内の処理<a class="headerlink" href="#id8" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <p>外部資源利用を行うモジュール内で、外部計算機側の処理が実行されるまでの流れを下記に示す。</p>
-<div class="figure align-center" id="id30">
+<div class="figure align-center" id="id31">
 
             <style>
             /* mermaid issue 527 workaround */
@@ -198,7 +198,7 @@ module22--SSH経由--&gt;module12
   B-&gt;&gt;C:（Ａ）が実行
   C-&gt;&gt;D:（Ｂ）がSSH経由で外部計算機の（Ｃ）を実行
   D-&gt;&gt;E:（Ｃ）が実行
-        </div><p class="caption"><span class="caption-number">図 3.3 </span><span class="caption-text">SSH接続経由によるコマンド実行の流れ</span><a class="headerlink" href="#id30" title="この画像へのパーマリンク">¶</a></p>
+        </div><p class="caption"><span class="caption-number">図 3.3 </span><span class="caption-text">SSH接続経由によるコマンド実行の流れ</span><a class="headerlink" href="#id31" title="この画像へのパーマリンク">¶</a></p>
 </div>
 <ul>
 <li><p>モジュール</p>
@@ -224,7 +224,7 @@ module22--SSH経由--&gt;module12
 <blockquote>
 <div><ul>
 <li><p>外部計算の準備を行う。</p></li>
-<li><p>名前は「execute_remote_command.sh」固定である。(インストール資材に含まれるサンプルファイルはリネームが必要)</p></li>
+<li><p>名前は <strong>execute_remote_command.sh</strong> 固定である。(インストール資材に含まれるサンプルファイルはリネームが必要)</p></li>
 <li><p><a class="reference internal" href="#how-to-use"><span class="std std-ref">使用方法</span></a> で説明する編集を行う。</p></li>
 <li><p>SSH経由で（Ｃ）を実行する。</p>
 <blockquote>
@@ -240,7 +240,7 @@ module22--SSH経由--&gt;module12
 <li><p>プログラム（Ｃ）</p>
 <blockquote>
 <div><ul class="simple">
-<li><p>名前は「execute_remote-side_program_ssh.sh」固定である。(インストール資材に含まれるサンプルファイルはリネームが必要)</p></li>
+<li><p>名前は <strong>execute_remote-side_program_ssh.sh</strong> 固定である。(インストール資材に含まれるサンプルファイルはリネームが必要)</p></li>
 <li><p>外部計算機上で実行するプログラムは、ここへシェルスクリプトとして記述する。</p></li>
 </ul>
 </div></blockquote>
@@ -259,7 +259,7 @@ module22--SSH経由--&gt;module12
 <dd><p>外部計算機では、処理は/tmpなどに作成した一時ディレクトリで実行される。</p>
 </dd>
 <dt class="label" id="sample-name1"><span class="brackets">3</span></dt>
-<dd><p>本システムでは、MIntは「execute_remote_command.sample.sh」を実行し、外部計算機で実行するプログラムとして「execute_remote-side_program_ssh.sh」を呼び出す。外部計算機側ではインストール後にこのファイル（インストール直後は、execute_remote_program_ssh.sample.shと言う名前）を必要に応じて編集して使用することで、別なコマンドを記述することが可能になっている。</p>
+<dd><p>本システムでは、MIntは <strong>execute_remote_command.sample.sh</strong> を実行し、外部計算機で実行するプログラムとして <strong>execute_remote-side_program_ssh.sh</strong> を呼び出す。外部計算機側ではインストール後にこのファイル（インストール直後は、execute_remote_program_ssh.sample.shと言う名前）を必要に応じて編集して使用することで、別なコマンドを記述することが可能になっている。</p>
 </dd>
 </dl>
 </div>
@@ -269,7 +269,7 @@ module22--SSH経由--&gt;module12
 <div class="section" id="id10">
 <h3><span class="section-number">3.2.1. </span>動作イメージ<a class="headerlink" href="#id10" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <p>WebAPI方式での外部計算の実行イメージを( <a class="reference internal" href="#id11"><span class="std std-numref">図 3.4</span></a> )に示す。</p>
-<div class="figure align-center" id="id31">
+<div class="figure align-center" id="id32">
 <span id="id11"></span>
             <style>
             /* mermaid issue 527 workaround */
@@ -310,7 +310,7 @@ C-&gt;&gt;B:リクエスト
     C-&gt;&gt;B:計算結果の返却応答
     B-&gt;&gt;A:ジョブの終了要求
   end
-        </div><p class="caption"><span class="caption-number">図 3.4 </span><span class="caption-text">WebAPI方式の流れ</span><a class="headerlink" href="#id31" title="この画像へのパーマリンク">¶</a></p>
+        </div><p class="caption"><span class="caption-number">図 3.4 </span><span class="caption-text">WebAPI方式の流れ</span><a class="headerlink" href="#id32" title="この画像へのパーマリンク">¶</a></p>
 </div>
 </div>
 <div class="section" id="id12">
@@ -318,16 +318,16 @@ C-&gt;&gt;B:リクエスト
 <p>WebAPI方式の外部資源利用を含むワークフローを、MIntのワークフローデザイナで表示した例を示す。
 赤枠の部分が遠隔実行の行われるモジュールである。
 なお、本ワークフローは動作検証用サンプルとして、<a class="reference internal" href="#how-to-use"><span class="std std-ref">使用方法</span></a> で説明するインストール資材に含まれている。</p>
-<div class="figure align-center" id="id32">
+<div class="figure align-center" id="id33">
 <a class="reference internal image-reference" href="_images/workflow_with_apimodule.png"><img alt="_images/workflow_with_apimodule.png" src="_images/workflow_with_apimodule.png" style="width: 965.0px; height: 519.0px;" /></a>
-<p class="caption"><span class="caption-number">図 3.5 </span><span class="caption-text">検証用ワークフロー</span><a class="headerlink" href="#id32" title="この画像へのパーマリンク">¶</a></p>
+<p class="caption"><span class="caption-number">図 3.5 </span><span class="caption-text">検証用ワークフロー</span><a class="headerlink" href="#id33" title="この画像へのパーマリンク">¶</a></p>
 </div>
 <p>※赤枠の部分が外部計算資源を利用するモジュールである。</p>
 </div>
 <div class="section" id="id13">
 <h3><span class="section-number">3.2.3. </span>モジュール内の処理<a class="headerlink" href="#id13" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <p>ワークフローの当該モジュール内で外部計算機側の処理が実行されるまでの流れを下記に示す。</p>
-<div class="figure align-center" id="id33">
+<div class="figure align-center" id="id34">
 
             <style>
             /* mermaid issue 527 workaround */
@@ -351,7 +351,7 @@ C-&gt;&gt;B:リクエスト
   B-&gt;&gt;C:（Ａ）がhttps経由でAPI発行
   D-&gt;&gt;C:（Ｃ）がhttps経由でAPI発行
   D-&gt;&gt;E:（Ｃ）が実行
-        </div><p class="caption"><span class="caption-number">図 3.6 </span><span class="caption-text">WebAPI方式でのコマンドの流れ</span><a class="headerlink" href="#id33" title="この画像へのパーマリンク">¶</a></p>
+        </div><p class="caption"><span class="caption-number">図 3.6 </span><span class="caption-text">WebAPI方式でのコマンドの流れ</span><a class="headerlink" href="#id34" title="この画像へのパーマリンク">¶</a></p>
 </div>
 <ul>
 <li><p>モジュール</p>
@@ -368,7 +368,7 @@ C-&gt;&gt;B:リクエスト
 <li><p>モジュールによって実行されるプログラム</p></li>
 <li><p>モジュール固有の前処理を行う。</p></li>
 <li><p>モジュールごとに任意の名前で用意する。</p></li>
-<li><p>misrc_distributed_computing_assist_api/debug/mi-system-side/mi-system-wf.pyを実行しておく。</p></li>
+<li><p><strong>misrc_distributed_computing_assist_api/debug/mi-system-side/mi-system-wf.py</strong> を実行しておく。</p></li>
 <li><p>WebAPIへ計算の情報を登録する。</p></li>
 </ul>
 </div></blockquote>
@@ -392,7 +392,7 @@ C-&gt;&gt;B:リクエスト
 <blockquote>
 <div><ul class="simple">
 <li><p>ポーリングプログラムである。</p></li>
-<li><p>misrc_distributed_computing_assist_api/debug/remote-side/mi-system-remote.pyを実行しておく。</p></li>
+<li><p><strong>misrc_distributed_computing_assist_api/debug/remote-side/mi-system-remote.py</strong> を実行しておく。</p></li>
 <li><p>外部計算機上で実行するプログラム名は、このプログラム経由でMIntシステムから受信され、このプログラムが実行する。</p></li>
 </ul>
 </div></blockquote>
@@ -402,7 +402,7 @@ C-&gt;&gt;B:リクエスト
 <div><ul class="simple">
 <li><p>（Ｃ）から実行される外部計算用スクリプト。</p></li>
 <li><p>名前は任意。（プログラム（Ｃ）経由で伝えられるため、あらかじめMIntシステム側に設定が必要）</p></li>
-<li><p>「execute_remote_command_api.sh」を参考にして作成しておく。</p></li>
+<li><p><strong>execute_remote_command_api.sh</strong> を参考にして作成しておく。</p></li>
 </ul>
 </div></blockquote>
 </li>
@@ -457,7 +457,7 @@ C-&gt;&gt;B:リクエスト
 <blockquote>
 <div><ul class="simple">
 <li><p>WebAPI方式用のプログラムおよびサンプルが同梱されている。</p></li>
-<li><p>MInt側資材は「debug/mi-system-side」、外部計算機側資材は「debug/remote-side」にある。</p></li>
+<li><p>MInt側資材は <strong>debug/mi-system-side</strong> 、外部計算機側資材は <strong>debug/remote-side</strong> にある。</p></li>
 </ul>
 </div></blockquote>
 </li>
@@ -487,7 +487,7 @@ C-&gt;&gt;B:リクエスト
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span>/tmp/&lt;uuid&gt;
 </pre></div>
 </div>
-<p>ユーザが外部計算機側でカスタマイズするファイルは、通常、SSH方式では「misrc_remote_workflow/scripts/execute_remote-side_program_ssh.sample.sh」、WebAPI方式では「execute_remote-side_program_api.sample.sh」のみである。カスタマイズの方法については後述する。
+<p>ユーザが外部計算機側でカスタマイズするファイルは、通常、SSH方式では <strong>misrc_remote_workflow/scripts/execute_remote-side_program_ssh.sample.sh</strong> 、WebAPI方式では <strong>execute_remote-side_program_api.sample.sh</strong> のみである。カスタマイズの方法については後述する。
 これ以外のファイルも改変可能であるが、その改変が原因で外部計算を利用するワークフローが動作しなかった場合、MInt運用チームは責を負わない。</p>
 <p>資材展開後のMInt側のディレクトリ構造は以下のようになる。</p>
 <ul class="simple">
@@ -579,22 +579,22 @@ execute_remote_command.sample.py           kousoku_abaqus_http.py
 </div>
 </div></blockquote>
 <ol class="arabic simple" start="2">
-<li><p>外部計算機側で実行するスクリプトがあれば「remote-side_scripts」に配置する。</p></li>
-<li><p>MIntが外部計算機へログインして最初に実行するプログラム名は前述のとおり「execute_remote-side_program_ssh.sh」に固定されている。このため「execute_remote-side_program_ssh.sample.sh」をこの名前でコピーするか、新規に作成して、必要な手順をスクリプト化する。</p></li>
+<li><p>外部計算機側で実行するスクリプトがあれば <strong>remote-side_scripts</strong> に配置する。</p></li>
+<li><p>MIntが外部計算機へログインして最初に実行するプログラム名は前述のとおり <strong>execute_remote-side_program_ssh.sh</strong> に固定されている。このため <strong>execute_remote-side_program_ssh.sample.sh</strong> をこの名前でコピーするか、新規に作成して、必要な手順をスクリプト化する。</p></li>
 </ol>
 </div>
 <div class="section" id="mint">
 <h3><span class="section-number">4.3.3. </span>(参考)MInt側作業<a class="headerlink" href="#mint" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <ol class="arabic simple">
-<li><p>外部計算資源を利用するモジュールが「misrc_remote_workflow/scripts/execute_remote_command.sample.sh」に相当するスクリプト(実際にはリネームされている)が必要なパラメータとともに実行するように構成する。</p></li>
+<li><p>外部計算資源を利用するモジュールが <strong>misrc_remote_workflow/scripts/execute_remote_command.sample.sh</strong> に相当するスクリプト(実際にはリネームされている)が必要なパラメータとともに実行するように構成する。</p></li>
 <li><p>1.を実行可能なワークフローを、外部計算を含まないものと同じ手順で作成する。</p></li>
 </ol>
 </div>
 </div>
 <div class="section" id="id22">
 <h2><span class="section-number">4.4. </span>WebAPI方式<a class="headerlink" href="#id22" title="このヘッドラインへのパーマリンク">¶</a></h2>
-<div class="section" id="id23">
-<h3><span class="section-number">4.4.1. </span>認証関連情報の用意<a class="headerlink" href="#id23" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<div class="section" id="get-authorizaion-infomation">
+<span id="id23"></span><h3><span class="section-number">4.4.1. </span>認証関連情報の用意<a class="headerlink" href="#get-authorizaion-infomation" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <p>MInt側担当者に問い合わせて下記の情報を用意する。</p>
 <ul>
 <li><p>ホスト情報</p>
@@ -640,7 +640,10 @@ api-debug.py  debug_gui.py  mi-system-remote.py
 </pre></div>
 </div>
 </div></blockquote>
-<ol class="arabic simple" start="2">
+</div>
+<div class="section" id="id25">
+<h3><span class="section-number">4.4.3. </span>実行<a class="headerlink" href="#id25" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<ol class="arabic simple">
 <li><p>mi-system-remote.pyを実行する</p></li>
 </ol>
 <blockquote>
@@ -648,12 +651,16 @@ api-debug.py  debug_gui.py  mi-system-remote.py
 </pre></div>
 </div>
 </div></blockquote>
+<ul class="simple">
+<li><p>ホスト情報はnims.mintsys.jpを指定する。</p></li>
+<li><p>API token は <a class="reference internal" href="#get-authorizaion-infomation"><span class="std std-ref">認証関連情報の用意</span></a> で入手した認証情報を指定する。</p></li>
+</ul>
 </div>
-<div class="section" id="id25">
-<h3><span class="section-number">4.4.3. </span>(参考)MInt側作業<a class="headerlink" href="#id25" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<div class="section" id="id26">
+<h3><span class="section-number">4.4.4. </span>(参考)MInt側作業<a class="headerlink" href="#id26" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <ol class="arabic simple">
-<li><p>misrc_distributed_computing_assist_apiリポジトリを展開する。</p></li>
-<li><p>mi_dicomapi.pyが未動作であれば、mi_distributed_computing_assist.iniに外部計算機の設定を実施する。動作中であれば、設定を再読み込みする。</p></li>
+<li><p><strong>misrc_distributed_computing_assist_api</strong> リポジトリを展開する。</p></li>
+<li><p><strong>mi_dicomapi.py</strong> が未動作であれば、<strong>mi_distributed_computing_assist.ini</strong> に外部計算機の設定を実施する。動作中であれば、設定を再読み込みする。</p></li>
 </ol>
 <blockquote>
 <div><div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ python
@@ -673,11 +680,11 @@ api-debug.py  debug_gui.py  mi-system-remote.py
 </div>
 </div></blockquote>
 <ol class="arabic simple" start="4">
-<li><p>モジュールの実行プログラム内で、misrc_distributed_computing_assist_api/debug/mi-system-side/mi-system-wf.py を必要なパラメータとともに実行するように構成する。</p></li>
+<li><p>モジュールの実行プログラム内で、<strong>misrc_distributed_computing_assist_api/debug/mi-system-side/mi-system-wf.py</strong> を必要なパラメータとともに実行するように構成する。</p></li>
 </ol>
 </div>
 <div class="section" id="sample">
-<span id="id26"></span><h3><span class="section-number">4.4.4. </span>その他MInt側注意事項<a class="headerlink" href="#sample" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<span id="id27"></span><h3><span class="section-number">4.4.5. </span>その他MInt側注意事項<a class="headerlink" href="#sample" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <ul class="simple">
 <li><p>pbsNodeGroup設定でssh-node01を設定する。他の計算機では外へアクセスすることができないため。</p></li>
 <li><p>pbsQueueなどCPU数などは指定できない。</p></li>
@@ -685,8 +692,8 @@ api-debug.py  debug_gui.py  mi-system-remote.py
 </ul>
 </div>
 </div>
-<div class="section" id="id27">
-<h2><span class="section-number">4.5. </span>ワークフローの廃止<a class="headerlink" href="#id27" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<div class="section" id="id28">
+<h2><span class="section-number">4.5. </span>ワークフローの廃止<a class="headerlink" href="#id28" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>ユーザがMInt運用チームにワークフローの廃止届を提出する。当該ワークフローはMInt上で「無効」のステータスを付与され参照・実行不能となる。</p>
 <p>以上</p>
 </div>
@@ -746,13 +753,14 @@ api-debug.py  debug_gui.py  mi-system-remote.py
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#id22">4.4. WebAPI方式</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#id23">4.4.1. 認証関連情報の用意</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#get-authorizaion-infomation">4.4.1. 認証関連情報の用意</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#id24">4.4.2. 資材の展開</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#id25">4.4.3. (参考)MInt側作業</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#sample">4.4.4. その他MInt側注意事項</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id25">4.4.3. 実行</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id26">4.4.4. (参考)MInt側作業</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#sample">4.4.5. その他MInt側注意事項</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="#id27">4.5. ワークフローの廃止</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id28">4.5. ワークフローの廃止</a></li>
 </ul>
 </li>
 </ul>

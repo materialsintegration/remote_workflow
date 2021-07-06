@@ -190,7 +190,7 @@ SSH方式の外部資源利用を含むワークフローを、MIntのワーク�
 * プログラム（Ｂ） このプログラムが外部計算機と通信を行う。
 
     + 外部計算の準備を行う。
-    + 名前は「execute_remote_command.sh」固定である。(インストール資材に含まれるサンプルファイルはリネームが必要)
+    + 名前は **execute_remote_command.sh** 固定である。(インストール資材に含まれるサンプルファイルはリネームが必要)
     + :ref:`how_to_use` で説明する編集を行う。
     + SSH経由で（Ｃ）を実行する。
 
@@ -198,7 +198,7 @@ SSH方式の外部資源利用を含むワークフローを、MIntのワーク�
         - 外部計算機上の一時ディレクトリ [#calc_dir1]_ の内容を全部受信するため、MIntに送信しないデータは外部計算機側で（Ｃ）の実行終了前に削除する。
 * プログラム（Ｃ）
 
-    + 名前は「execute_remote-side_program_ssh.sh」固定である。(インストール資材に含まれるサンプルファイルはリネームが必要)
+    + 名前は **execute_remote-side_program_ssh.sh** 固定である。(インストール資材に含まれるサンプルファイルはリネームが必要)
     + 外部計算機上で実行するプログラムは、ここへシェルスクリプトとして記述する。
 * プログラム（Ｄ）
 
@@ -206,7 +206,7 @@ SSH方式の外部資源利用を含むワークフローを、MIntのワーク�
     + 外部計算機上のプログラムを（Ｃ）のみで完結させ、本スクリプト群は用意しない運用も可。
 
 .. [#calc_dir1] 外部計算機では、処理は/tmpなどに作成した一時ディレクトリで実行される。
-.. [#sample_name1] 本システムでは、MIntは「execute_remote_command.sample.sh」を実行し、外部計算機で実行するプログラムとして「execute_remote-side_program_ssh.sh」を呼び出す。外部計算機側ではインストール後にこのファイル（インストール直後は、execute_remote_program_ssh.sample.shと言う名前）を必要に応じて編集して使用することで、別なコマンドを記述することが可能になっている。
+.. [#sample_name1] 本システムでは、MIntは **execute_remote_command.sample.sh** を実行し、外部計算機で実行するプログラムとして **execute_remote-side_program_ssh.sh** を呼び出す。外部計算機側ではインストール後にこのファイル（インストール直後は、execute_remote_program_ssh.sample.shと言う名前）を必要に応じて編集して使用することで、別なコマンドを記述することが可能になっている。
 
 .. raw:: latex
 
@@ -316,7 +316,7 @@ WebAPI方式の外部資源利用を含むワークフローを、MIntのワー�
     + モジュールによって実行されるプログラム
     + モジュール固有の前処理を行う。
     + モジュールごとに任意の名前で用意する。
-    + misrc_distributed_computing_assist_api/debug/mi-system-side/mi-system-wf.pyを実行しておく。
+    + **misrc_distributed_computing_assist_api/debug/mi-system-side/mi-system-wf.py** を実行しておく。
     + WebAPIへ計算の情報を登録する。
 * WebAPI (このプログラムがMIntシステムと外部計算機との通信を中継する。)
 
@@ -327,13 +327,13 @@ WebAPI方式の外部資源利用を含むワークフローを、MIntのワー�
 * プログラム（Ｃ）
 
     + ポーリングプログラムである。
-    + misrc_distributed_computing_assist_api/debug/remote-side/mi-system-remote.pyを実行しておく。
+    + **misrc_distributed_computing_assist_api/debug/remote-side/mi-system-remote.py** を実行しておく。
     + 外部計算機上で実行するプログラム名は、このプログラム経由でMIntシステムから受信され、このプログラムが実行する。
 * プログラム（Ｄ）
 
     + （Ｃ）から実行される外部計算用スクリプト。
     + 名前は任意。（プログラム（Ｃ）経由で伝えられるため、あらかじめMIntシステム側に設定が必要）
-    + 「execute_remote_command_api.sh」を参考にして作成しておく。
+    + **execute_remote_command_api.sh** を参考にして作成しておく。
 
 .. _how_to_use:
 
@@ -378,7 +378,7 @@ SSH, WebAPI方式共通
 - misrc_distributed_computing_assist.api 
 
     - WebAPI方式用のプログラムおよびサンプルが同梱されている。
-    - MInt側資材は「debug/mi-system-side」、外部計算機側資材は「debug/remote-side」にある。 
+    - MInt側資材は **debug/mi-system-side** 、外部計算機側資材は **debug/remote-side** にある。 
 
 .. [#whatisRepository] 本機能を実現する資材などを格納したサーバ。GitHubを利用しているが、MInt運用チームがアカウントを発行したユーザのみダウンロードが可能である。
 
@@ -403,7 +403,7 @@ SSH, WebAPI方式共通
 
   /tmp/<uuid>
 
-ユーザが外部計算機側でカスタマイズするファイルは、通常、SSH方式では「misrc_remote_workflow/scripts/execute_remote-side_program_ssh.sample.sh」、WebAPI方式では「execute_remote-side_program_api.sample.sh」のみである。カスタマイズの方法については後述する。
+ユーザが外部計算機側でカスタマイズするファイルは、通常、SSH方式では **misrc_remote_workflow/scripts/execute_remote-side_program_ssh.sample.sh** 、WebAPI方式では **execute_remote-side_program_api.sample.sh** のみである。カスタマイズの方法については後述する。
 これ以外のファイルも改変可能であるが、その改変が原因で外部計算を利用するワークフローが動作しなかった場合、MInt運用チームは責を負わない。
 
 資材展開後のMInt側のディレクトリ構造は以下のようになる。
@@ -490,17 +490,19 @@ SSH方式
      execute_remote_command.sample.py           kousoku_abaqus_http.py
 
 
-2. 外部計算機側で実行するスクリプトがあれば「remote-side_scripts」に配置する。
-3. MIntが外部計算機へログインして最初に実行するプログラム名は前述のとおり「execute_remote-side_program_ssh.sh」に固定されている。このため「execute_remote-side_program_ssh.sample.sh」をこの名前でコピーするか、新規に作成して、必要な手順をスクリプト化する。
+2. 外部計算機側で実行するスクリプトがあれば **remote-side_scripts** に配置する。
+3. MIntが外部計算機へログインして最初に実行するプログラム名は前述のとおり **execute_remote-side_program_ssh.sh** に固定されている。このため **execute_remote-side_program_ssh.sample.sh** をこの名前でコピーするか、新規に作成して、必要な手順をスクリプト化する。
 
 (参考)MInt側作業
 ----------------
 
-1. 外部計算資源を利用するモジュールが「misrc_remote_workflow/scripts/execute_remote_command.sample.sh」に相当するスクリプト(実際にはリネームされている)が必要なパラメータとともに実行するように構成する。
+1. 外部計算資源を利用するモジュールが **misrc_remote_workflow/scripts/execute_remote_command.sample.sh** に相当するスクリプト(実際にはリネームされている)が必要なパラメータとともに実行するように構成する。
 2. 1.を実行可能なワークフローを、外部計算を含まないものと同じ手順で作成する。
 
 WebAPI方式
 ==========
+
+.. _get_authorizaion_infomation:
 
 認証関連情報の用意
 ------------------
@@ -536,17 +538,23 @@ MInt側担当者に問い合わせて下記の情報を用意する。
      $ ls
      api-debug.py  debug_gui.py  mi-system-remote.py
 
-2. mi-system-remote.pyを実行する
+実行
+----
+
+1. mi-system-remote.pyを実行する
 
   .. code::
   
      $ python mi-system-remote.py <ホスト情報> https://nims.mintsys.jp <API token>
 
+* ホスト情報はnims.mintsys.jpを指定する。
+* API token は :ref:`get_authorizaion_infomation` で入手した認証情報を指定する。
+
 (参考)MInt側作業
 ----------------
 
-1. misrc_distributed_computing_assist_apiリポジトリを展開する。
-2. mi_dicomapi.pyが未動作であれば、mi_distributed_computing_assist.iniに外部計算機の設定を実施する。動作中であれば、設定を再読み込みする。
+1. **misrc_distributed_computing_assist_api** リポジトリを展開する。
+2. **mi_dicomapi.py** が未動作であれば、**mi_distributed_computing_assist.ini** に外部計算機の設定を実施する。動作中であれば、設定を再読み込みする。
 
   .. code::
 
@@ -562,7 +570,7 @@ MInt側担当者に問い合わせて下記の情報を用意する。
 
      $ python mi_dicomapi.py
 
-4. モジュールの実行プログラム内で、misrc_distributed_computing_assist_api/debug/mi-system-side/mi-system-wf.py を必要なパラメータとともに実行するように構成する。
+4. モジュールの実行プログラム内で、**misrc_distributed_computing_assist_api/debug/mi-system-side/mi-system-wf.py** を必要なパラメータとともに実行するように構成する。
 
 .. _sample:
 
