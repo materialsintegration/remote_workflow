@@ -329,6 +329,7 @@ WebAPI方式の外部資源利用を含むワークフローを、MIntのワー�
     + ポーリングプログラムである。
     + **misrc_distributed_computing_assist_api/debug/remote-side/mi-system-remote.py** を実行しておく。
     + 外部計算機上で実行するプログラム名は、このプログラム経由でMIntシステムから受信され、このプログラムが実行する。
+    + 認証情報はこのプログラム（Ｃ）が使用する。認証情報が無いとWebAPIにアクセスできない。詳細は :ref:`get_authorizaion_infomation` で説明する。
 * プログラム（Ｄ）
 
     + （Ｃ）から実行される外部計算用スクリプト。
@@ -425,14 +426,14 @@ SSH, WebAPI方式共通
 ワークフローサンプル
 ------------------
 
-misrc_remote_workflow/sample_dataに、Abaqus実行環境が用意可能な場合に使用可能なワークフローおよび、そのサンプル入力ファイルが用意されている。
+**misrc_remote_workflow/sample_data** に、Abaqus実行環境が用意可能な場合に使用可能なワークフローおよび、そのサンプル入力ファイルが用意されている。
 これを利用して、MInt側と外部計算機側のテストが可能である。
-また、misrc_remote_workflow/scriptsに、この時のモジュール実行プログラムがある。
+また、**misrc_remote_workflow/scripts** に、この時のモジュール実行プログラムがある。
 これを参考に、他のモジュール実行プログラムを作成することが可能である。
 利用する際にはMIntシステム側と調整が必要である。
 
-* kousoku_abaqus_ssh_version2.py : SSH方式のモジュール実行スクリプト
-* kousoku_abaqus_api_version2.py : WebAPI方式のモジュール実行スクリプト
+* **kousoku_abaqus_ssh_version2.py** : SSH方式のモジュール実行スクリプト
+* **kousoku_abaqus_api_version2.py** : WebAPI方式のモジュール実行スクリプト
 
 もっと簡易な例題ワークフローは現在準備中である。
 
@@ -477,7 +478,7 @@ SSH方式
 
   .. code::
   
-     $ git clone https://gitlab.mintsys.jp/midev/misrc_remote_workflow
+     $ git clone https://github.com/materialsintegration/misrc_remote_workflow.git
      $ cd misrc_remote_workflow
      $ ls
      README.md  documents  inventories  misrc_remote_workflow.json  modulesxml  sample_data  scripts
@@ -522,11 +523,11 @@ MInt側担当者に問い合わせて下記の情報を用意する。
 資材の展開
 ----------
 
-1. misrc_distributed_computing_assist_apiリポジトリを展開する。
+1. **misrc_distributed_computing_assist_api** リポジトリを展開する。
 
   .. code::
   
-     $ git clone https://gitlab.mintsys.jp/midev/misrc_distributed_computing_assist_api
+     $ git clone https://github.com/materialsintegration/misrc_distributed_computing_assist_api.git
      $ cd misrc_distributed_computing_assist_api
      $ ls
      README.md  logging.cfg     mi_dicomapi_infomations.py           syslogs
@@ -541,13 +542,15 @@ MInt側担当者に問い合わせて下記の情報を用意する。
 実行
 ----
 
-1. mi-system-remote.pyを実行する
+認証情報と共にポーリングプログラムを動作させておく。事前に設定した情報に従ってMIntシステム側と通信し、入力ファイルの受信、計算、出力ファイルの送信が自動的に行われる。認証情報が無い、間違っている、などした場合はポーリングは失敗し、計算は行われない。
+
+1. **mi-system-remote.py** を実行する
 
   .. code::
   
      $ python mi-system-remote.py <ホスト情報> https://nims.mintsys.jp <API token>
 
-* ホスト情報はnims.mintsys.jpを指定する。
+* ホスト情報は **nims.mintsys.jp** を指定する。
 * API token は :ref:`get_authorizaion_infomation` で入手した認証情報を指定する。
 
 (参考)MInt側作業
@@ -564,7 +567,7 @@ MInt側担当者に問い合わせて下記の情報を用意する。
      >>> ret = session.post("https://nims.mintsys.jp/reload-ini")
      >>>
 
-3. mi_dicomapi.pyを動作させて待ち受け状態にする。
+3. **mi_dicomapi.py** を動作させて待ち受け状態にする。
 
   .. code::
 
