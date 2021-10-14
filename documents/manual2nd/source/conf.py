@@ -15,7 +15,7 @@
 # import os
 # import sys
 # sys.path.insert(0, os.path.abspath('.'))
-
+from os.path import expanduser
 
 # -- Project information -----------------------------------------------------
 
@@ -28,11 +28,12 @@ version = ''
 # The full version, including alpha/beta/rc tags
 release = '1.0.1'
 
+HOME = expanduser("~")
 # mermaid compile? command setting
-mermaid_cmd = '/home/misystem/node_modules/.bin/mmdc'
+mermaid_cmd = '%s/node_modules/.bin/mmdc'%HOME
 # mermaid_cmd = '/home/misystem/mmdc.sh'
 #mermaid_params = ['-p', '/home/misystem/puppeteer-config.json', '--width', "200", "--height", "150"]
-mermaid_params = ['-p', '/home/misystem/puppeteer-config.json', '--backgroundColor', 'transparent']
+mermaid_params = ['-p', '%s/puppeteer-config.json'%HOME, '--backgroundColor', 'transparent']
 # mermaid_params = ['--width', '100']
 # mermaid_params = ['--height', '100']
 #mermaid_output_format = 'svg'

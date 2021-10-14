@@ -77,11 +77,13 @@ SSH方式とWebAPI方式の比較
     + ファイルは内部でrsync -avを利用して送受信され、サイズは無制限である。
     + コマンドラインなどの文字列はBase64エンコード無しで送受信される。
     + 外部計算機側SSHサーバのポート(TCP/22以外でも可)のインバウンドアクセスの開放が必要である。
+    + 通信障害には弱い。計算中などで通信が切れると復帰できず、本バージョンでは実行プロセスが簡易なため計算続行が不可能である。
 * WebAPI方式
     + 外部計算機からMIntのAPIサーバにポーリングを行い、要処理案件の有無を確認する。ポーリング間隔は数分程度を想定している。案件があれば必要なデータとコマンドをプルし、自らコマンドを実行し、APIで結果を送信する。
     + ファイルはBase64エンコードされ、サイズはエンコード後に2GiB [#whatisGiB]_ 未満である必要がある。
     + コマンドラインなどの文字列はBase64エンコード無しで送受信される。
-    + MIntのAPIサーバへのhttps(TCP/443)のアウトバウンドアクセスの許可が必要である。
+    + MIntのAPIサーバへのhttps(TCP/50443)のアウトバウンドアクセスの許可が必要である。
+    + サーバー側クライアント側で状態を保持しているため、通信障害が起きても再接続と計算続行が可能である。
 
 .. [#whatisGiB] GiB はギビバイトといい、コンピュータの容量や記憶装置の大きさを表す情報単位の一つである。1GiB は 2の30乗バイトであり、1,073,741,824Bである。
 
@@ -316,17 +318,18 @@ WebAPI方式の外部資源利用を含むワークフローを、MIntのワー�
     + プログラム（Ａ）を実行する
 * プログラム（Ａ）
 
-    + モジュールによって実行されるプログラム
+    + モジュールによって実行されるプログラム。モジュールごとに任意の名前で用意する。
     + モジュール固有の前処理を行う。
-    + モジュールごとに任意の名前で用意する。
     + **misrc_distributed_computing_assist_api/debug/mi-system-side/mi-system-wf.py** を実行しておく。
-    + WebAPIへ計算の情報を登録する。
+      - WebAPIへ計算の情報が登録される。
+      - 以降このプログラムが外部計算機資源側（以下の（Ｃ）とAPIを介して計算を行う）
 * WebAPI (このプログラムがMIntシステムと外部計算機との通信を中継する。)
 
     + 外部計算の準備を行う。
         - 送受信するファイルはパラメータとしてあらかじめ設定しておく。
     + WebAPI経由で（Ｃ）からのアクセスを受け付ける
     + （Ａ）から計算の情報登録が無い限り、（Ｃ）からアクセスがあっても計算は始まらない。
+    + ワークフローを実行したユーザーのトークンと（Ｃ）からのトークンが合致しないと（Ｃ）は適正な通信相手とならない。
 * プログラム（Ｃ）
 
     + ポーリングプログラムである。
@@ -345,8 +348,9 @@ WebAPI方式の外部資源利用を含むワークフローを、MIntのワー�
 使用方法
 ========
 
-SSH方式、WebAPI方式それぞれのインストールおよびプログラムの実行までを説明する。
-なお、外部計算機はbashスクリプトとPythonスクリプトの動作するLinuxホストを想定しているが、MInt側の通信が正常に確立できるならば、これ以外の環境でも構わない。
+SSH方式、WebAPI方式それぞれのインストールおよびプログラムの実行までを外部計算機側で作業が必要な項目について説明する。
+なお、外部計算機側はbashスクリプトとPythonスクリプトの動作するLinuxホストを想定しているが、MInt側との通信が正常に確立できるならば、これ以外の環境でも構わない。
+その場合はパスワードなしログインの設定などは環境に合わせて適宜同様の処置を行うことになる。
 また、外部計算機側で秘匿データを扱う際は、これに関する仕様をMInt側に開示する必要も無い。
 
 .. _before_descide_items:
@@ -358,7 +362,7 @@ SSH方式、WebAPI方式それぞれのインストールおよびプログラ�
 
 1. 環境構築
 
-    + 外部計算機側, MInt側のユーザアカウントの準備
+    + 外部計算機側, MIntシステムのユーザアカウントの準備
     + SSH or WebAPIの方式選択
     + 認証関連情報の用意
 2. ワークフロー・モジュールの仕様策定 (実装調査書の作成)
@@ -370,6 +374,8 @@ SSH方式、WebAPI方式それぞれのインストールおよびプログラ�
 
 SSH, WebAPI方式共通
 ==================
+
+.. _get_resources:
 
 資材の入手
 ----------
@@ -383,6 +389,14 @@ SSH, WebAPI方式共通
 
     - WebAPI方式用のプログラムおよびサンプルが同梱されている。
     - MInt側資材は **debug/mi-system-side** 、外部計算機側資材は **debug/remote-side** にある。 
+
+- ワークフローオリエンテッドなリポジトリ
+
+    - 上記リポジトリのサンプルスクリプト以外のワークフローを利用する場合に必要な特別なリポジトリ
+    - 通常はgithubにアップされていないので、MInt運用チームに依頼して入手する。
+
+.. note::
+   特別なリポジトリを利用する場合の利用方法については別途MInt運用チームまでお問い合わせること。
 
 .. [#whatisRepository] 本機能を実現する資材などを格納したサーバ。GitHubを利用しているが、アカウントが無くともダウンロードは可能である。MInt運用チームがアカウントを発行したユーザのみアップロードが可能である。
 
@@ -407,7 +421,10 @@ SSH, WebAPI方式共通
 
   /tmp/<uuid>
 
-ユーザが外部計算機側でカスタマイズするファイルは、通常、SSH方式では **misrc_remote_workflow/scripts/execute_remote-side_program_ssh.sample.sh** 、WebAPI方式では **execute_remote-side_program_api.sample.sh** のみである。カスタマイズの方法については後述する。
+.. note::
+   ワーキングディレクトリは展開した資材のうち、外部計算機資源側のプログラムが自動的に作成、使用するため、ユーザーは意識しなくて良い。
+
+ユーザが外部計算機側でカスタマイズするファイルは、通常、SSH方式では **misrc_remote_workflow/scripts/execute_remote-side_program_ssh.sample.sh** 、WebAPI方式では事前に名称を決めAPIに登録しておく。カスタマイズの方法については後述する。
 これ以外のファイルも改変可能であるが、その改変が原因で外部計算を利用するワークフローが動作しなかった場合、MInt運用チームは責を負わない。
 
 資材展開後のMInt側のディレクトリ構造は以下のようになる。
@@ -443,41 +460,27 @@ SSH, WebAPI方式共通
 SSH方式
 =======
 
+.. _ready_public_keys:
+
 公開鍵の用意
-----------
+------------
 
 パスフレーズ無しの公開鍵認証を原則とする。
-外部計算機側で作成したRSA公開鍵 (例: ~/.ssh/id_rsa.pub) をMInt運用チームに送付する。
-鍵は既存のものでも良いが、下記のコマンドで新規に作成しても良い。
+MInt運用チームに依頼して、パスワードなしログイン用の公開鍵を入手し、以下の手順に沿ってファイルを作成しておく。
 
   .. code::
 
-     $ ssh-keygen -t rsa
-     Generating public/private rsa key pair.
-     Enter file in which to save the key (/home/misystem/.ssh/id_rsa):
-     Enter passphrase (empty for no passphrase): 
-     Enter same passphrase again: 
-     Your identification has been saved in /home/misystem/.ssh/id_test_rsa.
-     Your public key has been saved in /home/misystem/.ssh/id_test_rsa.pub.
-     The key fingerprint is:
-     fd:f6:ab:3c:55:8d:f5:4d:52:60:27:2b:9b:b8:49:fb misystem@zabbix-server
-     The key's randomart image is:
-     +--[ RSA 2048]----+
-     |              +oo|
-     |             ..+o|
-     |            . .=+|
-     |         . . +. =|
-     |        S + o  . |
-     |         . =  .  |
-     |          + o.   |
-     |           +..   |
-     |            Eoo. |
-     +-----------------+
+     $ cd .ssh
+     $ cat <入手した公開鍵暗号ファイル> >> authorized_keys
+     $ chmod 600 authorized_keys
+
+.. note::
+   ワークフロー実行前にMInt運用チームに連絡してパスワードなしログインが可能なことを確認すること
 
 資材の展開
 ----------
 
-1. misrc_remote_workflowリポジトリを展開する。
+1. **misrc_remote_workflow** リポジトリを展開する。
 
   .. code::
   
@@ -500,8 +503,14 @@ SSH方式
 (参考)MInt側作業
 ----------------
 
-1. 外部計算資源を利用するモジュールが **misrc_remote_workflow/scripts/execute_remote_command.sample.sh** に相当するスクリプト(実際にはリネームされている)が必要なパラメータとともに実行するように構成する。
-2. 1.を実行可能なワークフローを、外部計算を含まないものと同じ手順で作成する。
+1. 外部計算資源を利用するモジュールが実行可能なスクリプトを **misrc_remote_workflow/scripts/execute_remote_command.sample.sh** をコピーして専用スクリプトを作成する。
+2. 予測モジュールのmodules/resouceRequest/pbsNodeGroupタグに ssh-node01 という値をセットする。
+3. 予測モジュールのmodules/objectPathタグに1. で作成したスクリプトをセットする。
+4. 1.で作成したスクリプトを各行のコメントに従い適宜修正する。
+5. 1.を実行可能な予測モジュールを組み込んだワークフローを作成する。
+
+.. note::
+   :numref: `ready_public_keys` :ref: `ready_public_keys` で作成したキーを外部計算機資源側の想定されるユーザーに設定し、パスワードなしログインができることを確認しておく。
 
 WebAPI方式
 ==========
@@ -518,10 +527,13 @@ MInt側担当者に問い合わせて下記の情報を用意する。
     + MInt側でAPIの発行者を識別するための文字列。ユーザ企業のドメインなどと一致させる必要は無い。
 * APIトークン
 
-    + MIntのAPI認証システムを使用するためのトークン。MInt運用チームに問い合わせて取得する。
+    + MIntのAPI認証システムを使用するためのトークン。MIntシステムログイン後、ユーザープロファイル管理システムメニューで表示される、「APIトークン」を使用する。
+
+        - ユーザーの環境でポーリングスクリプトを動作させるときに必要であるが、後述のログイン方式を利用する場合はトークン自体は必要ない。
 * MIntのURL
 
     + MIntのURL(エンドポイントは不要)を、MInt運用チームに問い合わせておく。
+* WebAPI方式を利用できるようにMInt運用チームに設定を依頼する。
 
 資材の展開
 ----------
@@ -542,41 +554,75 @@ MInt側担当者に問い合わせて下記の情報を用意する。
      $ ls
      api-debug.py  debug_gui.py  mi-system-remote.py
 
+2. **authentication_operator** リポジトリを展開、環境変数を設定する。（ログイン方式を選択する場合）
+
+  .. code::
+
+     $ git clone https://gitlab.mintsys.jp/midev/authentication_operator.git
+     $ export AUTHENTICATION_OPERATOR=<path to authentication_operator
+
+.. note::
+   環境変数AUTHENTICATION_OPERATORはログインシェルの自動設定ファイルに設定しておく。
+
+3. 計算に必要なスクリプトの準備
+
+   + ファイル名はMInt運用チームに伝えて、APIに登録しておく。
+   + 特別なリポジトリを利用する場合はこの作業が必要ないこともある。
+
 実行
 ----
 
 認証情報と共にポーリングプログラムを動作させておく。事前に設定した情報に従ってMIntシステム側と通信し、入力ファイルの受信、計算、出力ファイルの送信が自動的に行われる。認証情報が無い、間違っている、などの場合はポーリングは失敗し、計算は行われない。
+また **ワークフローを実行したユーザーと同じユーザーのトークンまたはログイン方式での同じユーザー** で実行しないとこちらもポーリングは失敗し、計算は行われない。
 
-1. **mi-system-remote.py** を実行する
+1. **mi-system-remote.py** を実行する。
+2. トークン指定方式
 
   .. code::
   
      $ python mi-system-remote.py <ホスト情報> https://nims.mintsys.jp <API token>
+     site id = rme-u-tokyo
+     base url = https://nims.mintsys.jp:50443
 
-* ホスト情報は **nims.mintsys.jp** を指定する。
-* API token は\ :numref:`get_authorizaion_infomation`\ の\ :ref:`get_authorizaion_infomation` で入手した認証情報を指定する。
+3. ログイン方式
+
+  .. code::
+     
+     $ python mi-system-remote.py <ホスト情報> https://nims.mintsys.jp login
+     site id = rme-u-tokyo
+     base url = https://nims.mintsys.jp:50443
+     nims.mintsys.jp へのログイン
+     ログインID: <MIntシステムのログイン名>
+     パスワード: <同、パスワード>
+      token = <ログイン名のトークンの表示>
+     ...
+     
+.. note::
+   ホスト情報は **nims.mintsys.jp** を指定する。
+.. note::
+   API token は\ :numref:`get_authorizaion_infomation`\ の\ :ref:`get_authorizaion_infomation` で入手した認証情報を指定する。
 
 (参考)MInt側作業
 ----------------
 
 1. **misrc_distributed_computing_assist_api** リポジトリを展開する。
-2. **mi_dicomapi.py** が未動作であれば、**mi_distributed_computing_assist.ini** に外部計算機の設定を実施する。動作中であれば、設定を再読み込みする。
-
-  .. code::
-
-     $ python
-     >>> import requests
-     >>> session = requests.Session()
-     >>> ret = session.post("https://nims.mintsys.jp/reload-ini")
-     >>>
-
+2. 構成ファイル **mi_distributed_computing_assist.ini** に必要な設定を行う。
 3. **mi_dicomapi.py** を動作させて待ち受け状態にする。
 
   .. code::
 
      $ python mi_dicomapi.py
 
+  または
+
+  .. code::
+
+     $ systemctl start distcomp_api
+
 4. モジュールの実行プログラム内で、**misrc_distributed_computing_assist_api/debug/mi-system-side/mi-system-wf.py** を必要なパラメータとともに実行するように構成する。
+
+.. note::
+   ワークフロー側から計算登録時に構成ファイルは再読込されるので、APIプログラムが現在動作中であっても読み込ませるための特別な動作は必要ない。
 
 .. _sample:
 
@@ -587,8 +633,32 @@ MInt側担当者に問い合わせて下記の情報を用意する。
 * pbsQueueなどCPU数などは指定できない。
 * 外部計算機側で別途Torqueなどのバッチジョブシステムに依存する。
 
+エラーが発生した場合
+====================
+
+ワークフローを本実行する前にMInt運用チームと連携して動作確認を行っておくが、まんいち異常終了した場合などは以下の方法で対策を検討することができる。
+
+* SSH方式、API方式ともワークフローの出力ポートとは別に外部計算機で行われた処理のログがある。MInt運用チームに連絡して、それを入手する。
+* 同様に、外部計算機資源側で :numref:`get_resources` :ref:`get_resources` で説明したワーキングディレクトリに計算結果およびログが残っているのでこれを利用する。
+
+     - ワーキングディレクトリはUUIDで構成されたディレクトリ名のディレクトリの作成時間などで該当ディレクトリかどうか判断する。
+
+通信異常
+--------
+
+インターネット経由であるので、通信異常は発生するものとして対処してある。APIではリトライ方式を採用している。デフォルトはリトライ間隔60秒のリトライ回数5回で通信失敗として終了する。これは以下の書式で指定することも可能である。
+
+.. code::
+
+     $ python mi-system-remote.py <ホスト情報> https://nims.mintsys.jp <API token> retry:<リトライ回数>,<リトライ間隔>
+
+.. note::
+   リトライ回数は整数で指定し、リトライ間隔は整数または実数で指定する。
+.. note::
+   ssh方式ではその性質上処理中に通信異常が起きると復帰できない。
+
 ワークフローの廃止
-================
+==================
 
 ユーザがMInt運用チームにワークフローの廃止届を提出する。当該ワークフローはMInt上で「無効」のステータスを付与され参照・実行不能となる。
 
