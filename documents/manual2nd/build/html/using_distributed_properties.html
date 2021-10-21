@@ -1,0 +1,923 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ja">
+  <head>
+    <meta charset="utf-8" />
+    <title>1. はじめに &#8212; 外部計算資源の利用について 1.0.1 ドキュメント</title>
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/language_data.js"></script>
+    <script src="_static/translations.js"></script>
+    <script src="https://unpkg.com/mermaid@8.0.0/dist/mermaid.min.js"></script>
+    <link rel="index" title="索引" href="genindex.html" />
+    <link rel="search" title="検索" href="search.html" />
+    <link rel="prev" title="外部計算資源の利用方法（本運用）" href="index.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="id1">
+<h1><span class="section-number">1. </span>はじめに<a class="headerlink" href="#id1" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<p>MIntには、ワークフローを構成するモジュール内の一部分の処理を、MIntの計算ノード以外の「外部計算機」に行わせる機能がある。本機能によって、ユーザには下記に挙げる利点がある。</p>
+<ul class="simple">
+<li><p>秘匿プログラムの使用</p></li>
+<li><p>秘匿データの使用</p></li>
+<li><p>特殊構成 (MIntの計算ノードでは対応できない) の計算機を使用できる</p></li>
+<li><p>商用ソフトの使用 (MIntの計算ノードにも商用ソフトがインストールされているが、ライセンスの規定上、ほとんどの場合NIMS外からは利用できない)</p></li>
+</ul>
+<p>外部計算資源の利用に際しては、MInt、外部計算機の双方が後述のセキュリティ水準を満たす必要がある。</p>
+<ol class="arabic">
+<li><p>MIコンソーシアム会則（秘密保持誓約書含む）、MIntシステム利用規定など、MInt利用に関わる契約・規定を遵守すること。</p></li>
+<li><p>MInt側は、下記のセキュリティ対策を実施すること。</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>第三者によるMIntのセキュリティ分析・セキュリティリスク診断を実施し、リスクを避ける設計を維持すること。</p></li>
+<li><p>MIntを構成するサーバのOS・ミドルウェア・ライブラリ等に対し、継続的に脆弱性データベースを確認し、必要なアップデートを実施すること。</p></li>
+<li><p>不正アクセス監視やネットワーク負荷監視を実施すること。</p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p>外部計算機側は、外部計算機として利用されるコンピュータに対し、十分なセキュリティ対策を実施すること。継続的に利用する場合には、定期的に対策状況を確認し、セキュリティレベルを維持すること。</p></li>
+</ol>
+<p>外部計算資源利用には、SSH方式とWebAPI方式がある。
+前者はMIntから外部計算機へSSHで必要なデータとコマンドをプッシュする方式である。
+単純で、外部計算を遅延なく開始できる利点があるが、外部計算機側でMIntに対しSSHのポートを開放してプッシュを受け入れる必要がある点は、特に企業ユーザではハードルが高いことが想定される。
+これに対し、後者は数分間隔で外部計算機側からMIntにWebAPI(https)でポーリングし、処理すべき案件が存在した場合は、必要なデータとコマンドがプルされる方式である。
+この方式では外部計算機側にポート開放の必要が無いが、外部計算の開始までにポーリング間隔に相当する遅延が生じる。</p>
+<p>本機能は外部計算機内にユーザが持つ秘匿データの扱いにも十分な配慮が行われている。
+まず、ユーザが持つ秘匿データに関して、MIntが収集する情報はワークフローの各モジュールの入出力ポートの情報のみであり、モジュールの内部で完結する本機能のために、モジュールと外部計算機の間で送受信される情報は収集対象外である。
+外部計算機側は、MIntにあらかじめ定められたコマンドのみ実行できるように設定することができる。
+また、MIntに処理結果を返送する前に不必要なデータをワーキングディレクトリから削除することができる。</p>
+<p>上記の機構によって、安全な外部計算が保証される。下記の各章で具体的な利用方法について記す。
+また、外部計算資源の利用に際して本書では不明な点は、ユーザとMInt運用チームとの協議で決定するものとする。</p>
+</div>
+<div class="section" id="id2">
+<h1><span class="section-number">2. </span>概要<a class="headerlink" href="#id2" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<div class="section" id="id3">
+<h2><span class="section-number">2.1. </span>利用イメージ<a class="headerlink" href="#id3" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>外部計算資源の利用イメージを( <a class="reference internal" href="#image-for-use-eps"><span class="std std-numref">図 2.1</span></a> )に示す。</p>
+<ul class="simple">
+<li><p>MIntはNIMS構内のDMZ <a class="footnote-reference brackets" href="#whatisdmz" id="id4">1</a> に存在する。</p></li>
+<li><p>ユーザはMInt上に、外部計算を利用するモジュールを含んだワークフローを持つ。当該モジュールやワークフローの参照・実行権限は自機関内などに限定できる。</p></li>
+<li><p>ユーザが当該ワークフローを実行すると、外部計算を利用するモジュールで一部の処理が外部計算機に受け渡される。</p></li>
+<li><p>外部計算機は処理の過程で、MIntに置けないデータやプログラムにアクセスできる。これらのアクセスを外部計算機の内部で完結させることで、安全な利用が可能となる。</p></li>
+</ul>
+ <A HREF="_images/remote_execution_image.png"><img src="_images/remote_execution_image.png" /></A>
+
+外部計算資源の利用イメージ<div class="figure align-center" id="image-for-use-eps">
+<a class="reference internal image-reference" href="_images/image_for_use.eps"><img alt="_images/image_for_use.eps" src="_images/image_for_use.eps" style="width: 385.8px; height: 221.4px;" /></a>
+<p class="caption"><span class="caption-number">図 2.1 </span><span class="caption-text">外部計算資源の利用イメージ</span><a class="headerlink" href="#image-for-use-eps" title="この画像へのパーマリンク">¶</a></p>
+</div>
+<dl class="footnote brackets">
+<dt class="label" id="whatisdmz"><span class="brackets"><a class="fn-backref" href="#id4">1</a></span></dt>
+<dd><p>物理的にはNIMS構内のサーバ室に存在するが、ネットワーク的には機構内LANとインターネットの双方からファイアウォールで切り離された領域。</p>
+</dd>
+</dl>
+</div>
+<div class="section" id="sshwebapi">
+<h2><span class="section-number">2.2. </span>SSH方式とWebAPI方式の比較<a class="headerlink" href="#sshwebapi" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<ul class="simple">
+<li><dl class="simple">
+<dt>SSH方式</dt><dd><ul>
+<li><p>MIntからSSHで外部計算機にアクセスし、必要なファイルとコマンドをプッシュし、コマンドを発行し、結果を得る。</p></li>
+<li><p>ファイルは内部でrsync -avを利用して送受信され、サイズは無制限である。</p></li>
+<li><p>コマンドラインなどの文字列はBase64エンコード無しで送受信される。</p></li>
+<li><p>外部計算機側SSHサーバのポート(TCP/22以外でも可)のインバウンドアクセスの開放が必要である。</p></li>
+<li><p>通信障害には弱い。計算中などで通信が切れると復帰できず、本バージョンでは実行プロセスが簡易なため計算続行が不可能である。</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>WebAPI方式</dt><dd><ul>
+<li><p>外部計算機からMIntのWebAPIサーバにポーリングを行い、要処理案件の有無を確認する。ポーリング間隔は数分程度を想定している。案件があれば必要なデータとコマンドをプルし、自らコマンドを実行し、APIで結果を送信する。</p></li>
+<li><p>ファイルはBase64エンコードされ、サイズはエンコード後に2GiB <a class="footnote-reference brackets" href="#whatisgib" id="id5">2</a> 未満である必要がある。</p></li>
+<li><p>コマンドラインなどの文字列はBase64エンコード無しで送受信される。</p></li>
+<li><p>MIntのWebAPIサーバへのhttps(TCP/50443)のアウトバウンドアクセスの許可が必要である。</p></li>
+<li><p>サーバー側クライアント側で状態を保持しているため、通信障害が起きても再接続と計算続行が可能である。</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+<dl class="footnote brackets">
+<dt class="label" id="whatisgib"><span class="brackets"><a class="fn-backref" href="#id5">2</a></span></dt>
+<dd><p>GiB はギビバイトといい、コンピュータの容量や記憶装置の大きさを表す情報単位の一つである。1GiB は 2の30乗バイトであり、1,073,741,824Bである。</p>
+</dd>
+</dl>
+</div>
+</div>
+<div class="section" id="id6">
+<h1><span class="section-number">3. </span>動作原理<a class="headerlink" href="#id6" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<div class="section" id="ssh">
+<h2><span class="section-number">3.1. </span>SSH方式<a class="headerlink" href="#ssh" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<div class="section" id="id7">
+<h3><span class="section-number">3.1.1. </span>動作イメージ<a class="headerlink" href="#id7" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<p>SSH 方式での外部資源利用のイメージを( <a class="reference internal" href="#ssh-project-create-flow"><span class="std std-numref">図 3.1</span></a> )に示す。</p>
+<div class="figure align-center" id="id33">
+<span id="ssh-project-create-flow"></span>
+            <style>
+            /* mermaid issue 527 workaround */
+            .section {
+                opacity: 1.0 !important;
+            }
+            </style>
+            <script>mermaid.initialize({startOnLoad:true});</script><div class="mermaid">
+            graph LR;
+
+subgraph NIMS所外
+  input3[\秘匿データ/]
+  module21[専用プログラム実行]
+  module22[データ返却]
+end
+subgraph MInt
+  subgraph ワークフロー
+    input1[\入力/]
+    module11[SSH実行開始]
+    module12[SSHデータ受け取り]
+    module13[計算]
+    output1[/出力\]
+  end
+end
+
+input1--&gt;module11
+module11--&gt;module12
+module12--&gt;module13
+module13--&gt;output1
+input3--&gt;module21
+module11--SSH経由--&gt;module21
+module21--&gt;module22
+module22--SSH経由--&gt;module12
+        </div><p class="caption"><span class="caption-number">図 3.1 </span><span class="caption-text">SSH方式の外部資源利用のイメージ</span><a class="headerlink" href="#id33" title="この画像へのパーマリンク">¶</a></p>
+</div>
+</div>
+<div class="section" id="id8">
+<h3><span class="section-number">3.1.2. </span>ワークフロー例<a class="headerlink" href="#id8" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<p>SSH方式の外部資源利用を含むワークフローを、MIntのワークフローデザイナで表示した例を示す。
+赤枠の部分が遠隔実行の行われるモジュールである。
+なお、本ワークフローは動作検証用サンプルとして、<a class="reference internal" href="#how-to-use"><span class="std std-numref">4 章</span></a>の<a class="reference internal" href="#how-to-use"><span class="std std-ref">使用方法</span></a> で説明するインストール資材に含まれている。</p>
+<div class="figure align-center" id="id34">
+<a class="reference internal image-reference" href="_images/workflow_with_sshmodule.png"><img alt="_images/workflow_with_sshmodule.png" src="_images/workflow_with_sshmodule.png" style="width: 796.0px; height: 441.6px;" /></a>
+<p class="caption"><span class="caption-number">図 3.2 </span><span class="caption-text">動作検証用のワークフロー</span><a class="headerlink" href="#id34" title="この画像へのパーマリンク">¶</a></p>
+</div>
+</div>
+<div class="section" id="id9">
+<h3><span class="section-number">3.1.3. </span>モジュール内の処理<a class="headerlink" href="#id9" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<p>外部資源利用を行うモジュール内で、外部計算機側の処理が実行されるまでの流れを下記に示す。</p>
+<div class="figure align-center" id="id35">
+
+            <style>
+            /* mermaid issue 527 workaround */
+            .section {
+                opacity: 1.0 !important;
+            }
+            </style>
+            <div class="mermaid">
+            sequenceDiagram;
+
+  participant A as モジュール
+  participant B as プログラム（Ａ）
+  participant C as プログラム（Ｂ）
+  participant D as プログラム（Ｃ）
+  participant E as プログラム（Ｄ）
+
+  Note over A,C : MInt内
+  Note over D,E : 外部計算機内
+
+  A-&gt;&gt;B:モジュールが実行
+  B-&gt;&gt;C:（Ａ）が実行
+  C-&gt;&gt;D:（Ｂ）がSSH経由で外部計算機の（Ｃ）を実行
+  D-&gt;&gt;E:（Ｃ）が実行
+        </div><p class="caption"><span class="caption-number">図 3.3 </span><span class="caption-text">SSH接続経由によるコマンド実行の流れ</span><a class="headerlink" href="#id35" title="この画像へのパーマリンク">¶</a></p>
+</div>
+<ul>
+<li><p>モジュール</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>MIntのワークフローシステムによって実行されるモジュール</p></li>
+<li><p>プログラム（Ａ）を実行する</p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p>プログラム（Ａ）</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>モジュールによって実行されるプログラム</p></li>
+<li><p>モジュール固有の前処理を行う。</p></li>
+<li><p>モジュールごとに任意の名前で用意する。</p></li>
+<li><p><a class="reference internal" href="#how-to-use"><span class="std std-numref">4 章</span></a>の<a class="reference internal" href="#how-to-use"><span class="std std-ref">使用方法</span></a> で説明する編集を行う。</p></li>
+<li><p>（Ｂ）を実行する。</p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p>プログラム（Ｂ） このプログラムが外部計算機と通信を行う。</p>
+<blockquote>
+<div><ul>
+<li><p>外部計算の準備を行う。</p></li>
+<li><p>名前は任意の名前を使用可能。</p></li>
+<li><p>テンプレートは <strong>execute_remote_command.sample.sh</strong> をコピーして使用する。</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><a class="reference internal" href="#how-to-use"><span class="std std-numref">4 章</span></a>の<a class="reference internal" href="#how-to-use"><span class="std std-ref">使用方法</span></a> で説明する編集を行う。</p></li>
+<li><p>（Ａ）が実行するプログラム名とコピーしたプログラム名は同名としておく。</p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p>SSH経由で（Ｃ）を実行する。</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>送信するファイルはパラメータとして記述する。</p></li>
+<li><p>外部計算機上の一時ディレクトリ <a class="footnote-reference brackets" href="#calc-dir1" id="id10">3</a> の内容を全部受信するため、MIntに送信しないデータは外部計算機側で（Ｃ）の実行終了前に削除する。</p></li>
+</ul>
+</div></blockquote>
+</li>
+</ul>
+</div></blockquote>
+</li>
+<li><p>プログラム（Ｃ）</p>
+<blockquote>
+<div><ul>
+<li><p>名前は プログラム（Ｂ）用のテンプレートで**execute_remote-side_program_ssh.sh** となっているが変更可能である。</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>同名のテンプレートが用意されているので、複雑な処理を必要とする場合は、コピーして使用する。</p></li>
+<li><p>（Ｂ）で実行されるプログラム名とコピーしたプログラム名は同名としておく。</p></li>
+</ul>
+</div></blockquote>
+</li>
+</ul>
+</div></blockquote>
+</li>
+<li><p>プログラム（Ｄ）</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>外部計算機上のプログラムを（Ｃ）のみで完結させ、本スクリプト群は用意しない運用も可能である。</p></li>
+</ul>
+</div></blockquote>
+</li>
+</ul>
+<dl class="footnote brackets">
+<dt class="label" id="calc-dir1"><span class="brackets"><a class="fn-backref" href="#id10">3</a></span></dt>
+<dd><p>外部計算機では、処理は/tmpなどに作成した一時ディレクトリで実行される。</p>
+</dd>
+<dt class="label" id="sample-name1"><span class="brackets">4</span></dt>
+<dd><p>本システムでは、MIntは <strong>execute_remote_command.sample.sh</strong> を実行し、外部計算機で実行するプログラムとして <strong>execute_remote-side_program_ssh.sh</strong> を呼び出す。外部計算機側ではインストール後にこのファイル（インストール直後は、execute_remote_program_ssh.sample.shと言う名前）を必要に応じて編集して使用することで、別なコマンドを記述することが可能になっている。</p>
+</dd>
+</dl>
+</div>
+</div>
+<div class="section" id="webapi">
+<h2><span class="section-number">3.2. </span>WebAPI方式<a class="headerlink" href="#webapi" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<div class="section" id="id11">
+<h3><span class="section-number">3.2.1. </span>動作イメージ<a class="headerlink" href="#id11" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<p>WebAPI方式での外部計算の実行イメージを( <a class="reference internal" href="#id12"><span class="std std-numref">図 3.4</span></a> )に示す。</p>
+<div class="figure align-center" id="id36">
+<span id="id12"></span>
+            <style>
+            /* mermaid issue 527 workaround */
+            .section {
+                opacity: 1.0 !important;
+            }
+            </style>
+            <div class="mermaid">
+            sequenceDiagram;
+
+participant A as MInt&lt;BR&gt;
+participant B as MInt WebAPIサーバ&lt;BR&gt;
+participant C as WebAPI方式&lt;BR&gt;（外部計算機側）
+participant D as ユーザープログラム&lt;BR&gt;（外部計算機側）
+
+
+C-&gt;&gt;B:リクエスト
+  alt 計算が存在しない
+    B-&gt;&gt;C:ありません
+    C --&gt;&gt; C:リクエスト継続
+  else 計算が存在する
+    A-&gt;&gt;B:計算要求
+    C-&gt;&gt;B:リクエスト
+    B-&gt;&gt;C:存在する
+    C-&gt;&gt;B:情報取得リクエスト
+    alt 計算実行
+      B-&gt;&gt;C:パラメータ送付、コマンドライン送付
+      C-&gt;&gt;D:プログラム実行
+      alt プログラム実行
+        D --&gt;&gt; D:プログラム実行中
+      else プログラム終了
+        D --&gt;&gt; C:プログラム終了
+      end
+      C-&gt;&gt;B:計算終了通知
+    else no seq
+    end
+    B-&gt;&gt;C:計算結果の返却要求
+    C-&gt;&gt;B:計算結果の返却応答
+    B-&gt;&gt;A:ジョブの終了要求
+  end
+        </div><p class="caption"><span class="caption-number">図 3.4 </span><span class="caption-text">WebAPI方式の流れ</span><a class="headerlink" href="#id36" title="この画像へのパーマリンク">¶</a></p>
+</div>
+</div>
+<div class="section" id="id13">
+<h3><span class="section-number">3.2.2. </span>ワークフロー例<a class="headerlink" href="#id13" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<p>WebAPI方式の外部資源利用を含むワークフローを、MIntのワークフローデザイナで表示した例を示す。
+赤枠の部分が遠隔実行の行われるモジュールである。
+なお、本ワークフローは動作検証用サンプルとして、<a class="reference internal" href="#how-to-use"><span class="std std-numref">4 章</span></a>の<a class="reference internal" href="#how-to-use"><span class="std std-ref">使用方法</span></a> で説明するインストール資材に含まれている。</p>
+<div class="figure align-center" id="id37">
+<a class="reference internal image-reference" href="_images/workflow_with_apimodule.png"><img alt="_images/workflow_with_apimodule.png" src="_images/workflow_with_apimodule.png" style="width: 965.0px; height: 519.0px;" /></a>
+<p class="caption"><span class="caption-number">図 3.5 </span><span class="caption-text">検証用ワークフロー</span><a class="headerlink" href="#id37" title="この画像へのパーマリンク">¶</a></p>
+</div>
+<p>※赤枠の部分が外部計算資源を利用するモジュールである。</p>
+</div>
+<div class="section" id="id14">
+<h3><span class="section-number">3.2.3. </span>モジュール内の処理<a class="headerlink" href="#id14" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<p>ワークフローの当該モジュール内で外部計算機側の処理が実行されるまでの流れを下記に示す。</p>
+<div class="figure align-center" id="id38">
+
+            <style>
+            /* mermaid issue 527 workaround */
+            .section {
+                opacity: 1.0 !important;
+            }
+            </style>
+            <div class="mermaid">
+            sequenceDiagram;
+
+  participant A as モジュール
+  participant B as プログラム（Ａ）
+  participant C as WebAPI
+  participant D as プログラム（Ｃ）
+  participant E as プログラム（Ｄ）
+
+  Note over A,C : MInt内
+  Note over D,E : 外部計算機内
+
+  A-&gt;&gt;B:モジュールが実行
+  B-&gt;&gt;C:（Ａ）がhttps経由でAPI発行
+  D-&gt;&gt;C:（Ｃ）がhttps経由でAPI発行
+  D-&gt;&gt;E:（Ｃ）が実行
+        </div><p class="caption"><span class="caption-number">図 3.6 </span><span class="caption-text">WebAPI方式でのコマンドの流れ</span><a class="headerlink" href="#id38" title="この画像へのパーマリンク">¶</a></p>
+</div>
+<ul>
+<li><p>モジュール</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>MIntのワークフローシステムによって実行されるモジュール</p></li>
+<li><p>プログラム（Ａ）を実行する</p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p>プログラム（Ａ）</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>モジュールによって実行されるプログラム。モジュールごとに任意の名前で用意する。</p></li>
+<li><p>モジュール固有の前処理を行う。</p></li>
+<li><p><strong>misrc_distributed_computing_assist_api/debug/mi-system-side/mi-system-wf.py</strong> を実行しておく。
+- WebAPIへ計算の情報が登録される。
+- 以降このプログラムが外部計算機資源側（以下の（Ｃ）とAPIを介して計算を行う）</p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p>WebAPI (このプログラムがMIntシステムと外部計算機との通信を中継する。)</p>
+<blockquote>
+<div><ul class="simple">
+<li><dl class="simple">
+<dt>外部計算の準備を行う。</dt><dd><ul>
+<li><p>送受信するファイルはパラメータとしてあらかじめ設定しておく。</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><p>WebAPI経由で（Ｃ）からのアクセスを受け付ける</p></li>
+<li><p>（Ａ）から計算の情報登録が無い限り、（Ｃ）からアクセスがあっても計算は始まらない。</p></li>
+<li><p>ワークフローを実行したユーザーのトークンと（Ｃ）からのトークンが合致しないと（Ｃ）は適正な通信相手とならない。</p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p>プログラム（Ｃ）</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>ポーリングプログラムである。</p></li>
+<li><p><strong>misrc_distributed_computing_assist_api/debug/remote-side/mi-system-remote.py</strong> を実行しておく。</p></li>
+<li><p>外部計算機上で実行するプログラム名は、このプログラム経由でMIntシステムから受信され、このプログラムが実行する。</p></li>
+<li><p>認証情報はこのプログラム（Ｃ）が使用する。認証情報が無いとWebAPIにアクセスできない。詳細は<a class="reference internal" href="#get-authorizaion-infomation"><span class="std std-numref">4.4.1 章</span></a>の<a class="reference internal" href="#get-authorizaion-infomation"><span class="std std-ref">認証関連情報の用意</span></a> で説明する。</p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p>プログラム（Ｄ）</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>（Ｃ）から実行される外部計算用スクリプト。</p></li>
+<li><p>名前は任意。（プログラム（Ｃ）経由で伝えられるため、あらかじめMIntシステム側に設定が必要）</p></li>
+<li><p><strong>execute_remote_command_api.sh</strong> を参考にして作成しておく。</p></li>
+</ul>
+</div></blockquote>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="section" id="how-to-use">
+<span id="id15"></span><h1><span class="section-number">4. </span>使用方法<a class="headerlink" href="#how-to-use" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<p>SSH方式、WebAPI方式それぞれのインストールおよびプログラムの実行までを外部計算機側で作業が必要な項目について説明する。
+なお、外部計算機側はbashスクリプトとPythonスクリプトの動作するLinuxホストを想定しているが、MInt側との通信が正常に確立できるならば、これ以外の環境でも構わない。
+その場合はパスワードなしログインの設定などは環境に合わせて適宜同様の処置を行うことになる。
+また、外部計算機側で秘匿データを扱う際は、これに関する仕様をMInt側に開示する必要も無い。</p>
+<div class="section" id="before-descide-items">
+<span id="id16"></span><h2><span class="section-number">4.1. </span>事前決定事項<a class="headerlink" href="#before-descide-items" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>事前に決定しておく項目は以下の通り。</p>
+<ol class="arabic">
+<li><p>環境構築</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>外部計算機側, MIntシステムのユーザアカウントの準備</p></li>
+<li><p>SSH or WebAPIの方式選択</p></li>
+<li><p>認証関連情報の用意</p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p>ワークフロー・モジュールの仕様策定 (実装調査書の作成)</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>MIntと外部計算機の役割分担の決定</p></li>
+<li><p>MIntと外部計算機の間を受け渡すパラメータ・ファイルの設計</p></li>
+<li><p>MInt側の前処理・後処理の設計</p></li>
+<li><p>外部計算機側スクリプトの設計</p></li>
+</ul>
+</div></blockquote>
+</li>
+</ol>
+</div>
+<div class="section" id="ssh-webapi">
+<h2><span class="section-number">4.2. </span>SSH, WebAPI方式共通<a class="headerlink" href="#ssh-webapi" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<div class="section" id="get-resources">
+<span id="id17"></span><h3><span class="section-number">4.2.1. </span>資材の入手<a class="headerlink" href="#get-resources" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<p>外部計算資源の利用に必要な資材は GitHub 上のリポジトリ <a class="footnote-reference brackets" href="#whatisrepository" id="id18">5</a> <a class="reference external" href="https://github.com/materialsintegration">https://github.com/materialsintegration</a> に用意されている。</p>
+<ul>
+<li><p>misrc_remote_workflow</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>主に外部計算機側で実行されるスクリプトのサンプルが同梱されている。</p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p>misrc_distributed_computing_assist.api</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>WebAPI方式用のプログラムおよびサンプルが同梱されている。</p></li>
+<li><p>MInt側資材は <strong>debug/mi-system-side</strong> 、外部計算機側資材は <strong>debug/remote-side</strong> にある。</p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p>ワークフローの外部実行に必要なリポジトリ</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>上記リポジトリのサンプルスクリプト以外に外部実行機能のあるワークフローを利用する場合に必要なリポジトリ</p></li>
+<li><p>通常はgithubにアップされていないので、MInt運用チームに依頼して入手する。</p></li>
+</ul>
+</div></blockquote>
+</li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">注釈</p>
+<p>特別なリポジトリを利用する場合の利用方法については別途MInt運用チームまで問い合わせること。</p>
+</div>
+<dl class="footnote brackets">
+<dt class="label" id="whatisrepository"><span class="brackets"><a class="fn-backref" href="#id18">5</a></span></dt>
+<dd><p>本機能を実現する資材などを格納したサーバ。GitHubを利用しているが、アカウントが無くともダウンロードは可能である。MInt運用チームがアカウントを発行したユーザのみアップロードが可能である。</p>
+</dd>
+</dl>
+<p>ユーザは外部計算機上にこれらを展開し、必要なカスタマイズを行う。
+資材展開後の外部計算機側のディレクトリ構造は以下のようになる。</p>
+<ul class="simple">
+<li><p>ユーザーディレクトリ</p></li>
+</ul>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>~/ユーザーディレクトリ
+  + remote_workflow
+    + scripts
+      + input_data
+  + misrc_distributed_computing_assist_api
+    + debug
+      + remote-side
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>ワーキングディレクトリ</p></li>
+</ul>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>/tmp/&lt;uuid&gt;
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">注釈</p>
+<p>ワーキングディレクトリは展開した資材のうち、外部計算機資源側のプログラムが自動的に作成、使用するため、ユーザーは意識しなくて良い。</p>
+</div>
+<p>ユーザが外部計算機側でカスタマイズするファイルは、通常、SSH方式では <strong>misrc_remote_workflow/scripts/execute_remote-side_program_ssh.sample.sh</strong> 、WebAPI方式では事前に名称を決めホスト情報ともども登録しておく。カスタマイズの方法については後述する。
+これ以外のファイルも改変可能であるが、その改変が原因で外部計算を利用するワークフローが動作しなかった場合、MInt運用チームは責を負わない。</p>
+<p>資材展開後のMInt側のディレクトリ構造は以下のようになる。</p>
+<ul class="simple">
+<li><p>ユーザーディレクトリ</p></li>
+</ul>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>~/misystemディレクトリ
+ + remote_workflow
+   + scripts
+ + misrc_distributed_computing_assist_api
+   + debug
+     + mi-system-side
+</pre></div>
+</div>
+<ul class="simple">
+<li><dl class="simple">
+<dt>ワーキングディレクトリ</dt><dd><ul>
+<li><p>複雑なので省略する。</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+</div>
+<div class="section" id="id19">
+<h3><span class="section-number">4.2.2. </span>ワークフローサンプル<a class="headerlink" href="#id19" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<p><strong>misrc_remote_workflow/sample_data</strong> に、Abaqus実行環境が用意可能な場合に使用可能なワークフローおよび、そのサンプル入力ファイルが用意されている。
+これを利用して、MInt側と外部計算機側のテストが可能である。
+また、<strong>misrc_remote_workflow/scripts</strong> に、この時のモジュール実行プログラムがある。
+これを参考に、他のモジュール実行プログラムを作成することが可能である。
+利用する際にはMIntシステム側と調整が必要である。</p>
+<ul class="simple">
+<li><p><strong>kousoku_abaqus_ssh_version2.py</strong> : SSH方式のモジュール実行スクリプト</p></li>
+<li><p><strong>kousoku_abaqus_api_version2.py</strong> : WebAPI方式のモジュール実行スクリプト</p></li>
+</ul>
+<p>もっと簡易な例題ワークフローは現在準備中である。</p>
+</div>
+</div>
+<div class="section" id="id20">
+<h2><span class="section-number">4.3. </span>SSH方式<a class="headerlink" href="#id20" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>主に、外部計算機資源側の準備について記述する。</p>
+<div class="section" id="ready-public-keys">
+<span id="id21"></span><h3><span class="section-number">4.3.1. </span>公開鍵の用意<a class="headerlink" href="#ready-public-keys" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<p>パスフレーズ無しの公開鍵認証を原則とする。
+MInt運用チームに依頼して、パスワードなしログイン用の公開鍵を入手し、以下の手順に沿ってファイルを作成しておく。
+SSH方式はMIntシステムから外部計算機資源への一方通行のSSH通信で行われるため、パスワード無しログイン設定を外部計算機資源側にのみ実施する。</p>
+<blockquote>
+<div><div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ cd .ssh
+$ cat &lt;入手した公開鍵暗号ファイル&gt; &gt;&gt; authorized_keys
+$ chmod 600 authorized_keys
+</pre></div>
+</div>
+</div></blockquote>
+<div class="admonition note">
+<p class="admonition-title">注釈</p>
+<p>ワークフロー実行前にMInt運用チームに連絡してパスワードなしログインが可能なことを確認すること</p>
+</div>
+</div>
+<div class="section" id="id22">
+<h3><span class="section-number">4.3.2. </span>資材の展開<a class="headerlink" href="#id22" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<ol class="arabic simple">
+<li><p><strong>misrc_remote_workflow</strong> リポジトリを展開する。</p></li>
+</ol>
+<blockquote>
+<div><div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ git clone https://github.com/materialsintegration/misrc_remote_workflow.git
+$ cd misrc_remote_workflow
+$ ls
+README.md  documents  inventories  misrc_remote_workflow.json  modulesxml  sample_data  scripts
+$ cd scripts
+$ ls
+abaqus                                     execute_remote_command.sample.sh  kousoku_abaqus_ssh.sh
+create_inputdata.py                        input_data                        kousoku_abaqus_ssh_version2.py
+execute_remote-side_program_api.sample.sh  kousoku_abaqus_api_version2.py    kousoku_abaqus_ssh_version2.sh
+execute_remote-side_program_ssh.sample.sh  kousoku_abaqus_api_version2.sh    remote-side_scripts
+execute_remote_command.sample.py           kousoku_abaqus_http.py
+</pre></div>
+</div>
+</div></blockquote>
+<ol class="arabic simple" start="2">
+<li><p>外部計算機側で実行するスクリプトがあれば <strong>remote-side_scripts</strong> に配置する。</p></li>
+<li><p>MIntが外部計算機へログインして最初に実行するプログラム名は前述のとおり <strong>execute_remote-side_program_ssh.sh</strong> に固定されている。このため <strong>execute_remote-side_program_ssh.sample.sh</strong> をこの名前でコピーするか、新規に作成して、必要な手順をスクリプト化する。</p></li>
+</ol>
+</div>
+<div class="section" id="mint">
+<h3><span class="section-number">4.3.3. </span>(参考)MInt側作業<a class="headerlink" href="#mint" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<ol class="arabic simple">
+<li><p>外部計算資源を利用するモジュールが実行可能なスクリプト <strong>misrc_remote_workflow/scripts/execute_remote_command.sample.sh</strong> をコピーして専用スクリプトを作成する。</p></li>
+<li><p>予測モジュールのmodules/resouceRequest/pbsNodeGroupタグに ssh-node01 という値をセットする。</p></li>
+<li><p>予測モジュールのmodules/objectPathタグに1. で作成したスクリプトをセットする。</p></li>
+<li><p>1.で作成したスクリプトを各行のコメントに従い適宜修正する。</p></li>
+<li><p>1.を実行可能な予測モジュールを組み込んだワークフローを作成する。</p></li>
+</ol>
+</div>
+</div>
+<div class="section" id="id23">
+<h2><span class="section-number">4.4. </span>WebAPI方式<a class="headerlink" href="#id23" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>主に、外部計算機資源側の準備について記述する。</p>
+<div class="section" id="get-authorizaion-infomation">
+<span id="id24"></span><h3><span class="section-number">4.4.1. </span>認証関連情報の用意<a class="headerlink" href="#get-authorizaion-infomation" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<p>MInt側担当者に問い合わせて下記の情報を用意する。</p>
+<ul>
+<li><p>ホスト情報</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>MInt側でAPIの発行者を識別するための文字列。ユーザ企業のドメインなどと一致させる必要は無い。</p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p>APIトークン</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>MIntのAPI認証システムを使用するためのトークン。MIntシステムログイン後、ユーザープロファイル管理システムメニューで表示される、「APIトークン」を使用する。</p></li>
+<li><p>ユーザーの環境でポーリングスクリプトを動作させるときに必要であるが、後述のログイン方式を利用する場合はトークン自体は必要ない。</p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p>MIntのURL</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>MIntのURL(エンドポイントは不要)を、MInt運用チームに問い合わせておく。</p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p>WebAPI方式を利用できるようにMInt運用チームに設定を依頼する。</p></li>
+</ul>
+</div>
+<div class="section" id="id25">
+<h3><span class="section-number">4.4.2. </span>資材の展開<a class="headerlink" href="#id25" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<ol class="arabic simple">
+<li><p><strong>misrc_distributed_computing_assist_api</strong> リポジトリを展開する。</p></li>
+</ol>
+<blockquote>
+<div><div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ git clone https://github.com/materialsintegration/misrc_distributed_computing_assist_api.git
+$ cd misrc_distributed_computing_assist_api
+$ ls
+README.md  logging.cfg     mi_dicomapi_infomations.py           syslogs
+debug      mi_dicomapi.py  mi_distributed_computing_assist.ini
+$ cd debug
+$ ls
+api_status.py  api_status_gui.py  api_status_gui.pyc  mi-system-side  remote-side
+$ cd remote-side
+$ ls
+api-debug.py  debug_gui.py  mi-system-remote.py
+</pre></div>
+</div>
+</div></blockquote>
+<ol class="arabic simple" start="2">
+<li><p><strong>authentication_operator</strong> リポジトリを展開、環境変数を設定する。（ログイン方式を選択する場合）</p></li>
+</ol>
+<blockquote>
+<div><div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ git clone https://gitlab.mintsys.jp/midev/authentication_operator.git
+$ export AUTHENTICATION_OPERATOR=&lt;path to authentication_operator
+</pre></div>
+</div>
+</div></blockquote>
+<div class="admonition note">
+<p class="admonition-title">注釈</p>
+<p>環境変数AUTHENTICATION_OPERATORはログインシェルの自動設定ファイルに設定しておく。</p>
+</div>
+<ol class="arabic simple" start="3">
+<li><p>計算に必要なスクリプトの準備</p>
+<ul class="simple">
+<li><p>ファイル名はMInt運用チームに伝えて、APIに登録しておく。</p></li>
+<li><p>特別なリポジトリを利用する場合はこの作業が必要ないこともある。</p></li>
+</ul>
+</li>
+</ol>
+</div>
+<div class="section" id="id26">
+<h3><span class="section-number">4.4.3. </span>実行<a class="headerlink" href="#id26" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<p>認証情報と共にポーリングプログラムを動作させておく。事前に設定した情報に従ってMIntシステム側と通信し、入力ファイルの受信、計算、出力ファイルの送信が自動的に行われる。認証情報が無い、間違っている、などの場合はポーリングは失敗し、計算は行われない。
+また <strong>ワークフローを実行したユーザーと同じユーザーのトークンまたはログイン方式での同じユーザー</strong> で実行しないとこちらもポーリングは失敗し、計算は行われない。</p>
+<ol class="arabic simple">
+<li><p>以下2. または3. のどちからの方法で、<strong>mi-system-remote.py</strong> を実行する。</p></li>
+<li><p>トークン指定方式</p></li>
+</ol>
+<blockquote>
+<div><div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ python mi-system-remote.py &lt;ホスト情報&gt; https://nims.mintsys.jp &lt;API token&gt;
+site id = &lt;ホスト情報&gt; で指定した識別子
+base url = https://nims.mintsys.jp:50443
+</pre></div>
+</div>
+</div></blockquote>
+<ol class="arabic simple" start="3">
+<li><p>ログイン方式</p></li>
+</ol>
+<blockquote>
+<div><div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ python mi-system-remote.py &lt;ホスト情報&gt; https://nims.mintsys.jp login
+site id = &lt;ホスト情報&gt; で指定した識別子
+base url = https://nims.mintsys.jp:50443
+nims.mintsys.jp へのログイン
+ログインID: &lt;MIntシステムのログイン名&gt;
+パスワード: &lt;同、パスワード&gt;
+ token = &lt;ログイン名のトークンの表示&gt;
+...
+</pre></div>
+</div>
+</div></blockquote>
+<div class="admonition note">
+<p class="admonition-title">注釈</p>
+<p>ホスト情報とAPI token は<a class="reference internal" href="#get-authorizaion-infomation"><span class="std std-numref">4.4.1 章</span></a>の<a class="reference internal" href="#get-authorizaion-infomation"><span class="std std-ref">認証関連情報の用意</span></a> で入手したそれぞれの認証情報を指定する。</p>
+</div>
+</div>
+<div class="section" id="id27">
+<h3><span class="section-number">4.4.4. </span>(参考)MInt側作業<a class="headerlink" href="#id27" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<ol class="arabic simple">
+<li><p><strong>misrc_distributed_computing_assist_api</strong> リポジトリを展開する。</p></li>
+<li><p>構成ファイル <strong>mi_distributed_computing_assist.ini</strong> に必要な設定を行う。</p></li>
+<li><p><strong>mi_dicomapi.py</strong> を動作させて待ち受け状態にする。</p></li>
+</ol>
+<blockquote>
+<div><div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ python mi_dicomapi.py
+</pre></div>
+</div>
+<p>または</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ systemctl start distcomp_api
+</pre></div>
+</div>
+</div></blockquote>
+<ol class="arabic simple" start="4">
+<li><p>モジュールの実行プログラム内で、<strong>misrc_distributed_computing_assist_api/debug/mi-system-side/mi-system-wf.py</strong> を必要なパラメータとともに実行するように構成する。</p></li>
+</ol>
+<div class="admonition note">
+<p class="admonition-title">注釈</p>
+<p>ワークフロー側から計算登録時に構成ファイルは再読込されるので、WebAPIプログラムが現在動作中であっても読み込ませるための特別な動作は必要ない。</p>
+</div>
+</div>
+</div>
+<div class="section" id="sample">
+<span id="id28"></span><h2><span class="section-number">4.5. </span>その他MInt側注意事項<a class="headerlink" href="#sample" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>SSH方式、WebAPI方式共通の注意事項など。</p>
+<ul class="simple">
+<li><p>pbsNodeGroup設定でssh-node01を設定する。他の計算機では外へアクセスすることができないため。</p></li>
+<li><p>pbsQueueなどCPU数などは指定できない。</p></li>
+<li><p>外部計算機側で別途Torqueなどのバッチジョブシステムに依存する。</p></li>
+</ul>
+</div>
+<div class="section" id="id29">
+<h2><span class="section-number">4.6. </span>エラーが発生した場合<a class="headerlink" href="#id29" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>ワークフローを本実行する前にMInt運用チームと連携して動作確認を行っておくが、予期せず異常終了した場合などは以下の方法で対策を検討することができる。</p>
+<ul>
+<li><p>SSH方式、WebAPI方式ともワークフローの出力ポートとは別に外部計算機で計算が行われた際の処理のログがある。MInt運用チームに連絡して、それを入手する。</p></li>
+<li><p>同様に、外部計算機資源側で <a class="reference internal" href="#get-resources"><span class="std std-numref">4.2.1 章</span></a> <a class="reference internal" href="#get-resources"><span class="std std-ref">資材の入手</span></a> で説明したワーキングディレクトリに計算結果およびログが残っているのでこれを利用する。</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>ワーキングディレクトリ <a class="footnote-reference brackets" href="#whatisworkingdirectory" id="id30">6</a> はUUIDで構成されたディレクトリ名のディレクトリの作成時間などで該当ディレクトリかどうか判断する。</p></li>
+</ul>
+</div></blockquote>
+</li>
+</ul>
+<dl class="footnote brackets">
+<dt class="label" id="whatisworkingdirectory"><span class="brackets"><a class="fn-backref" href="#id30">6</a></span></dt>
+<dd><p>外部計算機側のワーキングディレクトリは/tmpディレクトリに作成されるので、OSの設定に変更がなければ30日後に削除される。このため問題が発生した場合は発生から30日以内に調査を開始する必要がある。</p>
+</dd>
+</dl>
+<div class="section" id="id31">
+<h3><span class="section-number">4.6.1. </span>通信異常<a class="headerlink" href="#id31" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<p>インターネット経由であるので、通信異常は発生するものとして対処してある。WebAPI方式では外部計算機側からの通信となるため、外部計算機側のプログラムでリトライ方式を採用している。デフォルトはリトライ間隔60秒のリトライ回数5回で通信失敗として終了する。この値は以下の書式で上書き指定することも可能である。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ python mi-system-remote.py &lt;ホスト情報&gt; https://nims.mintsys.jp &lt;API token&gt; retry:&lt;リトライ回数&gt;,&lt;リトライ間隔&gt;
+</pre></div>
+</div>
+<p>SSH方式ではその性質上処理中に通信異常が起きると復帰できない。現バージョンではSSH方式での処理中の通信異常を復帰させる手段は実装されていない。どちらの場合も通信が途絶えて処理続行不能と判断されれば、MIntシステム側に異常を通知し、異常終了となる ように構成されている。</p>
+<div class="admonition note">
+<p class="admonition-title">注釈</p>
+<p>リトライ回数は整数で指定し、リトライ間隔は整数または実数で指定する。</p>
+</div>
+</div>
+</div>
+<div class="section" id="id32">
+<h2><span class="section-number">4.7. </span>ワークフローの廃止<a class="headerlink" href="#id32" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>ユーザがMInt運用チームにワークフローの廃止届を提出する。当該ワークフローはMInt上で「無効」のステータスを付与され参照・実行不能となる。</p>
+<div class="line-block">
+<div class="line"><br /></div>
+<div class="line"><br /></div>
+</div>
+<p>以上</p>
+</div>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">外部計算資源の利用について</a></h1>
+
+
+
+
+
+
+
+
+<h3>ナビゲーション</h3>
+<p class="caption"><span class="caption-text">目次:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">1. はじめに</a></li>
+<li class="toctree-l1"><a class="reference internal" href="#id2">2. 概要</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#id3">2.1. 利用イメージ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#sshwebapi">2.2. SSH方式とWebAPI方式の比較</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="#id6">3. 動作原理</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#ssh">3.1. SSH方式</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id7">3.1.1. 動作イメージ</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id8">3.1.2. ワークフロー例</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id9">3.1.3. モジュール内の処理</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#webapi">3.2. WebAPI方式</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id11">3.2.1. 動作イメージ</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id13">3.2.2. ワークフロー例</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id14">3.2.3. モジュール内の処理</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="#how-to-use">4. 使用方法</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#before-descide-items">4.1. 事前決定事項</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#ssh-webapi">4.2. SSH, WebAPI方式共通</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#get-resources">4.2.1. 資材の入手</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id19">4.2.2. ワークフローサンプル</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#id20">4.3. SSH方式</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#ready-public-keys">4.3.1. 公開鍵の用意</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id22">4.3.2. 資材の展開</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#mint">4.3.3. (参考)MInt側作業</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#id23">4.4. WebAPI方式</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#get-authorizaion-infomation">4.4.1. 認証関連情報の用意</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id25">4.4.2. 資材の展開</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id26">4.4.3. 実行</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id27">4.4.4. (参考)MInt側作業</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#sample">4.5. その他MInt側注意事項</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id29">4.6. エラーが発生した場合</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id31">4.6.1. 通信異常</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#id32">4.7. ワークフローの廃止</a></li>
+</ul>
+</li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="index.html" title="前の章へ">外部計算資源の利用方法（本運用）</a></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">クイック検索</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="検索" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2021, SIP-MI.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.4.4</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="_sources/using_distributed_properties.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>
