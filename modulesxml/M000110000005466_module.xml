@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<modules xmlns="http://www.example.com/predictionModuleSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:dc="http://purl.org/dc/elements/1.1/" xsi:schemaLocation="http://www.example.com/predictionModuleSchema predictionModuleSchema.xsd">
+    <module>
+        <dc:title>WFAS_code_aster_更新</dc:title>
+        <dc:description>WFAS API用
+CodeAster可視化ファイル作成。
+JSONファイルのアーカイブ
+ZIPファイル
+</dc:description>
+        <dc:creator>間中　祐介</dc:creator>
+        <creatorId>1100001100000210</creatorId>
+        <dc:date>2020-06-19</dc:date>
+        <predictionModel>M000110000005466</predictionModel>
+        <version></version>
+        <objectPath></objectPath>
+        <inputPorts>
+            <port>
+                <name>code_aster_出力_結果</name>
+                <descriptor>D000110000018640</descriptor>
+                <type>file</type>
+                <required>true</required>
+            </port>
+        </inputPorts>
+        <outputPorts>
+            <port>
+                <name>code_aster_可視化_最大温度</name>
+                <descriptor>D000110000018668</descriptor>
+                <type>file</type>
+            </port>
+            <port>
+                <name>code_aster_出力_可視化ファイルアーカイブ</name>
+                <descriptor>D000110000018645</descriptor>
+                <type>file</type>
+            </port>
+            <port>
+                <name>code_aster_可視化_静的情報_アーカイブ</name>
+                <descriptor>D000110000018670</descriptor>
+                <type>file</type>
+            </port>
+            <port>
+                <name>code_aster_可視化_疲労情報_アーカイブ</name>
+                <descriptor>D000110000018671</descriptor>
+                <type>file</type>
+            </port>
+            <port>
+                <name>code_aster_可視化_疲労ダメージ</name>
+                <descriptor>D000110000018672</descriptor>
+                <type>file</type>
+            </port>
+            <port>
+                <name>code_aster_最大温度_リスト</name>
+                <descriptor>D000110000018787</descriptor>
+                <type>file</type>
+            </port>
+        </outputPorts>
+    </module>
+</modules>
