@@ -1,14 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <modules xmlns="http://www.example.com/predictionModuleSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:dc="http://purl.org/dc/elements/1.1/" xsi:schemaLocation="http://www.example.com/predictionModuleSchema predictionModuleSchema.xsd">
     <module>
-        <dc:title>WFAS_code_aster_実行</dc:title>
-        <dc:description>WFAS API用
-code_aster実行モジュール</dc:description>
+        <dc:title>code_aster_クラウド_実行</dc:title>
+        <dc:description>クラウド実行用 code_aster実行モジュール</dc:description>
         <dc:creator>間中　祐介</dc:creator>
         <creatorId>1100001100000210</creatorId>
         <dc:date>2020-06-19</dc:date>
         <predictionModel>M000110000005465</predictionModel>
-        <version></version>
+        <version>1.0.0</version>
         <objectPath></objectPath>
         <inputPorts>
             <port>
