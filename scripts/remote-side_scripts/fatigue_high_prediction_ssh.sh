@@ -11,7 +11,8 @@ export PYTHONDIR=${MODULEDIR}/python
 export DAMASK_NUM_THREADS=8
 
 python2 ${PYTHONDIR}/grain_data.py grain.dat
-ln -s ${DAMASK_SETUPFILE}* ./
+#ln -s ${DAMASK_SETUPFILE}* ./
+cp ${DAMASK_SETUPFILE}* ./
 ${FMSPROG}/04_damask_u-tokyo/damask_pre1
 ${FMSPROG}/04_damask_u-tokyo/damask_pre2
 targetdirs=`cat ${FMSPROG}/04_damask_u-tokyo/damask_exec_dir`
