@@ -1,0 +1,167 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<modules xmlns="http://www.example.com/predictionModuleSchema" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><module>
+        <dc:identifier>P000029000001210</dc:identifier>
+        <dc:title>code_aster_実行_外部計算資源利用版</dc:title>
+        <dc:description>code_aster実行モジュール、外部計算機資源利用版(SSH方式)</dc:description>
+        <dc:creator>東大システム管理者０１</dc:creator>
+        <creatorId>200000100000001</creatorId>
+        <dc:date>2021-11-12</dc:date>
+        <predictionModel>M000020000004239</predictionModel>
+        <deleted>false</deleted>
+        <version>1.2.0</version>
+        <objectPath>/wfas_for_api_workflow/scripts6/codeaster_execute_remote.py</objectPath>
+        <resourceRequests>
+            <pbsQueue xsi:nil="true" />
+            <pbsNodeGroup>ssh-node01</pbsNodeGroup>
+            <pbsMinCores>1</pbsMinCores>
+            <pbsMaxCores>32</pbsMaxCores>
+            <pbsBaseCores>10</pbsBaseCores>
+        </resourceRequests>
+        <appendix xsi:nil="true" />
+        <history xsi:nil="true" />
+        <inputPorts>
+            <port>
+                <name>グループリスト</name>
+                <description xsi:nil="true" />
+                <descriptor>D000020000030158</descriptor>
+                <type>file</type>
+                <unit xsi:nil="true" />
+                <depth>0</depth>
+                <defaultValue xsi:nil="true" />
+                <required>true</required>
+            </port>
+            <port>
+                <name>プロジェクトプロパティ</name>
+                <description xsi:nil="true" />
+                <descriptor>D000020000030146</descriptor>
+                <type>file</type>
+                <unit xsi:nil="true" />
+                <depth>0</depth>
+                <defaultValue xsi:nil="true" />
+                <required>true</required>
+            </port>
+            <port>
+                <name>二次元メッシュ入力ファイル</name>
+                <description xsi:nil="true" />
+                <descriptor>D000020000030155</descriptor>
+                <type>file</type>
+                <unit xsi:nil="true" />
+                <depth>0</depth>
+                <defaultValue xsi:nil="true" />
+                <required>true</required>
+            </port>
+            <port>
+                <name>溶接パラメータ入力ファイル</name>
+                <description xsi:nil="true" />
+                <descriptor>D000020000030150</descriptor>
+                <type>file</type>
+                <unit xsi:nil="true" />
+                <depth>0</depth>
+                <defaultValue xsi:nil="true" />
+                <required>true</required>
+            </port>
+            <port>
+                <name>溶接溶解状態データ</name>
+                <description xsi:nil="true" />
+                <descriptor>D000020000030222</descriptor>
+                <type>file</type>
+                <unit xsi:nil="true" />
+                <depth>0</depth>
+                <defaultValue xsi:nil="true" />
+                <required>false</required>
+            </port>
+            <port>
+                <name>溶接複数レイヤーデータ</name>
+                <description xsi:nil="true" />
+                <descriptor>D000020000030221</descriptor>
+                <type>file</type>
+                <unit xsi:nil="true" />
+                <depth>0</depth>
+                <defaultValue xsi:nil="true" />
+                <required>false</required>
+            </port>
+            <port>
+                <name>熱源情報</name>
+                <description xsi:nil="true" />
+                <descriptor>D000020000030157</descriptor>
+                <type>file</type>
+                <unit xsi:nil="true" />
+                <depth>0</depth>
+                <defaultValue xsi:nil="true" />
+                <required>true</required>
+            </port>
+            <port>
+                <name>複数パス入力ファイル</name>
+                <description xsi:nil="true" />
+                <descriptor>D000020000030153</descriptor>
+                <type>file</type>
+                <unit xsi:nil="true" />
+                <depth>0</depth>
+                <defaultValue xsi:nil="true" />
+                <required>true</required>
+            </port>
+            <port>
+                <name>解析モデル指定子</name>
+                <description xsi:nil="true" />
+                <descriptor>D000020000030205</descriptor>
+                <type>file</type>
+                <unit xsi:nil="true" />
+                <depth>0</depth>
+                <defaultValue xsi:nil="true" />
+                <required>true</required>
+            </port>
+        </inputPorts>
+        <outputPorts>
+            <port>
+                <name>code_aster_出力_baseアーカイブ</name>
+                <description xsi:nil="true" />
+                <descriptor>D000020000030188</descriptor>
+                <type>file</type>
+                <unit xsi:nil="true" />
+                <depth>0</depth>
+                <defaultValue xsi:nil="true" />
+                <required xsi:nil="true" />
+            </port>
+            <port>
+                <name>code_aster_出力_resuファイル</name>
+                <description xsi:nil="true" />
+                <descriptor>D000020000030187</descriptor>
+                <type>file</type>
+                <unit xsi:nil="true" />
+                <depth>0</depth>
+                <defaultValue xsi:nil="true" />
+                <required xsi:nil="true" />
+            </port>
+            <port>
+                <name>code_aster_出力_メッシュとグループ</name>
+                <description xsi:nil="true" />
+                <descriptor>D000020000030184</descriptor>
+                <type>file</type>
+                <unit xsi:nil="true" />
+                <depth>0</depth>
+                <defaultValue xsi:nil="true" />
+                <required xsi:nil="true" />
+            </port>
+            <port>
+                <name>code_aster_出力_ログファイル</name>
+                <description xsi:nil="true" />
+                <descriptor>D000020000030186</descriptor>
+                <type>file</type>
+                <unit xsi:nil="true" />
+                <depth>0</depth>
+                <defaultValue xsi:nil="true" />
+                <required xsi:nil="true" />
+            </port>
+            <port>
+                <name>code_aster_出力_結果</name>
+                <description xsi:nil="true" />
+                <descriptor>D000020000030185</descriptor>
+                <type>file</type>
+                <unit xsi:nil="true" />
+                <depth>0</depth>
+                <defaultValue xsi:nil="true" />
+                <required xsi:nil="true" />
+            </port>
+        </outputPorts>
+    </module>
+    </modules>
