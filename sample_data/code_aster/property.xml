@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<Project>
+  <WeldType>BJ</WeldType>
+  <WeldShape>V</WeldShape>
+  <WeldMethod>SS</WeldMethod>
+  <WeldTypeKey>Butt Joint</WeldTypeKey>
+  <WeldShapeKey>V-type</WeldShapeKey>
+  <WeldMethodKey>Single Side</WeldMethodKey>
+  <Description>V Type_AC1:200,AC3:600,Base Mesh:2,Weld Size:1</Description>
+  <UpdatedBy>Admin12</UpdatedBy>
+  <UpdatedOn>2020/02/06</UpdatedOn>
+  <Status>Mesh Ok</Status>
+  <codeAsterStatus>New</codeAsterStatus>
+  <sysWeldStatus>New</sysWeldStatus>
+  <abaqusStatus>New</abaqusStatus>
+  <AnalysisModel>2D Plate Model</AnalysisModel>
+  <PipeLength>NaN</PipeLength>
+  <PipeOD>NaN</PipeOD>
+  <PipeCapThickness/>
+  <FEMCCVStatus>1001</FEMCCVStatus>
+  <AC1/>
+  <AC3/>
+  <MaxMeshSize/>
+  <BaseMatMeshSize/>
+  <WeldMatMeshSize/>
+  <HazMatMeshSize/>
+  <MeshGradeFactor/>
+  <SymetricMesh/>
+  <Material/>
+  <Thickness/>
+  <Pressure/>
+  <Number3D/>
+  <ContourMinVal>53.52407455444336</ContourMinVal>
+  <ContourMaxVal>748.9244384765625</ContourMaxVal>
+</Project>

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<Layers HeatSourceModel="0" LayerNo="1" Length="4.0" Penetration="4.0" Velocity="1.0" Width="2.0">
+<Layer Height="11" No="1" Order="1" PassesNo="1" ReverseDirection="unchecked">
+<Passes>
+	 <Pass CoolingTemp="200.0" CoolingTime="40.0" HalfWidthOfWeldBead="2.0" HeatValue="150.0" HeatingTime="1.0" LengthOfWeldBead="4.0" Name="A" PenetrationOfWeldBead="4.0" Position="5.5" Velocity="1.0"/>
+</Passes>
+</Layer>
+</Layers>

@@ -8,7 +8,14 @@
         <dc:date>2020-06-19</dc:date>
         <predictionModel>M000110000005465</predictionModel>
         <version>1.0.0</version>
-        <objectPath></objectPath>
+        <objectPath>/misrc_remote_workflow/scripts/execute_remote_command_code_aster_execute.sh</objectPath>
+        <resourceRequests>
+            <pbsQueue xsi:nil="true" />
+            <pbsNodeGroup>ssh-node01</pbsNodeGroup>
+            <pbsMinCores>1</pbsMinCores>
+            <pbsMaxCores>32</pbsMaxCores>
+            <pbsBaseCores>10</pbsBaseCores>
+        </resourceRequests>
         <inputPorts>
             <port>
                 <name>プロジェクトプロパティ</name>

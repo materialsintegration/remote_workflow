@@ -1,5 +1,6 @@
 #!/bin/bash
-ASTER_HOME="/opt/salome_meca/V2018.0.1_public"
+export ASTER_HOME="/home/rme/salome_meca/V2018.0.1_public"
+export WFAS6_HOME="/home/rme"
 source $ASTER_HOME/salome_prerequisites.sh
 source $ASTER_HOME/salome_modules.sh
 

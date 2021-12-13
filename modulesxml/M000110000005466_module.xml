@@ -11,8 +11,15 @@ ZIPファイル
         <creatorId>1100001100000210</creatorId>
         <dc:date>2020-06-19</dc:date>
         <predictionModel>M000110000005466</predictionModel>
-        <version></version>
-        <objectPath></objectPath>
+        <version>1.0.0</version>
+        <objectPath>/misrc_remote_workflow/scripts/execute_remote_command_code_aster_execute.sh</objectPath>
+        <resourceRequests>
+            <pbsQueue xsi:nil="true" />
+            <pbsNodeGroup>ssh-node01</pbsNodeGroup>
+            <pbsMinCores>1</pbsMinCores>
+            <pbsMaxCores>32</pbsMaxCores>
+            <pbsBaseCores>10</pbsBaseCores>
+        </resourceRequests>
         <inputPorts>
             <port>
                 <name>code_aster_出力_結果</name>

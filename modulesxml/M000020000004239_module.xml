@@ -8,8 +8,15 @@ code_aster実行モジュール</dc:description>
         <creatorId>200000100000001</creatorId>
         <dc:date>2020-01-27</dc:date>
         <predictionModel>M000020000004239</predictionModel>
-        <version></version>
-        <objectPath></objectPath>
+        <version>1.0.0</version>
+        <objectPath>/misrc_remote_workflow/scripts/execute_remote_command_code_aster_execute.sh</objectPath>
+        <resourceRequests>
+            <pbsQueue xsi:nil="true" />
+            <pbsNodeGroup>ssh-node01</pbsNodeGroup>
+            <pbsMinCores>1</pbsMinCores>
+            <pbsMaxCores>32</pbsMaxCores>
+            <pbsBaseCores>10</pbsBaseCores>
+        </resourceRequests>
         <inputPorts>
             <port>
                 <name>プロジェクトプロパティ</name>
