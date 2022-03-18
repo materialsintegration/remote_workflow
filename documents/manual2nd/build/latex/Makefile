@@ -5,6 +5,7 @@ ALLPDF = $(addsuffix .pdf,$(ALLDOCS))
 ALLDVI = $(addsuffix .dvi,$(ALLDOCS))
 ALLXDV =
 ALLPS  = $(addsuffix .ps,$(ALLDOCS))
+ALLIMGS = $(wildcard *.png *.gif *.jpg *.jpeg)
 
 # Prefix for archive names
 ARCHIVEPREFIX =
@@ -20,13 +21,18 @@ LATEX = latexmk -r latexmkjarc -dvi
 PDFLATEX = latexmk -r latexmkjarc -pdfdvi -dvi- -ps-
 
 
-%.dvi: %.tex FORCE_MAKE
+%.png %.gif %.jpg %.jpeg: FORCE_MAKE
+	extractbb '$@'
+
+%.dvi: %.tex $(ALLIMGS) FORCE_MAKE
+	for f in *.pdf; do extractbb "$$f"; done
 	$(LATEX) $(LATEXMKOPTS) '$<'
 
 %.ps: %.dvi
 	dvips '$<'
 
-%.pdf: %.tex FORCE_MAKE
+%.pdf: %.tex $(ALLIMGS) FORCE_MAKE
+	for f in *.pdf; do extractbb "$$f"; done
 	$(PDFLATEX) $(LATEXMKOPTS) '$<'
 
 all: $(ALLPDF)
