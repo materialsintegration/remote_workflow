@@ -33,9 +33,32 @@ MIntには、ワークフローを構成するモジュール内の一部分の�
 上記の機構によって、安全な外部計算が保証される。下記の各章で具体的な利用方法について記す。
 また、外部計算資源の利用に際して本書では不明な点は、ユーザとMInt運用チームとの協議で決定するものとする。
 
+本書の対象
+============
+
+対象読者
+---------
+
+本文書は既にMIntシステムのユーザーであり、これから外部計算資源を利用したワークフローの実行を行おうとしている方(以下利用者とする）を想定して記述しています。
+
+対象読者は以下の知識を有しているか、知識を有している担当者が存在していることを前提としています。
+
+* Linux(主にCentOS 7.x)の仕組みやコマンドについての基本的な知識
+* オープンソースソフトウェアを扱う、基本的な知識
+* MIntシステムのワークフローの操作、ランの実行などの基本的な知識
+
+対象範囲
+---------
+
+本文書ではこれから外部計算機資源を利用した既存のワークフローの実行を行うための情報を元に記述されている。MIntシステムに存在しない外部計算機資源を利用することを想定した予測モジュールやワークフローの新規作成に関する情報は記述しない。また外部計算機資源として利用者が用意する計算機(以下外部計算機と言う)で動作するプログラムはNIMS側での動作実績のあるものを対象とし、新規作成した上で外部計算機資源として利用する場合の情報も記述しない。（注：これはら別途「」に記述する。）
+
+この他、外部計算機に展開する予測モジュール用の資材の詳細についてはその予測モジュールまたはワークフローの利用者マニュアルを参照することとし、本書では扱わない。
+
+
 .. raw:: latex
 
     \newpage
+
 ====
 概要
 ====
@@ -348,132 +371,44 @@ WebAPI方式の外部資源利用を含むワークフローを、MIntのワー�
 
 .. _how_to_use:
 
-========
-使用方法
-========
+=================
+利用のための準備
+=================
 
 SSH方式、WebAPI方式それぞれのインストールおよびプログラムの実行までを外部計算機側で作業が必要な項目について説明する。
-なお、外部計算機側はbashスクリプトとPythonスクリプトの動作するLinuxホストを想定しているが、MInt側との通信が正常に確立できるならば、これ以外の環境でも構わない。
-その場合はパスワードなしログインの設定などは環境に合わせて適宜同様の処置を行うことになる。
-また、外部計算機側で秘匿データを扱う際は、これに関する仕様をMInt側に開示する必要も無い。
+なお、外部計算機側はbashスクリプトとPythonスクリプトの動作するLinux計算機を推奨している。ただしMInt側との通信が正常に確立でき、外部計算に必要なプログラムが実行可能であれば、これ以外の環境でも構わない。
+その場合、こちらに無い情報は利用者側で適宜用意して使うこととなる。
+また、外部計算機側で秘匿データを扱う際は、これに関する仕様をMInt側に開示する必要は無い。
 
 .. _before_descide_items:
 
-事前決定事項
-============
+事前確認
+=========
 
-事前に決定しておく項目は以下の通り。
+事前に以下の点を確認しておく。
 
-1. 環境構築
+* SSH方式またはWebAPI方式の選択
+* 外部計算機の利用場所
 
-    + 外部計算機側, MIntシステムのユーザアカウントの準備
-    + SSH or WebAPIの方式選択
-    + 認証関連情報の用意
-2. ワークフロー・モジュールの仕様策定 (実装調査書の作成)
- 
-    + MIntと外部計算機の役割分担の決定
-    + MIntと外部計算機の間を受け渡すパラメータ・ファイルの設計
-    + MInt側の前処理・後処理の設計
-    + 外部計算機側スクリプトの設計
+    + 自社内
+    + NIMS内
+    + AWSなどのクラウド
 
-SSH, WebAPI方式共通
-==================
+利用申請
+=========
 
-.. _get_resources:
-
-資材の入手
-----------
-
-外部計算資源の利用に必要な資材は GitHub 上のリポジトリ [#whatisRepository]_ https://github.com/materialsintegration に用意されている。
-
-- misrc_remote_workflow 
-
-    - 主に外部計算機側で実行されるスクリプトのサンプルが同梱されている。
-- misrc_distributed_computing_assist.api 
-
-    - WebAPI方式用のプログラムおよびサンプルが同梱されている。
-    - MInt側資材は **debug/mi-system-side** 、外部計算機側資材は **debug/remote-side** にある。 
-
-- ワークフローの外部実行に必要なリポジトリ
-
-    - 上記リポジトリのサンプルスクリプト以外に外部実行機能のあるワークフローを利用する場合に必要なリポジトリ
-    - 通常はgithubにアップされていないので、MInt運用チームに依頼して入手する。
-
-.. note::
-   特別なリポジトリを利用する場合の利用方法については別途MInt運用チームまで問い合わせること。
-
-.. [#whatisRepository] 本機能を実現する資材などを格納したサーバ。GitHubを利用しているが、アカウントが無くともダウンロードは可能である。MInt運用チームがアカウントを発行したユーザのみアップロードが可能である。
-
-ユーザは外部計算機上にこれらを展開し、必要なカスタマイズを行う。
-資材展開後の外部計算機側のディレクトリ構造は以下のようになる。
-
-* ユーザーディレクトリ
-
-.. code-block:: none
-  
-  ~/ユーザーディレクトリ
-    + remote_workflow
-      + scripts
-        + input_data
-    + misrc_distributed_computing_assist_api
-      + debug
-        + remote-side
-
-* ワーキングディレクトリ
-
-.. code-block:: none
-
-  /tmp/<uuid>
-
-.. note::
-   ワーキングディレクトリは展開した資材のうち、外部計算機資源側のプログラムが自動的に作成、使用するため、ユーザーは意識しなくて良い。
-
-ユーザが外部計算機側でカスタマイズするファイルは、通常、SSH方式では **misrc_remote_workflow/scripts/execute_remote-side_program_ssh.sample.sh** 、WebAPI方式では事前に名称を決めホスト情報ともども登録しておく。カスタマイズの方法については後述する。
-これ以外のファイルも改変可能であるが、その改変が原因で外部計算を利用するワークフローが動作しなかった場合、MInt運用チームは責を負わない。
-
-資材展開後のMInt側のディレクトリ構造は以下のようになる。
-
-* ユーザーディレクトリ
-
-.. code-block:: none
-
-   ~/misystemディレクトリ
-    + remote_workflow
-      + scripts
-    + misrc_distributed_computing_assist_api
-      + debug
-        + mi-system-side
-     
-* ワーキングディレクトリ
-    + 複雑なので省略する。
-
-ワークフローサンプル
-------------------
-
-**misrc_remote_workflow/sample_data** に、Abaqus実行環境が用意可能な場合に使用可能なワークフローおよび、そのサンプル入力ファイルが用意されている。
-これを利用して、MInt側と外部計算機側のテストが可能である。
-また、**misrc_remote_workflow/scripts** に、この時のモジュール実行プログラムがある。
-これを参考に、他のモジュール実行プログラムを作成することが可能である。
-利用する際にはMIntシステム側と調整が必要である。
-
-* **kousoku_abaqus_ssh_version2.py** : SSH方式のモジュール実行スクリプト
-* **kousoku_abaqus_api_version2.py** : WebAPI方式のモジュール実行スクリプト
-
-もっと簡易な例題ワークフローは現在準備中である。
-
-SSH方式
-=======
-
-主に、外部計算機資源側の準備について記述する。
-
-.. _ready_public_keys:
+外部計算機資源を利用したワークフローの利用申請を行い、必要な認証情報の準備を行う。
+このタイプのワークフローはユーザー専用となるため、その手続きが必要である。
+申請後、専用ワークフローのワークフローIDが返送されるので、実行にはそのワークフローIDを利用する。
 
 公開鍵の用意
-------------
+-------------
 
-パスフレーズ無しの公開鍵認証を原則とする。
-MInt運用チームに依頼して、パスワードなしログイン用の公開鍵を入手し、以下の手順に沿ってファイルを作成しておく。
-SSH方式はMIntシステムから外部計算機資源への一方通行のSSH通信で行われるため、パスワード無しログイン設定を外部計算機資源側にのみ実施する。
+SSH方式を選択した場合に必要になります。
+SSH接続はMIntシステムから外部計算機に向けて行われます。
+アクセスは公開鍵暗号方式を利用したパスワード無しログインで行われます。
+公開鍵暗号はパスフレーズ無しの形式です。
+MInt運用チームに依頼して、パスワードなしログイン用の公開鍵ファイルを入手し、以下の手順に沿ってファイルを作成しておきます。
 
   .. code::
 
@@ -482,30 +417,226 @@ SSH方式はMIntシステムから外部計算機資源への一方通行のSSH�
      $ chmod 600 authorized_keys
 
 .. note::
+   .sshディレクトリが無い場合は作成する。パーミッションも600としておく。
+
+.. note::
    ワークフロー実行前にMInt運用チームに連絡してパスワードなしログインが可能なことを確認すること
 
-資材の展開
-----------
+APIトークンの用意
+------------------
 
-1. **misrc_remote_workflow** リポジトリを展開する。
+WebAPIを選択した場合、認証情報として利用するユーザーのAPIトークンと識別子が必要になります。
+
+* APIトークンはMIntシステムログイン後、ユーザープロファイル管理システムのページで取得可能
+* 識別子は文字通りユーザーを識別するもので、通常利用者の所属組織のアルファベット表記などです。
+
+.. note::
+
+  APIトークンと識別子はMIntシステム運用チームへもお知らせください。
+
+環境構築
+=========
+
+外部計算機資源を利用した計算を行うMIntシステム外の計算機の環境構築について記述する。一般的に外部計算機資源を利用したいユーザーが構築する。手順は以下のとおり。
+
+* OSの準備
+* ソルバーの準備（必要であれば）
+* pythonの準備
+* gitの準備
+* MIntシステム認証プログラム（WebAPIを選択し、APIトークンを利用しない場合）
+* 予測モジュール用の資材の入手（個別の利用者マニュアルを参照）
+* 外部計算機資源を利用するための資材の入手と展開
+
+OSの準備
+==================
+
+OSはLinux系のOSが望ましいが、利用者側で用意でき、外部計算機資源の利用が可能なOSであればLinuxに限らない。ただしその場合は利用者側が本書を読んで必要な環境を用意するものとする。
+
+.. _ready_public_keys:
+
+
+ソルバーの準備
+===============
+
+利用したいワークフローによっては商用・非商用のソルバーが必要になる。商用の場合は利用者側でインストール、セットアップおよび動作確認を行うこととし、非商用の場合はMInt運用チームが構築スクリプトなどを提供する。
+
+Pythonの準備
+=============
+
+利用するワークフローの予測モジュールはpythonで記述されたスクリプトであることがあり、これを外部計算機にインストールして利用する。
+対応するバージョンは3.xであるため、用意したOSに使用可能か確認する。
+インストールされていない場合別途インストールする。
+WebAPIを選択した場合は必須となる。
+
+バージョン確認
+--------------
+
+確認方法は以下のいずれかが表示されればインストールの必要はない。
+
+.. code::
+
+  $ python3
+  Python 3.x.x ～
+
+.. code::
+
+  $ python --version
+  Python 3.x.x ～
+
+これ以外のバージョンが表示されない（コマンドが見つかりません or command not found）場合や、表示されても 2.x.x などと表示された場合はバージョン3.xのインストールが必要です。
+
+※ python3.xの追加インストールの方法についてはOS個別となるため、利用者側のシステム管理者などにお尋ねください。
+
+追加のパッケージ
+-----------------
+
+pip3.xコマンドを利用して以下のコマンドをインストールする。インストールはroot権限で行う。
+
+* requests
+* urllib3
+
+gitの準備
+=========
+
+外部計算資源の利用に必要な資材は GitHub 上のリポジトリ [#whatisRepository]_ https://github.com/materialsintegration に用意されている。このれを取得するためにgitコマンドが必要となる。
+
+確認方法
+--------
+git コマンドを実行してコマンドが見つかりません or command not foundなどになった場合は、gitコマンドを別途インストールします。
+
+※ インストールの方法についてはOS個別となるため、利用者側のシステム管理者などにお尋ねください。
+
+上記の例では以下の様な環境変数の設定が必要となります。
+
+* MATHEMATICA11_2：Mathematicaのインストールディレクトリ（例えば、/opt/Wolfram/Mathematica/11.2/Executablesなど）
+* BRITTLE_FRACTURE_HOME：上記<展開したい場所>で指定した場所をフルパスで指定します。（例えば/home/展開したい場所/misrc_brittle/facture_workflowとなる）
+* QT_QPA_PLATFORM：offscreen を指定する。
+
+外部計算機資源を利用するため資材
+==================================
+
+外部計算機に入手、展開の必要な資材は以下。
+
+* WebAPI用ポーリングプログラム（WebAPI方式を選択した場合）
+* MIntシステム認証プログラム（WebAPI方式の場合で、希望する場合のみ）
+* SSH用利用者側実行スクリプト集（SSH方式の場合）
+
+.. note::
+
+   SSH方式を選択した場合はWebAPI方式のような特別な資材は必要ありません。
+
+.. _api_polling_program:
+
+WebAPI用ポーリングプログラム
+-----------------------------
+
+WebAPI方式を選択した場合に必要になります。手順は公開している場所から以下の要領でgitコマンドを使用してダウンロード、展開します。
+
+* 手順
 
   .. code::
-  
-     $ git clone https://github.com/materialsintegration/misrc_remote_workflow.git
-     $ cd misrc_remote_workflow
-     $ ls
-     README.md  documents  inventories  misrc_remote_workflow.json  modulesxml  sample_data  scripts
-     $ cd scripts
-     $ ls
-     abaqus                                     execute_remote_command.sample.sh  kousoku_abaqus_ssh.sh
-     create_inputdata.py                        input_data                        kousoku_abaqus_ssh_version2.py
-     execute_remote-side_program_api.sample.sh  kousoku_abaqus_api_version2.py    kousoku_abaqus_ssh_version2.sh
-     execute_remote-side_program_ssh.sample.sh  kousoku_abaqus_api_version2.sh    remote-side_scripts
-     execute_remote_command.sample.py           kousoku_abaqus_http.py
+
+     $ cd <展開したい場所>
+     $ git clone https://github.com/materialsintegration/misrc_distributed_computing_assist_remote_side.git
+
+* 利用方法
+
+  + proxyサーバーの設定が必要であれば、設定する。(https_proxy環境変数）
+  + 外部計算機で、外部計算を行うユーザーで以下のコマンドを実行し、WebAPIのポーリング動作を実施します。
+
+    .. code::
+       
+       $ cd <展開した場所>/misrc_distributed_computing_assist_remote_side
+       $ python3 mi-system-remote.py <識別子> http://nims.mintsys.jp <APIトークン>
+
+  + ポート番号はデフォルト50443を利用するが、これを利用できない場合通常のhttps通信用443を利用することができる。以下の様に実行する。
+
+    .. code::
+       
+       $ cd <展開した場所>/misrc_distributed_computing_assist_remote_side
+       $ python3 mi-system-remote.py <識別子> http://nims.mintsys.jp <APIトークン> port:443
+
+* 動作確認
+
+  + 正常動作時
+
+    .. code::
+
+       site id = 指定した識別子
+       base url = https://nims.mintsys.jp:50443
+        token = 指定したAPIトークン
+       年/月/日 時:分:秒:send https://nims.mintsys.jp:50443/mi-distcomp-api/calc-request?site_id=指定した識別子
+       code = 0300 / message = There is no information for accept_id(None), about the your site id(指定した識別子)
+
+  + 異常な場合その１：識別子の間違い
+
+    .. code::
+
+       code = 400 / message = Your site-id(指定した識別子) does not match in the list that acceptable to.
+
+  + 異常な場合その２：APIトークン間違い
+
+    .. code::
+
+       2022/01/19 17:33:56:status code = 403 / reason = {"errors":[{"code":"0005","message":"/mi-distcomp-api/calc-requestへの実行権がありません。"}]}
+
+* 終了方法
+
+  + CtrlキーとCキーを同時に押します。以下の様に表示され最大６０秒後に終了します。
+
+    .. code::
+
+       Ctrl + C スクリプト停止要求受付
+
+.. note::
+
+    この作業はWebAPI方式を選択した場合に必要です。
+
+.. note::
+
+    WebAPIを実行するユーザーでの作業となります。
+
+MIntシステム認証プログラム
+--------------------------
+
+本資材はWebAPI方式を選択し、WebAPIポーリングプログラムをAPIトークンを利用せず、通常のログイン・パスワード方式で実行する場合に必要です。
+
+.. note::
+
+   この方式ですとコマンドラインにAPIトークンを記述する必要がなく、安全性もたかい使用法となります。インストールはroot権限で行います。必要な場合はMIntシステム運用チームまでご相談ください。
 
 
+SSH用利用者側実行スクリプト集
+------------------------------
+
+SSH方式を選択した場合に必要になります。手順は公開している場所から以下の要領でgitコマンドを使用してダウンロード、展開します。
+
+* 手順
+
+  .. code::
+
+     $ cd <展開したい場所>
+     $ git clone https://github.com/materialsintegration/remote_workflow.git
+
+.. [#whatisRepository] 本機能を実現する資材などを格納したサーバ。GitHubを利用しているが、アカウントが無くともダウンロードは可能である。MInt運用チームがアカウントを発行したユーザのみアップロードが可能である。
+
+========
+利用方法
+========
+
+SSH方式
+=======
+
+主に、外部計算機資源側の利用方法について記述する。
+
+1. **misrc_remote_workflow** リポジトリを展開した場所の通知
+
+    + この場所をMIntシステム運用チームへ知らせる。
 2. 外部計算機側で実行するスクリプトがあれば **remote-side_scripts** に配置する。
 3. MIntが外部計算機へログインして最初に実行するプログラム名は前述のとおり **execute_remote-side_program_ssh.sh** に固定されている。このため **execute_remote-side_program_ssh.sample.sh** をこの名前でコピーするか、新規に作成して、必要な手順をスクリプト化する。
+
+.. note::
+   SSH方式の場合は外部計算機において待機する必要のあるプログラムなどは無い。
 
 (参考)MInt側作業
 ----------------
@@ -519,62 +650,24 @@ SSH方式はMIntシステムから外部計算機資源への一方通行のSSH�
 .. note::
    :numref: `ready_public_keys` :ref: `ready_public_keys` で作成したキーを外部計算機資源側の想定されるユーザーに設定し、パスワードなしログインができることを確認しておく。
 
+.. raw:: latex
+
+   \newpage
+
 WebAPI方式
 ==========
 
 主に、外部計算機資源側の準備について記述する。
 
-.. _get_authorizaion_infomation:
-
-認証関連情報の用意
-------------------
-
-MInt側担当者に問い合わせて下記の情報を用意する。
-
-* ホスト情報
-
-    + MInt側でAPIの発行者を識別するための文字列。ユーザ企業のドメインなどと一致させる必要は無い。
-* APIトークン
-
-    + MIntのAPI認証システムを使用するためのトークン。MIntシステムログイン後、ユーザープロファイル管理システムメニューで表示される、「APIトークン」を使用する。
-    + ユーザーの環境でポーリングスクリプトを動作させるときに必要であるが、後述のログイン方式を利用する場合はトークン自体は必要ない。
-* MIntのURL
-
-    + MIntのURL(エンドポイントは不要)を、MInt運用チームに問い合わせておく。
-* WebAPI方式を利用できるようにMInt運用チームに設定を依頼する。
-
-資材の展開
-----------
-
 1. **misrc_distributed_computing_assist_api** リポジトリを展開する。
-
-  .. code::
-  
-     $ git clone https://github.com/materialsintegration/misrc_distributed_computing_assist_api.git
-     $ cd misrc_distributed_computing_assist_api
-     $ ls
-     README.md  logging.cfg     mi_dicomapi_infomations.py           syslogs
-     debug      mi_dicomapi.py  mi_distributed_computing_assist.ini
-     $ cd debug
-     $ ls
-     api_status.py  api_status_gui.py  api_status_gui.pyc  mi-system-side  remote-side
-     $ cd remote-side
-     $ ls
-     api-debug.py  debug_gui.py  mi-system-remote.py
-
 2. **authentication_operator** リポジトリを展開、環境変数を設定する。（ログイン方式を選択する場合）
-
-  .. code::
-
-     $ git clone https://gitlab.mintsys.jp/midev/authentication_operator.git
-     $ export AUTHENTICATION_OPERATOR=<path to authentication_operator
 
 .. note::
    環境変数AUTHENTICATION_OPERATORはログインシェルの自動設定ファイルに設定しておく。
 
 3. 計算に必要なスクリプトの準備
 
-   + ファイル名はMInt運用チームに伝えて、APIに登録しておく。
+   + 独自に実行ファイルを用意した場合はの情報はMInt運用チームに伝えておく。
    + 特別なリポジトリを利用する場合はこの作業が必要ないこともある。
 
 実行
@@ -583,30 +676,12 @@ MInt側担当者に問い合わせて下記の情報を用意する。
 認証情報と共にポーリングプログラムを動作させておく。事前に設定した情報に従ってMIntシステム側と通信し、入力ファイルの受信、計算、出力ファイルの送信が自動的に行われる。認証情報が無い、間違っている、などの場合はポーリングは失敗し、計算は行われない。
 また **ワークフローを実行したユーザーと同じユーザーのトークンまたはログイン方式での同じユーザー** で実行しないとこちらもポーリングは失敗し、計算は行われない。
 
-1. 以下2. または3. のどちからの方法で、**mi-system-remote.py** を実行する。
-2. トークン指定方式
+1. :numref: `api_polling_program` :ref: `api_polling_program` の動作確認で実行したどちからの方法で、**mi-system-remote.py** を実行する。
+2. 終了する場合はCtrl+Cで停止する。
 
-  .. code::
-  
-     $ python mi-system-remote.py <ホスト情報> https://nims.mintsys.jp <API token>
-     site id = <ホスト情報> で指定した識別子
-     base url = https://nims.mintsys.jp:50443
+    + ポーリング中の処理がある場合に備えてすぐには終了しない。
+    + 処理中の情報が無ければ最大60秒で終了する。
 
-3. ログイン方式
-
-  .. code::
-     
-     $ python mi-system-remote.py <ホスト情報> https://nims.mintsys.jp login
-     site id = <ホスト情報> で指定した識別子
-     base url = https://nims.mintsys.jp:50443
-     nims.mintsys.jp へのログイン
-     ログインID: <MIntシステムのログイン名>
-     パスワード: <同、パスワード>
-      token = <ログイン名のトークンの表示>
-     ...
-     
-.. note::
-   ホスト情報とAPI token は\ :numref:`get_authorizaion_infomation`\ の\ :ref:`get_authorizaion_infomation` で入手したそれぞれの認証情報を指定する。
 
 (参考)MInt側作業
 ----------------
@@ -632,6 +707,13 @@ MInt側担当者に問い合わせて下記の情報を用意する。
 
 .. _sample:
 
+外部計算機の作業場所
+====================
+
+SSH方式、WebAPI方式のどちらも計算場所はワーキングディレクトリ [#whatisworkingdirectory]_ と言い、UUIDで構成されたディレクトリ名のディレクトリの作成時間などで該当ディレクトリかどうか判断する。
+
+.. [#whatisworkingdirectory] 外部計算機側のワーキングディレクトリは/tmpディレクトリに作成されるので、OSの設定に変更がなければ30日後に削除される。このため問題が発生した場合は発生から30日以内に調査を開始する必要がある。
+
 その他MInt側注意事項
 ====================
 
@@ -647,11 +729,8 @@ SSH方式、WebAPI方式共通の注意事項など。
 ワークフローを本実行する前にMInt運用チームと連携して動作確認を行っておくが、予期せず異常終了した場合などは以下の方法で対策を検討することができる。
 
 * SSH方式、WebAPI方式ともワークフローの出力ポートとは別に外部計算機で計算が行われた際の処理のログがある。MInt運用チームに連絡して、それを入手する。
-* 同様に、外部計算機資源側で :numref:`get_resources` :ref:`get_resources` で説明したワーキングディレクトリに計算結果およびログが残っているのでこれを利用する。
-
-     - ワーキングディレクトリ [#whatisworkingdirectory]_ はUUIDで構成されたディレクトリ名のディレクトリの作成時間などで該当ディレクトリかどうか判断する。
-
-.. [#whatisworkingdirectory] 外部計算機側のワーキングディレクトリは/tmpディレクトリに作成されるので、OSの設定に変更がなければ30日後に削除される。このため問題が発生した場合は発生から30日以内に調査を開始する必要がある。
+* WebAPI方式であれば通信ログがポーリングプログラムの実行画面に出力されるのでこれを利用する。
+* 同様に、外部計算機のワーキングディレクトリに計算結果およびログが残っているのでこれを利用する。
 
 通信異常
 --------
