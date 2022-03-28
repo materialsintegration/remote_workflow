@@ -23,8 +23,8 @@ calc_dir=`cat /proc/sys/kernel/random/uuid`
 
 # リポジトリの展開
 echo "リポジトリの展開"
-echo 'rsync -av -L -e "$rsync_command" ~/assets/modules/misrc_remote_workflow/ rme@$instance_id:~/misrc_remote_workflow/ > /dev/null 2>&1'
-rsync -av -L -e "$rsync_command" ~/assets/modules/misrc_remote_workflow/ rme@$instance_id:~/misrc_remote_workflow/ > /dev/null 2>&1
+echo 'rsync -av -L -e "$rsync_command" ~/assets/modules/misrc_remote_workflow/ rme@$instance_id:~/misrc_remote_workflow/ > execute_remote_command_code_aster_execute.log 2>&1'
+rsync -av -L -e "$rsync_command" ~/assets/modules/misrc_remote_workflow/ rme@$instance_id:~/misrc_remote_workflow/ > execute_remote_command_code_aster_execute.log 2>&1
 
 # 作業ディレクトリ作成
 echo "作業ディレクトリ作成"
@@ -37,8 +37,8 @@ eval $ssh_makedir
 
 # ディレクトリを転送
 echo "ディレクトリを転送"
-echo 'rsync -av -L -e "$rsync_command" ./codeAster/ rme@$instance_id:/tmp/$calc_dir/codeAster/ > /dev/null 2>&1'
-rsync -av -L -e "$rsync_command" ./codeAster/ rme@$instance_id:/tmp/$calc_dir/codeAster/ > /dev/null 2>&1
+echo 'rsync -av -L -e "$rsync_command" ./codeAster/ rme@$instance_id:/tmp/$calc_dir/codeAster/ > execute_remote_command_code_aster_execute.log 2>&1'
+rsync -av -L -e "$rsync_command" ./codeAster/ rme@$instance_id:/tmp/$calc_dir/codeAster/ > execute_remote_command_code_aster_execute.log 2>&1
 
 # プログラム実行
 echo "プログラム実行"
