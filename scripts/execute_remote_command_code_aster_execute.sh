@@ -50,14 +50,14 @@ ssh_remotecmd=$ssh_client' "cd /tmp/$calc_dir/codeAster; "$client_cmd" "$model_t
 echo $ssh_remotecmd
 eval $ssh_remotecmd
 if [ $? != 0 ]; then
-    echo `date '+%Y-%m-%d %T'`": abnormal end: code_aster: unknown" >> /home/misystem/assets/workflow/site00002/solver_logs/solver_execute.log
+    echo `date '+%Y-%m-%d %T'`": abnormal end: code_aster: unknown" >> /home/misystem/assets/workflow/$MISYSTEM_SITEID/solver_logs/solver_execute.log
     rsync -av -e "$rsync_command" rme@$instance_id:/tmp/$calc_dir/codeAster/remote_program_exec.log ./
     echo "---------- remote side log ----------------"
     cat remote_program_exec.log
     echo "---------- remote side log ----------------"
     exit 1
 fi
-echo `date '+%Y-%m-%d %T'`": normal end: code_aster: unknown" >> /home/misystem/assets/workflow/site00002/solver_logs/solver_execute.log
+echo `date '+%Y-%m-%d %T'`": normal end: code_aster: unknown" >> /home/misystem/assets/workflow/$MISYSTEM_SITEID/solver_logs/solver_execute.log
 
 # 出力結果の取得
 echo "出力結果の取得"
