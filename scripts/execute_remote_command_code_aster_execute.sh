@@ -23,8 +23,8 @@ calc_dir=`cat /proc/sys/kernel/random/uuid`
 
 # リポジトリの展開
 echo "リポジトリの展開"
-echo 'rsync -av -L -e "$rsync_command" ~/assets/modules/misrc_remote_workflow/ rme@$instance_id:~/misrc_remote_workflow/ > /dev/null 2>&1'
-rsync -av -L -e "$rsync_command" ~/assets/modules/misrc_remote_workflow/ rme@$instance_id:~/misrc_remote_workflow/ > /dev/null 2>&1
+echo 'rsync -av -L -e "$rsync_command" ~/assets/modules/misrc_remote_workflow/ rme@$instance_id:~/misrc_remote_workflow/ > execute_remote_command_code_aster_execute.log 2>&1'
+rsync -av -L -e "$rsync_command" ~/assets/modules/misrc_remote_workflow/ rme@$instance_id:~/misrc_remote_workflow/ > execute_remote_command_code_aster_execute.log 2>&1
 
 # 作業ディレクトリ作成
 echo "作業ディレクトリ作成"
@@ -37,8 +37,8 @@ eval $ssh_makedir
 
 # ディレクトリを転送
 echo "ディレクトリを転送"
-echo 'rsync -av -L -e "$rsync_command" ./codeAster/ rme@$instance_id:/tmp/$calc_dir/codeAster/ > /dev/null 2>&1'
-rsync -av -L -e "$rsync_command" ./codeAster/ rme@$instance_id:/tmp/$calc_dir/codeAster/ > /dev/null 2>&1
+echo 'rsync -av -L -e "$rsync_command" ./codeAster/ rme@$instance_id:/tmp/$calc_dir/codeAster/ > execute_remote_command_code_aster_execute.log 2>&1'
+rsync -av -L -e "$rsync_command" ./codeAster/ rme@$instance_id:/tmp/$calc_dir/codeAster/ > execute_remote_command_code_aster_execute.log 2>&1
 
 # プログラム実行
 echo "プログラム実行"
@@ -50,14 +50,14 @@ ssh_remotecmd=$ssh_client' "cd /tmp/$calc_dir/codeAster; "$client_cmd" "$model_t
 echo $ssh_remotecmd
 eval $ssh_remotecmd
 if [ $? != 0 ]; then
-    echo `date '+%Y-%m-%d %T'`": abnormal end: code_aster: unknown" >> /home/misystem/assets/workflow/site00002/solver_logs/solver_execute.log
+    echo `date '+%Y-%m-%d %T'`": abnormal end: code_aster: unknown" >> /home/misystem/assets/workflow/$MISYSTEM_SITEID/solver_logs/solver_execute.log
     rsync -av -e "$rsync_command" rme@$instance_id:/tmp/$calc_dir/codeAster/remote_program_exec.log ./
     echo "---------- remote side log ----------------"
     cat remote_program_exec.log
     echo "---------- remote side log ----------------"
     exit 1
 fi
-echo `date '+%Y-%m-%d %T'`": normal end: code_aster: unknown" >> /home/misystem/assets/workflow/site00002/solver_logs/solver_execute.log
+echo `date '+%Y-%m-%d %T'`": normal end: code_aster: unknown" >> /home/misystem/assets/workflow/$MISYSTEM_SITEID/solver_logs/solver_execute.log
 
 # 出力結果の取得
 echo "出力結果の取得"
