@@ -1,13 +1,10 @@
 #!/bin/sh
 # MIシステム利用手引書、ビルドスクリプト for Jenkins
 
-# 2022/03/28-->リポジトリが意図せず更新されるので、このスクリプトを使用してのビルドは禁止する
-exit 0
-# 2022/03/28<--リポジトリが意図せず更新されるので、このスクリプトを使用してのビルドは禁止する
 export PATH=/usr/local/bin:$PATH
 export LD_LIBRARY_PATH=/usr/local/gcc-4.8.5/lib
-directories=(./manual1st ./manual2nd ./activities_of_nims)
-pdffilenames=(外部計算資源の利用１期 外部計算資源の利用２期 NIMSの取り組みについて)
+directories=(./)
+pdffilenames=(NIMSの取り組みについて)
 count=0
 logfile="`pwd`/build.log"
 if [ -e $logfile ]; then
