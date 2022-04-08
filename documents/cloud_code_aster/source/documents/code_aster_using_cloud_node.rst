@@ -178,7 +178,7 @@ code_asterを利用して熱伝導解析、弾性解析、疲労解析を行う�
 
 .. code::
    
-   **HEATSOURCE NAME=LAYER1_A Xc=-0.175 Yc=0.000 Zc=0 X=-0.104 Y=5.000
+   ＊＊HEATSOURCE NAME=LAYER1_A Xc=-0.175 Yc=0.000 Zc=0 X=-0.104 Y=5.000
 
 
 | 入力ファイル
@@ -240,4 +240,130 @@ WFAS6_code_aster_実行_外部計算機資源利用版の出力「code_aster_出
 
 1. ワークフローの選択
 
-WFAS6_code_aster_実行_外部計算機資源利用ワークフローを選択する。( :numref:`
+WFAS6_code_aster_実行_外部計算機資源利用ワークフローを選択する。( :numref:`cloud_code_aster_select_workflow` )
+
+.. figure:: ../figures/cloud_code_aster/select_workflow.png
+   :scale: 70%
+   :align: center
+   :name: cloud_code_aster_select_workflow
+
+   ワークフロー選択
+
+.. raw:: latex
+
+   \newpage
+
+2. 実行選択
+
+ワークフローが公開中であることを確認し、実行ボタンを押下する。( :numref:`cloud_code_aster_run_workflow` )
+
+.. figure:: ../figures/cloud_code_aster/run_workflow.png
+   :scale: 70%
+   :align: center
+   :name: cloud_code_aster_run_workflow
+
+   実行の選択
+
+.. raw:: latex
+
+   \newpage
+
+3. パラメータ入力
+
+各パラメータの入力ファイルをアップロードする。用意したファイルに対応するパラメータの参照ボタン（赤枠の中）を押下。
+ファイルを指定する。( :numref:`cloud_code_aster_input_parameters` )
+
+.. figure:: ../figures/cloud_code_aster/input_parameters.png
+   :scale: 70%
+   :align: center
+   :name: cloud_code_aster_input_parameters
+
+   パラメータの入力
+
+.. raw:: latex
+
+   \newpage
+
+4. 実行
+
+パラメータの指定が終ったら、実行ボタン（赤枠）を押下。( :numref:`cloud_code_aster_execute_run` ) ワークフローを実行する。
+
+.. figure:: ../figures/cloud_code_aster/execute_run.png
+   :scale: 70%
+   :align: center
+   :name: cloud_code_aster_execute_run
+
+   ワークフローの実行
+
+.. raw:: latex
+
+   \newpage
+
+計算結果の確認
+---------------
+
+1. ダウンロード
+
+計算が終了すると、計算結果をダウンロードすることが可能になる。
+「ラン一覧」画面から計算が終了したワークフローに移動しラン詳細画面に移る。
+「ダウンロード」ボタンを押下すると（ :numref:`cloud_code_aster_select_download` ）、計算結果ファイルダウンロード画面に遷移する。
+
+※ 計算結果ファイルダウンロード画面の操作手順は、マニュアルページの「材料設計ワークフローシステム 利用者マ
+ニュアル」の「6.2.4 計算結果ファイルをダウンロードする」を参照すること。
+
+.. figure:: ../figures/cloud_code_aster/select_download.png
+   :scale: 70%
+   :align: center
+   :name: cloud_code_aster_select_download
+
+   計算結果のダウンロード
+
+.. note::
+
+   ダウンロードしたファイルを解凍すると、ワークフローIDの名前のディレクトリが作成される。構造は「ワークフローID¥input」ディレクトリに入力に使用したファイルが、「ワークフローID_モジュール名」ディレクトリに計算結果が格納される。
+
+
+.. raw:: latex
+
+   \newpage
+
+2. 画像の確認
+
+各モジュールで出力される画像ファイルやテキストファイルがある場合、実行状況画面から閲覧することが可能になることがある。これを可視化機能というが、本ワークフローの出力はこの機能を利用した出力はない。可視化機能の使い方のみ解説する。（ :numref:`cloud_code_aster_view_status` )
+
+.. figure:: ../figures/cloud_code_aster/view_status.png
+   :scale: 70%
+   :align: center
+   :name: cloud_code_aster_view_status
+
+   計算結果画面の指定
+
+.. raw:: latex
+
+   \newpage
+
+参照したいモジュールを選択し、メニューから電卓アイコンを押下する。( :numref:`cloud_code_aster_module_output_select` )
+
+.. figure:: ../figures/cloud_code_aster/module_output_select.png
+   :scale: 70%
+   :align: center
+   :name: cloud_code_aster_module_output_select
+
+   計算結果の表時
+
+.. raw:: latex
+
+   \newpage
+
+表示されたダイアログの出力ポートの選択肢から見たいポート名を選択する。( :numref:`cloud_code_aster_view_module_result` )
+
+.. figure:: ../figures/cloud_code_aster/view_module_result.png
+   :scale: 70%
+   :align: center
+   :name: cloud_code_aster_view_module_result
+
+   計算結果の直接表示
+
+.. raw:: latex
+
+   \newpage
