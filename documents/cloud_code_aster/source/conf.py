@@ -51,7 +51,8 @@ numfig = True
 # ones.
 extensions = [
     'sphinx.ext.mathjax',
-    'sphinxcontrib.mermaid'
+    'sphinxcontrib.mermaid',
+    'sphinxcontrib.inkscapeconverter'
 ]
 
 # Add any paths that contain templates here, relative to this directory.

@@ -19,6 +19,8 @@ WFAS6_code_aster_実行_外部計算機資源利用ワークフロー
     - インスタンス作成のための起点となる計算機（インスタンス作成スクリプトの実行のみなので高性能でなくとも良い）
     - インスタンス作成のためのスクリプトまたは作成のための手順
 
+.. [#what_is_wfas] WFASはSIP-MIラボで開発された溶接シミュレーションソフトウェアによる解析をWEB GUIから行えるようにしたアプリケーションである。
+
 処理の流れ
 -----------
 
@@ -33,4 +35,209 @@ WFAS6_code_aster_実行_外部計算機資源利用ワークフロー
 ワークフローの説明
 -------------------
 
-このワークフローは熱伝導解析、弾性解析、疲労解析を行った後、それぞれの状態の可視化ファイルを作成するものである。可視化ファイルはThree.js [#what_is_three.js]_ などで表示可能なJSON形式のファイルが出力される。ワークフローは( :numref:`` )である。
+このワークフローは熱伝導解析、弾性解析、疲労解析を行った後、それぞれの状態の可視化ファイルを作成するものである。
+可視化ファイルはThree.js [#what_is_three.js]_ などで表示可能なJSON形式のファイルが出力される。
+ワークフローは( :numref:`cloud_version_code_aster` )である。
+
+.. figure:: ../figures/cloud_code_aster/W110000000680.svg
+   :scale: 70%
+   :align: center
+   :name: cloud_version_code_aster
+
+   WFAS6_code_aster_外部計算機資源利用
+   
+.. [#what_is_three.js] Three.jsとは、HTML5で3Dコンテンツを作成するためのJavaScriptライブラリである。Mr.doob氏が中心となって開発されており、オープンソースソフトウェアとして個人・商用でも無償で利用可能です。
+
+ツールの説明
+------------
+
+ワークフローで使用されるツールの説明
+
+WFAS6_code_aster_実行_外部計算機資源利用版
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+code_asterを利用して熱伝導解析、弾性解析、疲労解析を行うモジュール。
+
+| 入力ファイル：
+| ポート名：グループリスト
+| メッシュファイルのキーリスト
+
+.. code::
+
+   WELD_MAT_ELEM , 1
+   BASE_MAT_ELEM , 2
+   WELD_MAT_BOUN_NODE , 3
+   BASE_MAT_BOUN_NODE , 4
+   CORNER_NODES , 5
+   WELD_MAT_BOUN_ELEM , 6
+   BASE_MAT_BOUN_ELEM , 7
+   BOUN_FACE , 8
+   LEFT_FACE , 9
+   RIGHT_FACE , 10
+   SYMM_X_NODES , 11
+   SYMM_XY_NODES , 12
+   LAYER1_A , 13
+   VOL1_A , 14
+   WELDBEAM_NODES , 15
+   WELD_PATH , 16
+   WELD_REFPATH , 17
+   WELD_START_ELEM , 18
+   WELD_END_ELEM , 19
+   WELD_START_NODE , 20
+   WELD_END_NODE , 21
+
+| 入力ファイル
+| ポート名：プロジェクトプロパティ
+| レイヤー構造などの概要をxml形式で与える
+
+.. code::
+
+   <?xml version="1.0" encoding="UTF-8" standalone="no"?>
+    <Project>
+      <WeldType>BJ</WeldType>
+      <WeldShape>V</WeldShape>
+      <WeldMethod>SS</WeldMethod>
+      <WeldTypeKey>Butt Joint</WeldTypeKey>
+      <WeldShapeKey>V-type</WeldShapeKey>
+      <WeldMethodKey>Single Side</WeldMethodKey>
+      <Description>V Type_AC1:200,AC3:600,Base Mesh:2,Weld Size:1</Description>
+      <UpdatedBy>Admin12</UpdatedBy>
+      <UpdatedOn>2020/02/06</UpdatedOn>
+      <Status>Mesh Ok</Status>
+      <codeAsterStatus>New</codeAsterStatus>
+      <sysWeldStatus>New</sysWeldStatus>
+      <abaqusStatus>New</abaqusStatus>
+      <AnalysisModel>2D Plate Model</AnalysisModel>
+      <PipeLength>NaN</PipeLength>
+      <PipeOD>NaN</PipeOD>
+      <PipeCapThickness/>
+      <FEMCCVStatus>1001</FEMCCVStatus>
+      <AC1/>
+      <AC3/>
+      <MaxMeshSize/>
+      <BaseMatMeshSize/>
+      <WeldMatMeshSize/>
+      <HazMatMeshSize/>
+      <MeshGradeFactor/>
+      <SymetricMesh/>
+      <Material/>
+      <Thickness/>
+      <Pressure/>
+      <Number3D/>
+      <ContourMinVal>53.52407455444336</ContourMinVal>
+      <ContourMaxVal>748.9244384765625</ContourMaxVal>
+    </Project>
+
+| 入力ファイル
+| ポート名：二次元メッシュ入力ファイル
+| Abaqus等のメッシュフォーマットのファイルを利用可能（長いので例は省略）
+
+| 入力ファイル
+| ポート名：溶接パラメータ入力ファイル
+| 溶接状態のパラメータファイル（長いので例は省略）
+
+| 入力ファイル
+| ポート名：溶接溶解状態データ
+| 溶接状態パラメータファイル
+
+.. code::
+
+   WELD ID
+        BJVSS
+   BASE_MAT_FILE
+       DP_W_600
+   WELD_MAT_FILE
+       DP_W_600
+   SOLUTION_INITTEMP
+           20
+   FATIGUE_PRESSURE
+          100
+   CREEP_PRESSURE
+          100
+   CRACK_PRESSURE
+          100
+
+| 入力ファイル
+| ポート名：溶接複数レイヤーデータ
+| 複数レイヤーに渡る溶接シミュレーションを表すXMLデータ
+
+.. code::
+
+   <?xml version="1.0" encoding="UTF-8" standalone="no"?>
+   <Layers HeatSourceModel="0" LayerNo="1" Length="4.0" Penetration="4.0" Velocity="1.0" Width="2.0">
+   <Layer Height="11" No="1" Order="1" PassesNo="1" ReverseDirection="unchecked">
+   <Passes>
+        <Pass CoolingTemp="200.0" CoolingTime="40.0" HalfWidthOfWeldBead="2.0" HeatValue="150.0" HeatingTime="1.0" LengthOfWeldBead="4.0" Name="A" PenetrationOfWeldBead="4.0" Position="5.5" Velocity="1.0"/>
+   </Passes>
+   </Layer>
+   </Layers>
+
+| 入力ファイル
+| ポート名：熱源情報
+| 熱源の情報
+
+.. code::
+   
+   **HEATSOURCE NAME=LAYER1_A Xc=-0.175 Yc=0.000 Zc=0 X=-0.104 Y=5.000
+
+
+| 入力ファイル
+| ポート名：複数パス入力ファイル
+| 溶接パス（複数対応可）を表すメッシュファイル（長いので省略）
+
+
+WFAS6_code_aster_更新
+^^^^^^^^^^^^^^^^^^^^^^
+
+WFAS6_code_aster_実行_外部計算機資源利用版の出力「code_aster_出力_結果」を受け取って、可視化用のファイルを出力する。Three.jsなどを利用して可視化が可能である。
+
+
+出力ポート
+^^^^^^^^^^^
+
+| 出力ファイル
+| ポート名：code_aster_出力_baseアーカイブ
+| 解析で作成される～.baseディレクトリの圧縮アーカイブ（大きいので省略）
+
+| 出力ファイル
+| ポート名：code_aster_出力_resuファイル
+| 解析後の出力されるファイルの1つ。通常は空
+
+| 出力ファイル
+| ポート名：code_aster_メッシュとグループ
+| HDF5フォーマットの解析後のメッシュデータ
+
+| 出力ファイル
+| ポート名：code_aster_出力_ログファイル
+| 解析中のcode_asterのログ
+
+| 出力ファイル
+| ポート名：code_aster_出力_可視化ファイルアーカイブ
+| 熱伝導解析の全ステップ毎の温度状態の可視化ファイルの圧縮アーカイブ
+
+| 出力ファイル
+| ポートー名：code_aster_出力_弾性解析情報アーカイブ
+| 弾性解析の可視化ファイルの圧縮アーカイブ
+
+| 出力ファイル
+| ポートー名：code_aster_出力_最大温度
+| 熱伝導解析での最大温度の時の温度分布可視化情報
+
+| 出力ファイル
+| ポートー名：code_aster_出力_疲労ダメージ
+| 疲労計算結果の可視化情報
+
+| 出力ファイル
+| ポートー名：code_aster_出力_疲労情報アーカイブ
+| 疲労計算結果の情報の圧縮アーカイブ
+
+| 出力ファイル
+| ポートー名：code_aster_出力_最大温度リスト
+| 解析ステップ後との最大温度のリスト
+
+ワークフローの実行
+-------------------
+
+1. ワークフローの選択
+
+WFAS6_code_aster_実行_外部計算機資源利用ワークフローを選択する。( :numref:`

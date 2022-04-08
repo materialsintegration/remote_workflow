@@ -11,5 +11,5 @@
    :caption: 目次:
    :numbered: 4
 
-   using_distributed_properties.rst
+   documents/code_aster_using_cloud_node.rst
 
