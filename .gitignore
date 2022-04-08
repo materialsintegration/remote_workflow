@@ -8,4 +8,14 @@
 *.sty
 *.tex
 *.toc
+*.idx
+*.png
+*.eps
+*.xdy
+*.cls
 latexmkjarc
+latexmkrc
+*.out
+doctrees
+*/build/latex/Makefile
+*/build/latex/make.bat

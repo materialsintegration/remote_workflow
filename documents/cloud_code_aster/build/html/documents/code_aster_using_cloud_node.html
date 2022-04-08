@@ -1,0 +1,436 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ja">
+  <head>
+    <meta charset="utf-8" />
+    <title>1. WFAS6_code_aster_実行_外部計算機資源利用ワークフロー &#8212; 外部計算資源の利用について 1.0.1 ドキュメント</title>
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/language_data.js"></script>
+    <script src="../_static/translations.js"></script>
+    <link rel="index" title="索引" href="../genindex.html" />
+    <link rel="search" title="検索" href="../search.html" />
+    <link rel="prev" title="外部計算資源の利用方法（本運用）" href="../index.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="wfas6-code-aster">
+<h1><span class="section-number">1. </span>WFAS6_code_aster_実行_外部計算機資源利用ワークフロー<a class="headerlink" href="#wfas6-code-aster" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<div class="section" id="id1">
+<h2><span class="section-number">1.1. </span>概要<a class="headerlink" href="#id1" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>本ワークフローはWFAS <a class="footnote-reference brackets" href="#what-is-wfas" id="id2">1</a> で行う熱伝導解析で利用するcode_aster解析ワークフローを外部計算機資源のうちクラウドによる計算を使って実行するワークフローである。
+以下のような特徴を備える。</p>
+<ul>
+<li><p>本ワークフローはWFASから利用することを前提条件としたワークフローを元にしているため、入力パラメータが特殊である。</p></li>
+<li><p>可視化するためにはThree.jsなどのアプリケーション環境が必要。</p></li>
+<li><p>外部計算機としてクラウドインスタンスを利用するため、その手続きと準備が必要となる。</p></li>
+<li><p>MIntシステムとしてクラウドインスタンスの提供はできないため、利用者側で以下を用意する必要がある。</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>インスタンス作成のための起点となる計算機（インスタンス作成スクリプトの実行のみなので高性能でなくとも良い）</p></li>
+<li><p>インスタンス作成のためのスクリプトまたは作成のための手順</p></li>
+</ul>
+</div></blockquote>
+</li>
+</ul>
+<dl class="footnote brackets">
+<dt class="label" id="what-is-wfas"><span class="brackets"><a class="fn-backref" href="#id2">1</a></span></dt>
+<dd><p>WFASはSIP-MIラボで開発された溶接シミュレーションソフトウェアによる解析をWEB GUIから行えるようにしたアプリケーションである。</p>
+</dd>
+</dl>
+</div>
+<div class="section" id="id3">
+<h2><span class="section-number">1.2. </span>処理の流れ<a class="headerlink" href="#id3" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>ラン実行によるモジュールの処理の流れは以下のとおりとなる。</p>
+<ul class="simple">
+<li><p>クラウドインスタンスの作成</p></li>
+<li><p>実行スクリプト資材の展開</p></li>
+<li><p>パラメータの転送</p></li>
+<li><p>code_asterの処理</p></li>
+<li><p>結果ファイルの転送</p></li>
+</ul>
+</div>
+<div class="section" id="id4">
+<h2><span class="section-number">1.3. </span>ワークフローの説明<a class="headerlink" href="#id4" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>このワークフローは熱伝導解析、弾性解析、疲労解析を行った後、それぞれの状態の可視化ファイルを作成するものである。
+可視化ファイルはThree.js <a class="footnote-reference brackets" href="#what-is-three-js" id="id5">2</a> などで表示可能なJSON形式のファイルが出力される。
+ワークフローは( <a class="reference internal" href="#cloud-version-code-aster"><span class="std std-numref">図 1.1</span></a> )である。</p>
+<div class="figure align-center" id="cloud-version-code-aster">
+<a class="reference internal image-reference" href="../_images/W110000000680.svg"><img alt="../_images/W110000000680.svg" src="../_images/W110000000680.svg" /></a>
+<p class="caption"><span class="caption-number">図 1.1 </span><span class="caption-text">WFAS6_code_aster_外部計算機資源利用</span><a class="headerlink" href="#cloud-version-code-aster" title="この画像へのパーマリンク">¶</a></p>
+</div>
+<dl class="footnote brackets">
+<dt class="label" id="what-is-three-js"><span class="brackets"><a class="fn-backref" href="#id5">2</a></span></dt>
+<dd><p>Three.jsとは、HTML5で3Dコンテンツを作成するためのJavaScriptライブラリである。Mr.doob氏が中心となって開発されており、オープンソースソフトウェアとして個人・商用でも無償で利用可能です。</p>
+</dd>
+</dl>
+</div>
+<div class="section" id="id6">
+<h2><span class="section-number">1.4. </span>ツールの説明<a class="headerlink" href="#id6" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>ワークフローで使用されるツールの説明</p>
+<div class="section" id="id7">
+<h3><span class="section-number">1.4.1. </span>WFAS6_code_aster_実行_外部計算機資源利用版<a class="headerlink" href="#id7" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<p>code_asterを利用して熱伝導解析、弾性解析、疲労解析を行うモジュール。</p>
+<div class="line-block">
+<div class="line">入力ファイル：</div>
+<div class="line">ポート名：グループリスト</div>
+<div class="line">メッシュファイルのキーリスト</div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">WELD_MAT_ELEM</span> <span class="p">,</span> <span class="mi">1</span>
+<span class="n">BASE_MAT_ELEM</span> <span class="p">,</span> <span class="mi">2</span>
+<span class="n">WELD_MAT_BOUN_NODE</span> <span class="p">,</span> <span class="mi">3</span>
+<span class="n">BASE_MAT_BOUN_NODE</span> <span class="p">,</span> <span class="mi">4</span>
+<span class="n">CORNER_NODES</span> <span class="p">,</span> <span class="mi">5</span>
+<span class="n">WELD_MAT_BOUN_ELEM</span> <span class="p">,</span> <span class="mi">6</span>
+<span class="n">BASE_MAT_BOUN_ELEM</span> <span class="p">,</span> <span class="mi">7</span>
+<span class="n">BOUN_FACE</span> <span class="p">,</span> <span class="mi">8</span>
+<span class="n">LEFT_FACE</span> <span class="p">,</span> <span class="mi">9</span>
+<span class="n">RIGHT_FACE</span> <span class="p">,</span> <span class="mi">10</span>
+<span class="n">SYMM_X_NODES</span> <span class="p">,</span> <span class="mi">11</span>
+<span class="n">SYMM_XY_NODES</span> <span class="p">,</span> <span class="mi">12</span>
+<span class="n">LAYER1_A</span> <span class="p">,</span> <span class="mi">13</span>
+<span class="n">VOL1_A</span> <span class="p">,</span> <span class="mi">14</span>
+<span class="n">WELDBEAM_NODES</span> <span class="p">,</span> <span class="mi">15</span>
+<span class="n">WELD_PATH</span> <span class="p">,</span> <span class="mi">16</span>
+<span class="n">WELD_REFPATH</span> <span class="p">,</span> <span class="mi">17</span>
+<span class="n">WELD_START_ELEM</span> <span class="p">,</span> <span class="mi">18</span>
+<span class="n">WELD_END_ELEM</span> <span class="p">,</span> <span class="mi">19</span>
+<span class="n">WELD_START_NODE</span> <span class="p">,</span> <span class="mi">20</span>
+<span class="n">WELD_END_NODE</span> <span class="p">,</span> <span class="mi">21</span>
+</pre></div>
+</div>
+<div class="line-block">
+<div class="line">入力ファイル</div>
+<div class="line">ポート名：プロジェクトプロパティ</div>
+<div class="line">レイヤー構造などの概要をxml形式で与える</div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; standalone=&quot;no&quot;?&gt;
+ &lt;Project&gt;
+   &lt;WeldType&gt;BJ&lt;/WeldType&gt;
+   &lt;WeldShape&gt;V&lt;/WeldShape&gt;
+   &lt;WeldMethod&gt;SS&lt;/WeldMethod&gt;
+   &lt;WeldTypeKey&gt;Butt Joint&lt;/WeldTypeKey&gt;
+   &lt;WeldShapeKey&gt;V-type&lt;/WeldShapeKey&gt;
+   &lt;WeldMethodKey&gt;Single Side&lt;/WeldMethodKey&gt;
+   &lt;Description&gt;V Type_AC1:200,AC3:600,Base Mesh:2,Weld Size:1&lt;/Description&gt;
+   &lt;UpdatedBy&gt;Admin12&lt;/UpdatedBy&gt;
+   &lt;UpdatedOn&gt;2020/02/06&lt;/UpdatedOn&gt;
+   &lt;Status&gt;Mesh Ok&lt;/Status&gt;
+   &lt;codeAsterStatus&gt;New&lt;/codeAsterStatus&gt;
+   &lt;sysWeldStatus&gt;New&lt;/sysWeldStatus&gt;
+   &lt;abaqusStatus&gt;New&lt;/abaqusStatus&gt;
+   &lt;AnalysisModel&gt;2D Plate Model&lt;/AnalysisModel&gt;
+   &lt;PipeLength&gt;NaN&lt;/PipeLength&gt;
+   &lt;PipeOD&gt;NaN&lt;/PipeOD&gt;
+   &lt;PipeCapThickness/&gt;
+   &lt;FEMCCVStatus&gt;1001&lt;/FEMCCVStatus&gt;
+   &lt;AC1/&gt;
+   &lt;AC3/&gt;
+   &lt;MaxMeshSize/&gt;
+   &lt;BaseMatMeshSize/&gt;
+   &lt;WeldMatMeshSize/&gt;
+   &lt;HazMatMeshSize/&gt;
+   &lt;MeshGradeFactor/&gt;
+   &lt;SymetricMesh/&gt;
+   &lt;Material/&gt;
+   &lt;Thickness/&gt;
+   &lt;Pressure/&gt;
+   &lt;Number3D/&gt;
+   &lt;ContourMinVal&gt;53.52407455444336&lt;/ContourMinVal&gt;
+   &lt;ContourMaxVal&gt;748.9244384765625&lt;/ContourMaxVal&gt;
+ &lt;/Project&gt;
+</pre></div>
+</div>
+<div class="line-block">
+<div class="line">入力ファイル</div>
+<div class="line">ポート名：二次元メッシュ入力ファイル</div>
+<div class="line">Abaqus等のメッシュフォーマットのファイルを利用可能（長いので例は省略）</div>
+</div>
+<div class="line-block">
+<div class="line">入力ファイル</div>
+<div class="line">ポート名：溶接パラメータ入力ファイル</div>
+<div class="line">溶接状態のパラメータファイル（長いので例は省略）</div>
+</div>
+<div class="line-block">
+<div class="line">入力ファイル</div>
+<div class="line">ポート名：溶接溶解状態データ</div>
+<div class="line">溶接状態パラメータファイル</div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">WELD</span> <span class="n">ID</span>
+     <span class="n">BJVSS</span>
+<span class="n">BASE_MAT_FILE</span>
+    <span class="n">DP_W_600</span>
+<span class="n">WELD_MAT_FILE</span>
+    <span class="n">DP_W_600</span>
+<span class="n">SOLUTION_INITTEMP</span>
+        <span class="mi">20</span>
+<span class="n">FATIGUE_PRESSURE</span>
+       <span class="mi">100</span>
+<span class="n">CREEP_PRESSURE</span>
+       <span class="mi">100</span>
+<span class="n">CRACK_PRESSURE</span>
+       <span class="mi">100</span>
+</pre></div>
+</div>
+<div class="line-block">
+<div class="line">入力ファイル</div>
+<div class="line">ポート名：溶接複数レイヤーデータ</div>
+<div class="line">複数レイヤーに渡る溶接シミュレーションを表すXMLデータ</div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; standalone=&quot;no&quot;?&gt;
+&lt;Layers HeatSourceModel=&quot;0&quot; LayerNo=&quot;1&quot; Length=&quot;4.0&quot; Penetration=&quot;4.0&quot; Velocity=&quot;1.0&quot; Width=&quot;2.0&quot;&gt;
+&lt;Layer Height=&quot;11&quot; No=&quot;1&quot; Order=&quot;1&quot; PassesNo=&quot;1&quot; ReverseDirection=&quot;unchecked&quot;&gt;
+&lt;Passes&gt;
+     &lt;Pass CoolingTemp=&quot;200.0&quot; CoolingTime=&quot;40.0&quot; HalfWidthOfWeldBead=&quot;2.0&quot; HeatValue=&quot;150.0&quot; HeatingTime=&quot;1.0&quot; LengthOfWeldBead=&quot;4.0&quot; Name=&quot;A&quot; PenetrationOfWeldBead=&quot;4.0&quot; Position=&quot;5.5&quot; Velocity=&quot;1.0&quot;/&gt;
+&lt;/Passes&gt;
+&lt;/Layer&gt;
+&lt;/Layers&gt;
+</pre></div>
+</div>
+<div class="line-block">
+<div class="line">入力ファイル</div>
+<div class="line">ポート名：熱源情報</div>
+<div class="line">熱源の情報</div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>＊＊HEATSOURCE NAME=LAYER1_A Xc=-0.175 Yc=0.000 Zc=0 X=-0.104 Y=5.000
+</pre></div>
+</div>
+<div class="line-block">
+<div class="line">入力ファイル</div>
+<div class="line">ポート名：複数パス入力ファイル</div>
+<div class="line">溶接パス（複数対応可）を表すメッシュファイル（長いので省略）</div>
+</div>
+</div>
+<div class="section" id="id8">
+<h3><span class="section-number">1.4.2. </span>WFAS6_code_aster_更新<a class="headerlink" href="#id8" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<p>WFAS6_code_aster_実行_外部計算機資源利用版の出力「code_aster_出力_結果」を受け取って、可視化用のファイルを出力する。Three.jsなどを利用して可視化が可能である。</p>
+</div>
+<div class="section" id="id9">
+<h3><span class="section-number">1.4.3. </span>出力ポート<a class="headerlink" href="#id9" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<div class="line-block">
+<div class="line">出力ファイル</div>
+<div class="line">ポート名：code_aster_出力_baseアーカイブ</div>
+<div class="line">解析で作成される～.baseディレクトリの圧縮アーカイブ（大きいので省略）</div>
+</div>
+<div class="line-block">
+<div class="line">出力ファイル</div>
+<div class="line">ポート名：code_aster_出力_resuファイル</div>
+<div class="line">解析後の出力されるファイルの1つ。通常は空</div>
+</div>
+<div class="line-block">
+<div class="line">出力ファイル</div>
+<div class="line">ポート名：code_aster_メッシュとグループ</div>
+<div class="line">HDF5フォーマットの解析後のメッシュデータ</div>
+</div>
+<div class="line-block">
+<div class="line">出力ファイル</div>
+<div class="line">ポート名：code_aster_出力_ログファイル</div>
+<div class="line">解析中のcode_asterのログ</div>
+</div>
+<div class="line-block">
+<div class="line">出力ファイル</div>
+<div class="line">ポート名：code_aster_出力_可視化ファイルアーカイブ</div>
+<div class="line">熱伝導解析の全ステップ毎の温度状態の可視化ファイルの圧縮アーカイブ</div>
+</div>
+<div class="line-block">
+<div class="line">出力ファイル</div>
+<div class="line">ポートー名：code_aster_出力_弾性解析情報アーカイブ</div>
+<div class="line">弾性解析の可視化ファイルの圧縮アーカイブ</div>
+</div>
+<div class="line-block">
+<div class="line">出力ファイル</div>
+<div class="line">ポートー名：code_aster_出力_最大温度</div>
+<div class="line">熱伝導解析での最大温度の時の温度分布可視化情報</div>
+</div>
+<div class="line-block">
+<div class="line">出力ファイル</div>
+<div class="line">ポートー名：code_aster_出力_疲労ダメージ</div>
+<div class="line">疲労計算結果の可視化情報</div>
+</div>
+<div class="line-block">
+<div class="line">出力ファイル</div>
+<div class="line">ポートー名：code_aster_出力_疲労情報アーカイブ</div>
+<div class="line">疲労計算結果の情報の圧縮アーカイブ</div>
+</div>
+<div class="line-block">
+<div class="line">出力ファイル</div>
+<div class="line">ポートー名：code_aster_出力_最大温度リスト</div>
+<div class="line">解析ステップ後との最大温度のリスト</div>
+</div>
+</div>
+</div>
+<div class="section" id="id10">
+<h2><span class="section-number">1.5. </span>ワークフローの実行<a class="headerlink" href="#id10" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<ol class="arabic simple">
+<li><p>ワークフローの選択</p></li>
+</ol>
+<p>WFAS6_code_aster_実行_外部計算機資源利用ワークフローを選択する。( <a class="reference internal" href="#cloud-code-aster-select-workflow"><span class="std std-numref">図 1.2</span></a> )</p>
+<div class="figure align-center" id="cloud-code-aster-select-workflow">
+<a class="reference internal image-reference" href="../_images/select_workflow.png"><img alt="../_images/select_workflow.png" src="../_images/select_workflow.png" style="width: 809.9px; height: 290.5px;" /></a>
+<p class="caption"><span class="caption-number">図 1.2 </span><span class="caption-text">ワークフロー選択</span><a class="headerlink" href="#cloud-code-aster-select-workflow" title="この画像へのパーマリンク">¶</a></p>
+</div>
+<ol class="arabic simple" start="2">
+<li><p>実行選択</p></li>
+</ol>
+<p>ワークフローが公開中であることを確認し、実行ボタンを押下する。( <a class="reference internal" href="#cloud-code-aster-run-workflow"><span class="std std-numref">図 1.3</span></a> )</p>
+<div class="figure align-center" id="cloud-code-aster-run-workflow">
+<a class="reference internal image-reference" href="../_images/run_workflow.png"><img alt="../_images/run_workflow.png" src="../_images/run_workflow.png" style="width: 1099.6999999999998px; height: 618.0999999999999px;" /></a>
+<p class="caption"><span class="caption-number">図 1.3 </span><span class="caption-text">実行の選択</span><a class="headerlink" href="#cloud-code-aster-run-workflow" title="この画像へのパーマリンク">¶</a></p>
+</div>
+<ol class="arabic simple" start="3">
+<li><p>パラメータ入力</p></li>
+</ol>
+<p>各パラメータの入力ファイルをアップロードする。用意したファイルに対応するパラメータの参照ボタン（赤枠の中）を押下。
+ファイルを指定する。( <a class="reference internal" href="#cloud-code-aster-input-parameters"><span class="std std-numref">図 1.4</span></a> )</p>
+<div class="figure align-center" id="cloud-code-aster-input-parameters">
+<a class="reference internal image-reference" href="../_images/input_parameters.png"><img alt="../_images/input_parameters.png" src="../_images/input_parameters.png" style="width: 943.5999999999999px; height: 622.3px;" /></a>
+<p class="caption"><span class="caption-number">図 1.4 </span><span class="caption-text">パラメータの入力</span><a class="headerlink" href="#cloud-code-aster-input-parameters" title="この画像へのパーマリンク">¶</a></p>
+</div>
+<ol class="arabic simple" start="4">
+<li><p>実行</p></li>
+</ol>
+<p>パラメータの指定が終ったら、実行ボタン（赤枠）を押下。( <a class="reference internal" href="#cloud-code-aster-execute-run"><span class="std std-numref">図 1.5</span></a> ) ワークフローを実行する。</p>
+<div class="figure align-center" id="cloud-code-aster-execute-run">
+<a class="reference internal image-reference" href="../_images/execute_run.png"><img alt="../_images/execute_run.png" src="../_images/execute_run.png" style="width: 586.5999999999999px; height: 351.4px;" /></a>
+<p class="caption"><span class="caption-number">図 1.5 </span><span class="caption-text">ワークフローの実行</span><a class="headerlink" href="#cloud-code-aster-execute-run" title="この画像へのパーマリンク">¶</a></p>
+</div>
+</div>
+<div class="section" id="id11">
+<h2><span class="section-number">1.6. </span>計算結果の確認<a class="headerlink" href="#id11" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<ol class="arabic simple">
+<li><p>ダウンロード</p></li>
+</ol>
+<p>計算が終了すると、計算結果をダウンロードすることが可能になる。
+「ラン一覧」画面から計算が終了したワークフローに移動しラン詳細画面に移る。
+「ダウンロード」ボタンを押下すると（ <a class="reference internal" href="#cloud-code-aster-select-download"><span class="std std-numref">図 1.6</span></a> ）、計算結果ファイルダウンロード画面に遷移する。</p>
+<p>※ 計算結果ファイルダウンロード画面の操作手順は、マニュアルページの「材料設計ワークフローシステム 利用者マ
+ニュアル」の「6.2.4 計算結果ファイルをダウンロードする」を参照すること。</p>
+<div class="figure align-center" id="cloud-code-aster-select-download">
+<a class="reference internal image-reference" href="../_images/select_download.png"><img alt="../_images/select_download.png" src="../_images/select_download.png" style="width: 577.5px; height: 616.0px;" /></a>
+<p class="caption"><span class="caption-number">図 1.6 </span><span class="caption-text">計算結果のダウンロード</span><a class="headerlink" href="#cloud-code-aster-select-download" title="この画像へのパーマリンク">¶</a></p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">注釈</p>
+<p>ダウンロードしたファイルを解凍すると、ワークフローIDの名前のディレクトリが作成される。構造は「ワークフローID¥input」ディレクトリに入力に使用したファイルが、「ワークフローID_モジュール名」ディレクトリに計算結果が格納される。</p>
+</div>
+<ol class="arabic simple" start="2">
+<li><p>画像の確認</p></li>
+</ol>
+<p>各モジュールで出力される画像ファイルやテキストファイルがある場合、実行状況画面から閲覧することが可能になることがある。これを可視化機能というが、本ワークフローの出力はこの機能を利用した出力はない。可視化機能の使い方のみ解説する。（ <a class="reference internal" href="#cloud-code-aster-view-status"><span class="std std-numref">図 1.7</span></a> )</p>
+<div class="figure align-center" id="cloud-code-aster-view-status">
+<a class="reference internal image-reference" href="../_images/view_status.png"><img alt="../_images/view_status.png" src="../_images/view_status.png" style="width: 795.1999999999999px; height: 567.0px;" /></a>
+<p class="caption"><span class="caption-number">図 1.7 </span><span class="caption-text">計算結果画面の指定</span><a class="headerlink" href="#cloud-code-aster-view-status" title="この画像へのパーマリンク">¶</a></p>
+</div>
+<p>参照したいモジュールを選択し、メニューから電卓アイコンを押下する。( <a href="#id12"><span class="problematic" id="id13">:numre:`cloud_code_aster_module_output_select`</span></a> )</p>
+<div class="figure align-center" id="cloud-code-aster-module-output-select">
+<a class="reference internal image-reference" href="../_images/module_output_select.png"><img alt="../_images/module_output_select.png" src="../_images/module_output_select.png" style="width: 691.5999999999999px; height: 443.09999999999997px;" /></a>
+<p class="caption"><span class="caption-number">図 1.8 </span><span class="caption-text">計算結果の表時</span><a class="headerlink" href="#cloud-code-aster-module-output-select" title="この画像へのパーマリンク">¶</a></p>
+</div>
+<p>表示されたダイアログの出力ポートの選択肢から見たいポート名を選択する。( <a class="reference internal" href="#cloud-code-aster-view-module-result"><span class="std std-numref">図 1.9</span></a> )</p>
+<div class="figure align-center" id="cloud-code-aster-view-module-result">
+<a class="reference internal image-reference" href="../_images/view_module_result.png"><img alt="../_images/view_module_result.png" src="../_images/view_module_result.png" style="width: 472.49999999999994px; height: 388.5px;" /></a>
+<p class="caption"><span class="caption-number">図 1.9 </span><span class="caption-text">計算結果の直接表示</span><a class="headerlink" href="#cloud-code-aster-view-module-result" title="この画像へのパーマリンク">¶</a></p>
+</div>
+</div>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../index.html">外部計算資源の利用について</a></h1>
+
+
+
+
+
+
+
+
+<h3>ナビゲーション</h3>
+<p class="caption"><span class="caption-text">目次:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">1. WFAS6_code_aster_実行_外部計算機資源利用ワークフロー</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#id1">1.1. 概要</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id3">1.2. 処理の流れ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id4">1.3. ワークフローの説明</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id6">1.4. ツールの説明</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id7">1.4.1. WFAS6_code_aster_実行_外部計算機資源利用版</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id8">1.4.2. WFAS6_code_aster_更新</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id9">1.4.3. 出力ポート</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#id10">1.5. ワークフローの実行</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id11">1.6. 計算結果の確認</a></li>
+</ul>
+</li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="../index.html" title="前の章へ">外部計算資源の利用方法（本運用）</a></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">クイック検索</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="検索" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2021, SIP-MI.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.4.4</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="../_sources/documents/code_aster_using_cloud_node.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>
