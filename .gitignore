@@ -19,3 +19,4 @@ latexmkrc
 doctrees
 */build/latex/Makefile
 */build/latex/make.bat
+*.swp
