@@ -1,0 +1,494 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ja">
+  <head>
+    <meta charset="utf-8" />
+    <title>1. WFAS7利用_FrontISTR実行_検証版_外部計算_DPFワークフロー &#8212; 外部計算資源の利用について 1.0.1 ドキュメント</title>
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/language_data.js"></script>
+    <script src="../_static/translations.js"></script>
+    <script src="https://unpkg.com/mermaid@8.0.0/dist/mermaid.min.js"></script>
+    <link rel="index" title="索引" href="../genindex.html" />
+    <link rel="search" title="検索" href="../search.html" />
+    <link rel="prev" title="外部計算資源の利用方法（本運用）" href="../index.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="wfas7-frontistr-dpf">
+<h1><span class="section-number">1. </span>WFAS7利用_FrontISTR実行_検証版_外部計算_DPFワークフロー<a class="headerlink" href="#wfas7-frontistr-dpf" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<div class="section" id="id1">
+<h2><span class="section-number">1.1. </span>概要<a class="headerlink" href="#id1" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>本ワークフローはWFAS <a class="footnote-reference brackets" href="#what-is-wfas" id="id2">1</a> で行うクリープ性能試験で利用するFrontISTR解析ワークフローを外部計算機資源のうちDPF計算環境の利用による計算を使って実行するワークフローである。
+本ワークフローはWFAS7利用_FrontISTR実行_検証版を元に作られているため、以下の説明は省略する。</p>
+<ul class="simple">
+<li><p>ワークフローの説明</p></li>
+<li><p>入力データのフォーマット</p></li>
+<li><p>各ツールの説明</p></li>
+<li><p>計算結果の確認</p></li>
+<li><p>計算結果のファイル</p></li>
+</ul>
+<p>詳細はWFAS7利用_FrontISTR実行_検証版の使い方を参照すること。
+ここでは外部計算機利用のための説明を行う。</p>
+<div class="figure align-center" id="dpfc-frontistr-workflow">
+<a class="reference internal image-reference" href="../_images/W110000000724.svg"><img alt="../_images/W110000000724.svg" src="../_images/W110000000724.svg" /></a>
+<p class="caption"><span class="caption-number">図 1.1 </span><span class="caption-text">WFAS7利用_FrontISTR実行_検証版_外部計算_DPFワークフロー</span><a class="headerlink" href="#dpfc-frontistr-workflow" title="この画像へのパーマリンク">¶</a></p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">注釈</p>
+<p>本ワークフローはWFASから利用することを前提条件としたワークフローを元にしているため、入力パラメータが特殊である。</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">注釈</p>
+<p>外部計算機としてDPF計算環境を利用するため、その手続きと準備が必要となる。</p>
+</div>
+<dl class="footnote brackets">
+<dt class="label" id="what-is-wfas"><span class="brackets"><a class="fn-backref" href="#id2">1</a></span></dt>
+<dd><p>WFASはSIP-MIラボで開発された溶接シミュレーションソフトウェアによる解析をWEB GUIから行えるようにしたアプリケーションである。</p>
+</dd>
+</dl>
+</div>
+<div class="section" id="id3">
+<h2><span class="section-number">1.2. </span>外部計算機利用の仕組み<a class="headerlink" href="#id3" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>本ワークフローで使う外部計算機利用はMIntシステムとWebAPIを利用したポーリングシステムを利用して各モジュールの計算をMIntシステムおよびNIMSの所外の計算機を利用して行うものである。
+以下この方式をWebAPI方式とする。
+WebAPI方式での外部計算機利用の実行イメージを( <a class="reference internal" href="#webapi"><span class="std std-numref">図 1.2</span></a> )に示す。</p>
+<div class="figure align-center" id="id13">
+<span id="webapi"></span>
+            <style>
+            /* mermaid issue 527 workaround */
+            .section {
+                opacity: 1.0 !important;
+            }
+            </style>
+            <script>mermaid.initialize({startOnLoad:true});</script><div class="mermaid">
+            sequenceDiagram;
+
+participant D as ユーザープログラム&lt;BR&gt;（ユーザー側）
+participant C as ポーリングシステム&lt;BR&gt;（ユーザー側）
+participant B as WebAPI&lt;BR&gt;(NIMS内)
+participant A as MIntシステム&lt;BR&gt;（NIMS内）
+
+C-&gt;&gt;B:計算問い合わせ
+  alt 計算が存在しない
+    B-&gt;&gt;C:登録無し
+    C --&gt;&gt; C:計算問い合わせ継続
+  else 計算が存在する
+    A-&gt;&gt;B:計算登録
+    C-&gt;&gt;B:計算問い合わせ
+    B-&gt;&gt;C:登録有り
+    alt 計算実行
+      C-&gt;&gt;B:情報取得要求
+      B-&gt;&gt;C:パラメータ送付、コマンドライン送付
+      C-&gt;&gt;D:プログラム実行
+      alt プログラム実行
+        D --&gt;&gt; D:プログラム実行中
+      else プログラム終了
+        D --&gt;&gt; C:プログラム終了
+      end
+      C-&gt;&gt;B:計算終了通知
+    else no seq
+    end
+    B-&gt;&gt;C:計算結果の返却要求
+    C-&gt;&gt;B:計算結果の返却応答
+    B-&gt;&gt;A:ジョブの終了要求
+  end
+        </div><p class="caption"><span class="caption-number">図 1.2 </span><span class="caption-text">ポーリングシステムの流れ</span><a class="headerlink" href="#id13" title="この画像へのパーマリンク">¶</a></p>
+</div>
+</div>
+<div class="section" id="id4">
+<h2><span class="section-number">1.3. </span>外部計算機利用予測モジュールの処理<a class="headerlink" href="#id4" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>外部計算機利用予測モジュール（本ワークフローでは全ての予測モジュールが対象）内で外部計算機側の処理が実行されるまでの流れを下記に示す。</p>
+<div class="figure align-center" id="id14">
+
+            <style>
+            /* mermaid issue 527 workaround */
+            .section {
+                opacity: 1.0 !important;
+            }
+            </style>
+            <div class="mermaid">
+            sequenceDiagram;
+
+  participant A as モジュール
+  participant B as プログラム（Ａ）
+  participant C as WebAPI
+  participant D as プログラム（Ｃ）
+  participant E as プログラム（Ｄ）
+
+  Note over A,C : MInt内
+  Note over D,E : 外部計算機内
+
+  A-&gt;&gt;B:モジュールが実行
+  B-&gt;&gt;C:（Ａ）がhttps経由でAPI発行
+  D-&gt;&gt;C:（Ｃ）がhttps経由でAPI発行
+  D-&gt;&gt;E:（Ｃ）が実行
+        </div><p class="caption"><span class="caption-number">図 1.3 </span><span class="caption-text">WebAPI方式でのコマンドの流れ</span><a class="headerlink" href="#id14" title="この画像へのパーマリンク">¶</a></p>
+</div>
+<ul>
+<li><p>モジュール</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>MIntのワークフローシステムによって実行されるモジュール</p></li>
+<li><p>ワークフロー作成者が用意する。</p></li>
+<li><p>プログラム（Ａ）を実行する</p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p>プログラム（Ａ）</p>
+<blockquote>
+<div><ul>
+<li><p>モジュールによって実行されるプログラム。モジュールごとに任意の名前で用意する。</p></li>
+<li><p>ワークフロー作成者が用意する。</p></li>
+<li><p>モジュール固有の前処理を行う。</p></li>
+<li><p>モジュール内で**misrc_distributed_computing_assist_api/debug/mi-system-side/mi-system-wf.py** を実行する。</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>WebAPIへ計算の情報が登録される。</p></li>
+<li><p>以降このプログラムが外部計算機資源側（以下の（Ｃ））とAPIを介して計算に必要な処理を行う。</p></li>
+</ul>
+</div></blockquote>
+</li>
+</ul>
+</div></blockquote>
+</li>
+<li><p>WebAPI (このプログラムがMIntシステムと外部計算機との通信を中継する。)</p>
+<blockquote>
+<div><ul>
+<li><p>外部計算の準備を行う。</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>送受信するファイルはパラメータとしてあらかじめ設定しておく。</p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p>WebAPI経由で（Ｃ）からのアクセスを受け付ける</p></li>
+<li><p>（Ａ）から計算の情報登録が無い限り、（Ｃ）からアクセスがあっても計算は始まらない。</p></li>
+<li><p>ワークフローを実行したユーザーのトークンと（Ｃ）からのトークンが合致しないと（Ｃ）は適正な通信相手とならない。</p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p>プログラム（Ｃ）</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>ポーリングプログラムである。</p></li>
+<li><p>外部計算機資源（ユーザー）側で用意する。</p></li>
+<li><p><strong>misrc_distributed_computing_assist_api/debug/remote-side/mi-system-remote.py</strong> を実行する。</p></li>
+<li><p>外部計算機上で実行するプログラム名は、このプログラム経由でMIntシステムから受信され、このプログラムが実行する。</p></li>
+<li><p>認証情報はこのプログラム（Ｃ）が使用する。認証情報が無いとWebAPIにアクセスできない。詳細は<a class="reference internal" href="#prepair-using-workflow"><span class="std std-numref">1.4 章</span></a>の<a class="reference internal" href="#prepair-using-workflow"><span class="std std-ref">利用の準備</span></a> で説明する。</p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p>プログラム（Ｄ）</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>（Ｃ）から実行される外部計算用スクリプト。</p></li>
+<li><p>外部計算機資源（ユーザー）側で用意する。</p></li>
+<li><p>名前は任意。（プログラム（Ｃ）経由で伝えられるため、あらかじめMIntシステム側に設定が必要）</p></li>
+</ul>
+</div></blockquote>
+</li>
+</ul>
+<div class="section" id="id5">
+<h3><span class="section-number">1.3.1. </span>処理の流れ<a class="headerlink" href="#id5" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<p>ラン実行によるモジュールの処理の流れは以下のとおりとなる。</p>
+<ul class="simple">
+<li><p>クライアント（DPF）でポーリング開始</p></li>
+<li><p>MIntシステム（予測モジュール）からAPIサーバーへ外部計算用計算の登録</p></li>
+<li><p>クライアントでAPIサーバーから外部計算用計算情報の受信と詳細取得</p></li>
+<li><p>クライアントでAPIサーバーからパラメータの受信</p></li>
+<li><p>クライアントでFronISTRの処理</p></li>
+<li><p>クライアントでAPIサーバーへFrontISTR処理の終了通知と結果の送信</p></li>
+<li><p>MIntシステム（予測モジュール）でAPIサーバーから結果の受信</p></li>
+</ul>
+</div>
+</div>
+<div class="section" id="prepair-using-workflow">
+<span id="id6"></span><h2><span class="section-number">1.4. </span>利用の準備<a class="headerlink" href="#prepair-using-workflow" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>本ワークフローはFrontISTR計算をDPFが用意する計算機群を使用して計算を行うが、MIntチームが用意したアカウントを利用する場合、ワークフローも既存のものが使用可能である。
+DPFに専用のアカウントが必要な場合は以下の準備が必要となり、ワークフローも専用のものを用意する必要がある。</p>
+<ul>
+<li><p>DPF計算環境を利用するためのユーザーおよび資源</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>DPFの資料にしたがって準備する。</p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p>DPF計算環境でユーザー個別のFrontISTRのインストール</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>インストールはDPFの資料にしたがうが、FrontISTRのインストール資材はMIntシステムチームから入手する。</p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p>DPF計算環境で外部計算機資源をWebAPIで利用するための資材の展開</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>こちらは通常の外部計算機資源の利用マニュアルに従って入手、展開する。</p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p>利用申請</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>APIトークンの外部計算機利用ワークフロー利用申請</p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p>認証情報</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>API認証情報の取得</p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p>環境構築</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>利用者サイドの計算機および計算機資源。</p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p>ポーリングの開始</p></li>
+</ul>
+<div class="section" id="dpf">
+<h3><span class="section-number">1.4.1. </span>DPFを利用する場合の注意事項<a class="headerlink" href="#dpf" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<p>DPFにユーザー専用のアカウントを作って利用する場合、以下の点に注意すること。</p>
+<ul class="simple">
+<li><p>WebAPIのポート番号：50443で通信ができないので、portパラメータで443を利用する。</p></li>
+<li><p>認証局ファイル：WebAPI通信の際、proxy経由に必要な認証局ファイルの指定が必要である。no_authパラメータで指定する。</p></li>
+<li><p>作業ディレクトリの指定：通常、/tmpを使うが、DPFでは/home/&lt;ユーザーディレクトリ&gt;/&lt;作業ディレクトリ名&gt;を用意し、calc_baseパラメータで指定する。</p></li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">注釈</p>
+<p>認証局ファイルはICT室から入手できるnims_proxy.cerを利用する。</p>
+</div>
+</div>
+<div class="section" id="id7">
+<h3><span class="section-number">1.4.2. </span>利用申請<a class="headerlink" href="#id7" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<p>WebAPI方式を利用したポーリング実行に必要な利用申請を行う。
+このタイプのワークフローはユーザー専用となるため、その手続きが必要である。
+申請後、専用ワークフローのワークフローIDが返送されるので、実行にはそのワークフローIDを利用する。</p>
+</div>
+<div class="section" id="id8">
+<h3><span class="section-number">1.4.3. </span>認証情報の準備<a class="headerlink" href="#id8" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<p>MInt側担当者と打ち合わせて下記の情報を用意する。</p>
+<ul>
+<li><p>ホスト情報</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>MInt側でAPIの発行者を識別するための文字列。利用者が持つドメインとホスト名を使うのが一般的であるが、</p></li>
+</ul>
+</div></blockquote>
+</li>
+</ul>
+<p>同じである必要は無い。
+* APIトークン</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>MIntのAPI認証システムを使用するためのトークン。すでにMIntシステム利用申請を済ませ、ログインIDとパス</p></li>
+</ul>
+</div></blockquote>
+<dl class="simple">
+<dt>ワード入手済であれば、MIntシステムログイン後、ユーザープロファイル管理システムメニューで表示される、「APIトークン」を使用する。</dt><dd><ul class="simple">
+<li><p>ユーザーの環境でポーリングスクリプトを動作させるときに必要であるが、後述のログイン方式を利用する場&gt;合はトークン自体は必要ない。</p></li>
+</ul>
+</dd>
+</dl>
+<ul>
+<li><p>MIntのURL</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>MIntのURL(エンドポイントは不要)を、MInt運用チームに問い合わせておく。</p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p>WebAPI方式を利用できるようにMInt運用チームに設定を依頼する。</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>ホスト情報と使用コマンド情報をMIntシステムのWebAPIに事前登録する。</p></li>
+</ul>
+</div></blockquote>
+</li>
+</ul>
+</div>
+<div class="section" id="id9">
+<h3><span class="section-number">1.4.4. </span>環境設定<a class="headerlink" href="#id9" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<p>利用申請を行うと、実行に必要な環境構築方法や資材の入手方法のマニュアルが返送されるので、それを使用して環境構築および資材を入手、展開、実行準備を行っておく。</p>
+</div>
+<div class="section" id="id10">
+<h3><span class="section-number">1.4.5. </span>ポーリングの開始<a class="headerlink" href="#id10" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<p>認証情報と共にポーリングプログラムを動作させておく。
+事前に設定した情報に従ってMIntシステム側と通信し、入力ファイルの受信、計算、出力ファイルの送信が自動的に行われる。
+認証情報が無い、間違っている、などの場合は&gt;ポーリングは失敗し、計算は行われない。
+また <strong>ワークフローを実行したユーザーと同じユーザーのトークンまたはログイン方式での同じユーザー</strong> で実行しないとこちらもポーリングは失敗し、計算は行われない。</p>
+<ol class="arabic simple">
+<li><p>以下2. または3. のどちからの方法で、<strong>mi-system-remote.py</strong> を実行する。</p></li>
+<li><p>トークン指定方式</p></li>
+</ol>
+<blockquote>
+<div><div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ cd &lt;展開した場所&gt;/misrc_distributed_computing_assist_remote_side
+$ python mi-system-remote.py &lt;ホスト情報&gt; https://nims.mintsys.jp &lt;API token&gt; port:443 no_auth:/home/misystem/nims_proxy.cer calc_base:/home/misystem/remote_calculation
+site id = &lt;ホスト情報&gt; で指定した識別子
+base url = https://nims.mintsys.jp:443
+</pre></div>
+</div>
+</div></blockquote>
+<ol class="arabic simple" start="3">
+<li><p>ログイン方式</p></li>
+</ol>
+<blockquote>
+<div><div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ cd &lt;展開した場所&gt;/misrc_distributed_computing_assist_remote_side
+$ python mi-system-remote.py &lt;ホスト情報&gt; https://nims.mintsys.jp login port:443 no_auth:/home/misystem/nims_proxy.cer calc_base:/home/misystem/remote_calculation
+site id = &lt;ホスト情報&gt; で指定した識別子
+base url = https://nims.mintsys.jp:443
+nims.mintsys.jp へのログイン
+ログインID: &lt;MIntシステムのログイン名&gt;
+パスワード: &lt;同、パスワード&gt;
+ token = &lt;ログイン名のトークンの表示&gt;
+...
+</pre></div>
+</div>
+</div></blockquote>
+<div class="admonition note">
+<p class="admonition-title">注釈</p>
+<p>no_authパラメータでNIMSの用意した認証局ファイルを指定する必要がある。またportパラメータで443を指定する必要がある。</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">注釈</p>
+<p>ホスト情報とAPI token は<code class="xref std std-numref docutils literal notranslate"><span class="pre">get_authorizaion_infomation</span></code>の<span class="xref std std-ref">get_authorizaion_infomation</span> で入手したそれぞれの認証情報を指定する。</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">注釈</p>
+<p>通常は50443ポートを利用して行われるが、ポリシーによって使用不可能な場合はコマンドラインにport:443とすることで443ポートでの通信も可能となる。</p>
+</div>
+</div>
+</div>
+<div class="section" id="id11">
+<h2><span class="section-number">1.5. </span>ワークフローの実行<a class="headerlink" href="#id11" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>DPFに専用のアカウント作った場合は専用のワークフローとなるので、利用可能になると専用のIDが送付される。実行はそのIDで実行する。
+そうでない場合はID、W000110000000724のワークフローを使用する。</p>
+<div class="section" id="id12">
+<h3><span class="section-number">1.5.1. </span>ワークフロー実行中<a class="headerlink" href="#id12" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<p>実行中のワークフローを <a class="reference internal" href="#dpfc-frontistr-running-workflow"><span class="std std-numref">図 1.4</span></a> に示す。</p>
+<div class="figure align-center" id="dpfc-frontistr-running-workflow">
+<a class="reference internal image-reference" href="../_images/running_workflow.png"><img alt="../_images/running_workflow.png" src="../_images/running_workflow.png" style="width: 522.1999999999999px; height: 422.79999999999995px;" /></a>
+<p class="caption"><span class="caption-number">図 1.4 </span><span class="caption-text">実行中のワークフローのイメージ</span><a class="headerlink" href="#dpfc-frontistr-running-workflow" title="この画像へのパーマリンク">¶</a></p>
+</div>
+<ul class="simple">
+<li><p>灰色になっているのが実行終了したモジュール</p></li>
+<li><p>赤色になっているのが実行中のモジュール</p></li>
+<li><p>黄色いのは未実行のモジュール(この例では全モジュールが実行済みか実行中なので無い）</p></li>
+</ul>
+</div>
+</div>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../index.html">外部計算資源の利用について</a></h1>
+
+
+
+
+
+
+
+
+<h3>ナビゲーション</h3>
+<p class="caption"><span class="caption-text">目次:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">1. WFAS7利用_FrontISTR実行_検証版_外部計算_DPFワークフロー</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#id1">1.1. 概要</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id3">1.2. 外部計算機利用の仕組み</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id4">1.3. 外部計算機利用予測モジュールの処理</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id5">1.3.1. 処理の流れ</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#prepair-using-workflow">1.4. 利用の準備</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#dpf">1.4.1. DPFを利用する場合の注意事項</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id7">1.4.2. 利用申請</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id8">1.4.3. 認証情報の準備</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id9">1.4.4. 環境設定</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id10">1.4.5. ポーリングの開始</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#id11">1.5. ワークフローの実行</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id12">1.5.1. ワークフロー実行中</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="../index.html" title="前の章へ">外部計算資源の利用方法（本運用）</a></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">クイック検索</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="検索" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2021, SIP-MI.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.4.4</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="../_sources/documents/frontistr_using_dpfc_node.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>
