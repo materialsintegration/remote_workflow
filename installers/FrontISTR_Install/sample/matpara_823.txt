@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<materials>
+  <date>Thu Jun 27 11:55:09 2019</date>
+  <material method="prediction" name="MaW_BM">
+    <elastic>
+      <i name="youngs_modulus" unit="GPa">156.695</i>
+      <i name="poisson_ratio">0.274</i>
+    </elastic>
+    <creep method="prediction" model="norton">
+      <i name="a">9.006e-22</i>
+      <i name="n">7.521</i>
+    </creep>
+    <creep_damage method="prediction" model="time_fraction" type="linear_approximation">
+      <i name="a2">0.0</i>
+      <i name="a1">-7.626</i>
+      <i name="a0">46.252</i>
+    </creep_damage>
+  </material>
+
+  <material method="prediction" name="MaW_HAZ">
+    <elastic>
+      <i name="youngs_modulus" unit="GPa">151.703</i>
+      <i name="poisson_ratio">0.274</i>
+    </elastic>
+    <creep method="prediction" model="norton">
+      <i name="a">3.062E-14</i>
+      <i name="n">4.618</i>
+    </creep>
+    <creep_damage method="prediction" model="time_fraction" type="linear_approximation">
+      <i name="a2">0.0</i>
+      <i name="a1">-5.494</i>
+      <i name="a0">33.185</i>
+    </creep_damage>
+  </material>
+
+</materials>

@@ -1,0 +1,24 @@
+[materials]
+PM = MaW_BM
+HAZ = MaW_HAZ
+WM = MaW_BM
+
+[parameters]
+dimension = 3
+element_type = isoparametric_hexahedron
+temperature = 550
+step = 1000
+time_step_min = 1.0e-10
+time_step_max = 10
+output_ucd_file = output_ucd.inp
+output_ucd_start = 0
+output_ucd_end = 1000
+output_ucd_interval = 10
+
+creep_model = norton
+creep_time_step = norton 1.0
+
+creep_damage_time_fraction = linear_approximation
+creep_damage_ductility_exhaustion = power_approximation
+creep_damage_tf_huddleston_stress_coef  = 0.34
+
