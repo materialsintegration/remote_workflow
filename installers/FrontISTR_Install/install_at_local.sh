@@ -15,7 +15,11 @@ rm -rf ~/.intel
 # cmake 
 ############################################
 echo "installing cmake...."
-wget https://github.com/Kitware/CMake/releases/download/v3.20.2/cmake-3.20.2-linux-x86_64.tar.gz
+#wget https://github.com/Kitware/CMake/releases/download/v3.20.2/cmake-3.20.2-linux-x86_64.tar.gz
+if [ ! -e "cmake-3.20.2-linux-x86_64.tar.gz" ]; then
+    echo "cmake-3.20.2-linux-x86_64.tar.gz がありません。"
+    exit 1
+fi
 tar zxvf cmake-3.20.2-linux-x86_64.tar.gz > /dev/null 2>&1
 mkdir -p $PREFIX/cmake/3.20.2
 mv -f cmake-3.20.2-linux-x86_64/* $PREFIX/cmake/3.20.2/
