@@ -68,8 +68,12 @@ popd
 # you can use [yum -y install libxml-devel], instead of this script 
 ############################################
 echo "installing libxml2-devel..."
-rm -rf ./libxml2
-git clone --depth 1 -b v2.9.10 https://gitlab.gnome.org/GNOME/libxml2.git
+#rm -rf ./libxml2
+#git clone --depth 1 -b v2.9.10 https://gitlab.gnome.org/GNOME/libxml2.git
+if [ ! -e "libxml2" ]; then
+    echo "libxml2ディレクトリがありません。"
+    exit 1
+fi 
 cd libxml2
 ./autogen.sh
 ./configure --prefix $PREFIX --enable-shared=no --with-python=no
@@ -84,10 +88,10 @@ cd ..
 # Install VTK
 ############################################
 echo "installing VTK..."
-rm -rf VTK-8.2.0 VTK-8.2.0.tar.gz
-wget https://www.vtk.org/files/release/8.2/VTK-8.2.0.tar.gz --no-check-certificate
-if [ $? -ne 0 ]; then
-    echo "VTKインストールソースのダウンロードに失敗しました。"
+#rm -rf VTK-8.2.0 VTK-8.2.0.tar.gz
+#wget https://www.vtk.org/files/release/8.2/VTK-8.2.0.tar.gz --no-check-certificate
+if [ ! -e "VTK-8.2.0.tar.gz" ]; then
+    echo "VTKインストールソースがありません。"
     exit 1
 fi
 md5sum=`md5sum VTK-8.2.0.tar.gz | awk '{print $1}'`
@@ -110,8 +114,12 @@ echo "VTK installed."
 # Install HAM (RICOS's OSS)
 ############################################
 echo "installing HAM(RICOS's Open Source Softrware)..."
-rm -rf HAM-NIMS HAM-NIMS.tar.gz
-wget https://ritc.jp/download/HAM-NIMS.tar.gz
+#rm -rf HAM-NIMS HAM-NIMS.tar.gz
+#wget https://ritc.jp/download/HAM-NIMS.tar.gz
+if [ ! -e "HAM-NIMS.tar.gz" ]; then
+    echo "HAM-NIMS.tar.gz がありません。"
+    exit 1
+fi
 tar xzvf HAM-NIMS.tar.gz > /dev/null 2>&1
 cd HAM-NIMS
 cmake -Bbuild -H. -DCMAKE_INSTALL_PREFIX=$PREFIX
@@ -128,9 +136,13 @@ echo "HAM(RICOS's Open Source Sofrware) installed."
 # Install FrontISTR and libs
 ############################################
 # OpenBlas
-rm -rf OpenBLAS
+#rm -rf OpenBLAS
 echo "installing OpenBlas(for FrontISTR)..."
-git clone -b v0.3.7 --depth=1 https://github.com/xianyi/OpenBLAS.git
+#git clone -b v0.3.7 --depth=1 https://github.com/xianyi/OpenBLAS.git
+if [ ! -e "OpenBLAS" ]; then
+    echo "OpenBALSディレクトリがありません。"
+    exit 1
+fi
 cd OpenBLAS
 make -j DYNAMIC_ARCH=1 USE_OPENMP=1 BINARY=64 NO_SHARED=1
 if [ $? -ne 0 ]; then
@@ -144,8 +156,12 @@ echo "OpenBlas(for FrontISTR) installed."
 ############################################
 # METIS
 echo "installing METIS(for FrontISTR)..."
-rm -rf metis-5.1.0 metis-5.1.0.tar.gz
-wget http://glaros.dtc.umn.edu/gkhome/fetch/sw/metis/metis-5.1.0.tar.gz
+#rm -rf metis-5.1.0 metis-5.1.0.tar.gz
+#wget http://glaros.dtc.umn.edu/gkhome/fetch/sw/metis/metis-5.1.0.tar.gz
+if [ ! -e "metis-5.1.0.tar.gz" ]; then
+    echo "metis-5.1.0.tar.gz がありません。"
+    exit 1
+fi
 tar xvzf metis-5.1.0.tar.gz > /dev/null 2>&1
 cd metis-5.1.0
 make config prefix=${PREFIX} cc=gcc openmp=1 shared=not-set
@@ -160,8 +176,12 @@ echo "METIS(for FrontISTR) installed."
 ############################################
 # Scalapack
 echo "installing scalapack..."
-rm -rf scalapack
-git clone -b v2.1.0 --depth=1 https://github.com/Reference-ScaLAPACK/scalapack
+#rm -rf scalapack
+#git clone -b v2.1.0 --depth=1 https://github.com/Reference-ScaLAPACK/scalapack
+if [ ! -e "scalapack" ]; then
+    echo "scalapack ディレクトリがありません。"
+    exit 1
+fi
 cd scalapack
 cmake -Bbuild -H. -DBUILD_SHARED_LIBS=OFF -DBUILD_STATIC_LIBS=ON -DCMAKE_INSTALL_PREFIX=${PREFIX} -DCMAKE_EXE_LINKER_FLAGS="-fopenmp" -DBLAS_LIBRARIES=$PREFIX/lib/libopenblas.a -DLAPACK_LIBRARIES=$PREFIX/lib/libopenblas.a 
 if [ $? -ne 0 ]; then
@@ -175,8 +195,12 @@ echo "scalapack installed."
 ############################################
 # MUMPS
 echo "installing MUMPS(for FrontISTR)..."
-rm -rf MUMPS_5.3.3 MUMPS_5.3.3.tar.gz
-wget http://mumps.enseeiht.fr/MUMPS_5.3.3.tar.gz
+#rm -rf MUMPS_5.3.3 MUMPS_5.3.3.tar.gz
+#wget http://mumps.enseeiht.fr/MUMPS_5.3.3.tar.gz
+if [ ! -e "MUMPS_5.3.3.tar.gz" ]; then
+    echo "MUMPS_5.3.3.tar.gzがありません。"
+    exit 1
+fi
 tar xvzf MUMPS_5.3.3.tar.gz > /dev/null 2>&1
 cd MUMPS_5.3.3
 cp Make.inc/Makefile.inc.generic Makefile.inc
@@ -206,8 +230,12 @@ echo "MUMPS(for FrontISTR) isntalled."
 ############################################
 # Trilinos
 echo "installing Trilinos(for FrontISTR)..."
-rm -rf Trilinos
-git clone -b trilinos-release-12-12-1 --depth=1 https://github.com/trilinos/Trilinos.git
+#rm -rf Trilinos
+#git clone -b trilinos-release-12-12-1 --depth=1 https://github.com/trilinos/Trilinos.git
+if [ ! -e "Trilinos" ]; then
+    echo "Trilinosディレクトリがありません。"
+    exig 1
+fi
 cd Trilinos
 cmake -Bbuild -H. -DCMAKE_INSTALL_PREFIX=${PREFIX}  -DCMAKE_C_COMPILER=mpicc  -DCMAKE_CXX_COMPILER=mpicxx  -DCMAKE_Fortran_COMPILER=mpif90  -DTPL_ENABLE_LAPACK=ON  -DTPL_ENABLE_SCALAPACK=ON  -DTPL_ENABLE_METIS=ON  -DTPL_ENABLE_MUMPS=ON  -DTPL_ENABLE_MPI=ON  -DTrilinos_ENABLE_ML=ON  -DTrilinos_ENABLE_Zoltan=ON  -DTrilinos_ENABLE_OpenMP=ON  -DTrilinos_ENABLE_Amesos=OFF  -DTrilinos_ENABLE_ALL_OPTIONAL_PACKAGES=OFF  -DMETIS_LIBRARY_DIRS=$PREFIX/lib  -DMUMPS_LIBRARY_DIRS=$PREFIX/lib  -DBLAS_LIBRARY_DIRS=$PREFIX/lib  -DLAPACK_LIBRARY_DIRS=$PREFIX/lib  -DSCALAPACK_LIBRARY_DIRS=$PREFIX/lib  -DBLAS_LIBRARY_NAMES="openblas"  -DLAPACK_LIBRARY_NAMES="openblas" 
 if [ $? -ne 0 ]; then
@@ -221,8 +249,12 @@ echo "Trilinos(for FrontISTR) installed."
 ############################################
 # REVOCAP_Refiner
 echo "installing REVOCAP_Refiner(for FrontISTR)..."
-rm -rf REVOCAP_Mesh
-git clone --depth=1 https://gitlab.com/FrontISTR-Commons/REVOCAP_Mesh.git
+#rm -rf REVOCAP_Mesh
+#git clone --depth=1 https://gitlab.com/FrontISTR-Commons/REVOCAP_Mesh.git
+if [ ! -e "REVOCAP_Mesh" ]; then
+    echo "REVOCAP_Meshディレクトリがありません。"
+    exit 1
+fi
 cd REVOCAP_Mesh
 cat ./config/MakefileConfig.LinuxCluster > MakefileConfig.in 
 make -j Refiner
@@ -238,8 +270,12 @@ echo "REVOCAP_Refiner(for FrontISTR) installed."
 ############################################
 # FrontISTR
 echo "installing FrontISTR..."
-rm -rf FrontISTR-nims FrontISTR-nims.tar.gz
-wget https://ritc.jp/download/FrontISTR-nims.tar.gz
+#rm -rf FrontISTR-nims FrontISTR-nims.tar.gz
+#wget https://ritc.jp/download/FrontISTR-nims.tar.gz
+if [ ! -e "FrontISTR-nims.tar.gz" ]; then
+    echo "FrontISTR-nims.tar.gzがありません。"
+    exit 1
+fi
 tar xvzf FrontISTR-nims.tar.gz > /dev/null 2>&1
 cd FrontISTR-nims
 echo "cmake : `which cmake`"
