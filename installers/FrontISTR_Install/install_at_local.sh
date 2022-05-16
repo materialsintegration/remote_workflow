@@ -5,8 +5,8 @@ export http_proxy=http://proxy-calc:8888
 export https_proxy=http://proxy-calc:8888
 
 echo "oneAPIをアンインストールしています..."
-./l_BaseKit_p_2022.2.0.262.sh -a --action remove -s
-./l_HPCKit_p_2022.2.0.191.sh -a --action remove -s
+./l_BaseKit_p_2022.2.0.262_offline.sh -a --action remove -s
+./l_HPCKit_p_2022.2.0.191_offline.sh -a --action remove -s
 echo "~/local ディレクトリを削除しています..."
 rm -rf ~/local
 rm -rf ~/.intel
@@ -44,10 +44,10 @@ echo "cmake installed."
 # Intel MKL (Optional)
 ############################################
 echo "installing oneapi Basekit..."
-./l_BaseKit_p_2022.2.0.262.sh -a --install-dir /home/misystem/local/intel/oneapi -s --eula accept
+./l_BaseKit_p_2022.2.0.262_offline.sh -a --install-dir /home/misystem/local/intel/oneapi -s --eula accept
 echo "intel oneapi Basekit installed."
 echo "installing oneapi HPCkit..."
-./l_HPCKit_p_2022.2.0.191.sh -a --install-dir /home/misystem/local/intel/oneapi -s --eula accept
+./l_HPCKit_p_2022.2.0.191_offline.sh -a --install-dir /home/misystem/local/intel/oneapi -s --eula accept
 echo "intel oneapi HPCkit installed."
 
 if [ ! -e ~/local/intel/oneapi/setvars.sh ]; then
